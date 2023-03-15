@@ -5,15 +5,11 @@ import 'package:players_app/controllers/get_all_songsfunctioms.dart';
 import 'package:players_app/screens/music/playing_music_page.dart';
 import 'package:players_app/screens/music/playlist_screen.dart';
 import 'package:players_app/widgets/models/listtale_songs_model.dart';
+import 'package:provider/provider.dart';
 
-class AllSongs extends StatefulWidget {
+class AllSongs extends StatelessWidget {
   const AllSongs({super.key});
 
-  @override
-  State<AllSongs> createState() => _AllSongsState();
-}
-
-class _AllSongsState extends State<AllSongs> {
   @override
   Widget build(BuildContext context) {
     // defining AudioQuery====
@@ -85,29 +81,28 @@ class _AllSongsState extends State<AllSongs> {
                           item.data![index].artist == "<unknown>"
                       ? "Unknown Artist"
                       : item.data![index].artist!,
-                  trailingOne: IconButton(
-                    onPressed: () async {
-                      setState(
-                        () {
-                          if (FavouriteDb.isFavour(item.data![index])) {
-                            FavouriteDb.delete(item.data![index].id);
+                  trailingOne: Consumer<FavouriteMusicDb>(
+                    builder: (context, favoriteMusic, _) {
+                      return IconButton(
+                        // currently working =====================================================
+                        onPressed: () async {
+                          if (favoriteMusic.isFavour(item.data![index])) {
+                            favoriteMusic.delete(item.data![index].id);
                           } else {
-                            FavouriteDb.add(item.data![index]);
+                            favoriteMusic.add(item.data![index]);
                           }
                         },
+                        icon: favoriteMusic.isFavour(item.data![index])
+                            ? const Icon(
+                                Icons.favorite,
+                                color: Colors.black,
+                              )
+                            : const Icon(
+                                Icons.favorite_border,
+                                color: Colors.black,
+                              ),
                       );
-
-                      FavouriteDb.favouritesSongs.notifyListeners();
                     },
-                    icon: FavouriteDb.isFavour(item.data![index])
-                        ? const Icon(
-                            Icons.favorite,
-                            color: Colors.black,
-                          )
-                        : const Icon(
-                            Icons.favorite_border,
-                            color: Colors.black,
-                          ),
                   ),
                   trailingTwo: PopupMenuButton(
                     onSelected: (value) {

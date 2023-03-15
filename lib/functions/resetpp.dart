@@ -15,6 +15,5 @@ class ResetApp {
     await songPlayListDb.clear();
     await videoPlaylisdb.clear();
     await musicDb.clear();
-    FavouriteDb.favouritesSongs.value.clear();
   }
 }

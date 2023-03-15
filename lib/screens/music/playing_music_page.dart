@@ -7,6 +7,7 @@ import 'package:players_app/functions/songmodelcontrollers/favouritedbfunctions.
 import 'package:players_app/controllers/get_all_songsfunctioms.dart';
 import 'package:players_app/widgets/playing%20music%20page/play_music_buttons.dart';
 import 'package:players_app/widgets/playing%20music%20page/playing_mu_circleavtar.dart';
+import 'package:provider/provider.dart';
 
 class PlayinMusicScreen extends StatefulWidget {
   const PlayinMusicScreen(
@@ -125,9 +126,10 @@ class _PlayinMusicScreenState extends State<PlayinMusicScreen> {
                 maxLines: 1,
                 widget.songModelList[currentIndex].displayNameWOExt,
                 style: GoogleFonts.roboto(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.white,),
+                  fontSize: 22,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white,
+                ),
               ),
             ),
 
@@ -331,32 +333,32 @@ class _PlayinMusicScreenState extends State<PlayinMusicScreen> {
 
                 // ===================Favorite Button======================
                 PlaySongButtons(
-                    icons: IconButton(
-                      onPressed: () {
-                        setState(
-                          () {
-                            if (FavouriteDb.isFavour(
-                                widget.songModelList[currentIndex])) {
-                              FavouriteDb.delete(
-                                  widget.songModelList[currentIndex].id);
-                            } else {
-                              FavouriteDb.add(
-                                  widget.songModelList[currentIndex]);
-                            }
-                          },
-                        );
-                      },
-                      icon: FavouriteDb.isFavour(
-                              widget.songModelList[currentIndex])
-                          ? const Icon(
-                              Icons.favorite,
-                              color: Colors.black,
-                            )
-                          : const Icon(
-                              Icons.favorite_border,
-                              color: Colors.black,
-                            ),
-                    ),
+                  // currently working ============================================================================================
+                    icons: Consumer<FavouriteMusicDb>(
+                        builder: (context, favouriteMusic, _) {
+                      return IconButton(
+                        onPressed: () {
+                          if (favouriteMusic
+                              .isFavour(widget.songModelList[currentIndex])) {
+                            favouriteMusic
+                                .delete(widget.songModelList[currentIndex].id);
+                          } else {
+                            favouriteMusic
+                                .add(widget.songModelList[currentIndex]);
+                          }
+                        },
+                        icon: favouriteMusic
+                                .isFavour(widget.songModelList[currentIndex])
+                            ? const Icon(
+                                Icons.favorite,
+                                color: Colors.black,
+                              )
+                            : const Icon(
+                                Icons.favorite_border,
+                                color: Colors.black,
+                              ),
+                      );
+                    }),
                     width: 40,
                     hight: 40),
               ],

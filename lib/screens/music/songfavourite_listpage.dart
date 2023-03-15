@@ -6,21 +6,20 @@ import 'package:players_app/functions/songmodelcontrollers/favouritedbfunctions.
 import 'package:players_app/screens/music/playing_music_page.dart';
 import 'package:players_app/widgets/home%20widgets/home_songs_section.dart';
 import 'package:players_app/widgets/models/listtale_songs_model.dart';
+import 'package:provider/provider.dart';
 
-class SongFavouriteScreen extends StatefulWidget {
+class SongFavouriteScreen extends StatelessWidget {
   const SongFavouriteScreen({super.key});
 
   @override
-  State<SongFavouriteScreen> createState() => _SongFavouriteScreenState();
-}
-
-class _SongFavouriteScreenState extends State<SongFavouriteScreen> {
-  @override
   Widget build(BuildContext context) {
-    // Intializing FavouriteDB========
-    if (!FavouriteDb.isIntialized) {
-      FavouriteDb.isIntializ(songmodel);
-    }
+    // Intializing FavouriteMusicDB========
+
+    // final favouriteMusicDb =
+    //     Provider.of<FavouriteMusicDb>(context, listen: false);
+    // if (!favouriteMusicDb.isIntialized) {
+    //   favouriteMusicDb.isIntializ(songmodel);
+    // }
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -31,10 +30,13 @@ class _SongFavouriteScreenState extends State<SongFavouriteScreen> {
         backgroundColor: Colors.black,
         centerTitle: true,
       ),
-      body: ValueListenableBuilder(
-        valueListenable: FavouriteDb.favouritesSongs,
-        builder: (context, item, child) {
-          return FavouriteDb.favouritesSongs.value.isEmpty
+      body: Consumer<FavouriteMusicDb>(
+        // currently working ===============================================================================================
+        builder: (context, favouriteMusic, _) {
+          if (!favouriteMusic.isIntialized) {
+            favouriteMusic.isIntializ(songmodel);
+          }
+          return favouriteMusic.favouritesSongs.isEmpty
               ? const Center(
                   child: Text(
                     "No Favorites",
@@ -44,7 +46,7 @@ class _SongFavouriteScreenState extends State<SongFavouriteScreen> {
               : Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListView.builder(
-                    itemCount: item.length,
+                    itemCount: favouriteMusic.favouritesSongs.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -53,7 +55,7 @@ class _SongFavouriteScreenState extends State<SongFavouriteScreen> {
                             artworkWidth: 58,
                             artworkHeight: 58,
                             artworkFit: BoxFit.cover,
-                            id: item[index].id,
+                            id: favouriteMusic.favouritesSongs[index].id,
                             type: ArtworkType.AUDIO,
                             nullArtworkWidget: CircleAvatar(
                               backgroundColor: Colors.black,
@@ -74,20 +76,23 @@ class _SongFavouriteScreenState extends State<SongFavouriteScreen> {
                               ),
                             ),
                           ),
-                          title: item[index].displayNameWOExt,
-                          subtitle: item[index].artist == null ||
-                                  item[index].artist == "<unknown>"
+                          title: favouriteMusic
+                              .favouritesSongs[index].displayNameWOExt,
+                          subtitle: favouriteMusic
+                                          .favouritesSongs[index].artist ==
+                                      null ||
+                                  favouriteMusic
+                                          .favouritesSongs[index].artist ==
+                                      "<unknown>"
                               ? "Unknown Artist"
-                              : item[index].artist!,
+                              : favouriteMusic.favouritesSongs[index].artist!,
                           trailingOne: IconButton(
                             onPressed: () {
-                              setState(
-                                () {
-                                  if (FavouriteDb.isFavour(item[index])) {
-                                    FavouriteDb.delete(item[index].id);
-                                  }
-                                },
-                              );
+                              if (favouriteMusic.isFavour(
+                                  favouriteMusic.favouritesSongs[index])) {
+                                favouriteMusic.delete(
+                                    favouriteMusic.favouritesSongs[index].id);
+                              }
                             },
                             icon: const Icon(
                               Icons.delete,
@@ -96,14 +101,15 @@ class _SongFavouriteScreenState extends State<SongFavouriteScreen> {
                           ),
                           onTap: () {
                             PageManger.audioPlayer.setAudioSource(
-                                PageManger.songListCreating(item),
+                                PageManger.songListCreating(
+                                    favouriteMusic.favouritesSongs),
                                 initialIndex: index);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => PlayinMusicScreen(
-                                  songModelList: item,
-                                  count: item.length,
+                                  songModelList: favouriteMusic.favouritesSongs,
+                                  count: favouriteMusic.favouritesSongs.length,
                                 ),
                               ),
                             );

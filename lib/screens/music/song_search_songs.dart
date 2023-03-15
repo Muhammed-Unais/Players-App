@@ -11,6 +11,7 @@ import 'package:players_app/screens/music/playlist_screen.dart';
 import 'package:players_app/screens/videos/play_video_screen.dart';
 import 'package:players_app/screens/videos/playlist_video_screen.dart';
 import 'package:players_app/widgets/thumbnail.dart';
+import 'package:provider/provider.dart';
 
 class SongSearchScreen extends StatefulWidget {
   final bool songOrVideoCheck;
@@ -165,32 +166,31 @@ class _SongSearchScreenState extends State<SongSearchScreen> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               // ============Favorite Icon(adding & deleting)=============
-                              IconButton(
-                                onPressed: () async {
-                                  setState(
-                                    () {
-                                      if (FavouriteDb.isFavour(
-                                          foundSongs[index])) {
-                                        FavouriteDb.delete(
-                                            foundSongs[index].id);
-                                      } else {
-                                        FavouriteDb.add(foundSongs[index]);
-                                      }
-                                    },
-                                  );
-
-                                  FavouriteDb.favouritesSongs.notifyListeners();
-                                },
-                                icon: FavouriteDb.isFavour(foundSongs[index])
-                                    ? const Icon(
-                                        Icons.favorite,
-                                        color: Colors.black,
-                                      )
-                                    : const Icon(
-                                        Icons.favorite_border,
-                                        color: Colors.black,
-                                      ),
-                              ),
+// currently working ===========================================================================================================
+                              Consumer<FavouriteMusicDb>(
+                                  builder: (context, favouriteMusic, _) {
+                                return IconButton(
+                                  onPressed: () async {
+                                    if (favouriteMusic
+                                        .isFavour(foundSongs[index])) {
+                                      favouriteMusic
+                                          .delete(foundSongs[index].id);
+                                    } else {
+                                      favouriteMusic.add(foundSongs[index]);
+                                    }
+                                  },
+                                  icon: favouriteMusic.isFavour(
+                                          foundSongs[index])
+                                      ? const Icon(
+                                          Icons.favorite,
+                                          color: Colors.black,
+                                        )
+                                      : const Icon(
+                                          Icons.favorite_border,
+                                          color: Colors.black,
+                                        ),
+                                );
+                              }),
 
                               // ===========Morevert ICon For Add Playlist==============
                               PopupMenuButton(
