@@ -1,67 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:players_app/controllers/get_all_songsfunctioms.dart';
-import 'package:players_app/model/db/dbmodel.dart';
-import 'package:players_app/screens/music/song_adding_playlist.dart';
+import 'package:players_app/functions/songmodelcontrollers/favouritedbfunctions.dart';
+import 'package:players_app/screens/music/playing_screen/playing_music_page.dart';
+import 'package:players_app/widgets/home%20widgets/home_songs_section.dart';
 import 'package:players_app/widgets/models/listtale_songs_model.dart';
-import 'playing_music_page.dart';
+import 'package:provider/provider.dart';
 
-class PlaylistSongsList extends StatelessWidget {
-  final int findex;
-  final Playersmodel playlist;
-  const PlaylistSongsList(
-      {super.key, required this.findex, required this.playlist});
+class SongFavouriteScreen extends StatelessWidget {
+  const SongFavouriteScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    late List<SongModel> songsPlaylist;
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        label: const Text(
-          "Add Songs",
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.black,
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return SongAddingPlaylist(
-                  playlist: playlist,
-                );
-              },
-            ),
-          );
-        },
-      ),
       appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.black,
         title: Text(
-          playlist.name,
+          "Songs Fovorite",
           style: GoogleFonts.raleway(
               fontSize: 22, fontWeight: FontWeight.w800, color: Colors.white),
         ),
+        backgroundColor: Colors.black,
+        centerTitle: true,
       ),
-      body: ValueListenableBuilder(
-        valueListenable: Hive.box<Playersmodel>('SongPlaylistDB').listenable(),
-        builder: (context, musics, _) {
-          // here findex is playlist folder index so in this index we have players model class.in the class we have song id int type list.here that is assaigned to songs playlist
-          songsPlaylist = listPlaylist(musics.values.toList()[findex].songid);
-          return songsPlaylist.isEmpty
+      body: Consumer<FavouriteMusicDb>(
+        // currently working ===============================================================================================
+        builder: (context, favouriteMusic, _) {
+          if (!favouriteMusic.isIntialized) {
+            favouriteMusic.isIntializ(songmodel);
+          }
+          return favouriteMusic.favouritesSongs.isEmpty
               ? const Center(
                   child: Text(
-                    "Add Your Playlist",
+                    "No Favorites",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 )
               : Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListView.builder(
-                    itemCount: songsPlaylist.length,
+                    itemCount: favouriteMusic.favouritesSongs.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -70,7 +48,7 @@ class PlaylistSongsList extends StatelessWidget {
                             artworkWidth: 58,
                             artworkHeight: 58,
                             artworkFit: BoxFit.cover,
-                            id: songsPlaylist[index].id,
+                            id: favouriteMusic.favouritesSongs[index].id,
                             type: ArtworkType.AUDIO,
                             nullArtworkWidget: CircleAvatar(
                               backgroundColor: Colors.black,
@@ -91,14 +69,23 @@ class PlaylistSongsList extends StatelessWidget {
                               ),
                             ),
                           ),
-                          title: songsPlaylist[index].displayNameWOExt,
-                          subtitle: songsPlaylist[index].artist == null ||
-                                  songsPlaylist[index].artist == "<unknown>"
+                          title: favouriteMusic
+                              .favouritesSongs[index].displayNameWOExt,
+                          subtitle: favouriteMusic
+                                          .favouritesSongs[index].artist ==
+                                      null ||
+                                  favouriteMusic
+                                          .favouritesSongs[index].artist ==
+                                      "<unknown>"
                               ? "Unknown Artist"
-                              : songsPlaylist[index].artist!,
+                              : favouriteMusic.favouritesSongs[index].artist!,
                           trailingOne: IconButton(
                             onPressed: () {
-                              playlist.deleteData(songsPlaylist[index].id);
+                              if (favouriteMusic.isFavour(
+                                  favouriteMusic.favouritesSongs[index])) {
+                                favouriteMusic.delete(
+                                    favouriteMusic.favouritesSongs[index].id);
+                              }
                             },
                             icon: const Icon(
                               Icons.delete,
@@ -106,16 +93,16 @@ class PlaylistSongsList extends StatelessWidget {
                             ),
                           ),
                           onTap: () {
-                            List<SongModel> newMusicList = [...songsPlaylist];
-                            PageManger.audioPlayer.stop();
                             PageManger.audioPlayer.setAudioSource(
-                                PageManger.songListCreating(newMusicList),
+                                PageManger.songListCreating(
+                                    favouriteMusic.favouritesSongs),
                                 initialIndex: index);
-                            PageManger.audioPlayer.play();
-                            Navigator.of(context).push(
+                            Navigator.push(
+                              context,
                               MaterialPageRoute(
-                                builder: (ctx) => PlayinMusicScreen(
-                                  songModelList: songsPlaylist,
+                                builder: (context) => PlayinMusicScreen(
+                                  songModelList: favouriteMusic.favouritesSongs,
+                                  count: favouriteMusic.favouritesSongs.length,
                                 ),
                               ),
                             );
@@ -128,17 +115,5 @@ class PlaylistSongsList extends StatelessWidget {
         },
       ),
     );
-  }
-
-  List<SongModel> listPlaylist(List<int> data) {
-    List<SongModel> plsongs = [];
-    for (var i = 0; i < PageManger.songscopy.length; i++) {
-      for (var j = 0; j < data.length; j++) {
-        if (PageManger.songscopy[i].id == data[j]) {
-          plsongs.add(PageManger.songscopy[i]);
-        }
-      }
-    }
-    return plsongs;
   }
 }

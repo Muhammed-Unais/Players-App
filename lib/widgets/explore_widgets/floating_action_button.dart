@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:players_app/screens/music/playlist_screen.dart';
+import 'package:players_app/functions/new_playlist.dart';
 
 class SpeedDials extends StatelessWidget {
   const SpeedDials({super.key});

@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:players_app/functions/songmodelcontrollers/playlistfunctions.dart';
 import 'package:players_app/functions/videodbfunctions/videodbplaylist.dart';
-import 'package:players_app/screens/music/added_playlistsongs.dart';
-import 'package:players_app/screens/music/songfavourite_listpage.dart';
-import 'package:players_app/screens/music/playlist_screen.dart';
+import 'package:players_app/screens/music/playlist/added_playlistsongs.dart';
+import 'package:players_app/screens/music/favorite_songs/songfavourite_listpage.dart';
+import 'package:players_app/screens/music/playlist/song_playlist_screen.dart';
 import 'package:players_app/screens/videos/playlist_video_screen.dart';
 import 'package:players_app/screens/videos/video_favorite_screen.dart';
 import 'package:players_app/screens/videos/videos_playlist_videos_list.dart';
 import 'package:players_app/widgets/explore_widgets/explore_viewmore.dart';
 import 'package:players_app/widgets/explore_widgets/favourites_cards.dart';
 import 'package:players_app/widgets/explore_widgets/floating_action_button.dart';
-
+import 'package:players_app/widgets/playlist_scree.dart/playlist_popup.dart';
+import 'package:provider/provider.dart';
 
 class FavouritesAndPlaylistScreen extends StatelessWidget {
   const FavouritesAndPlaylistScreen({super.key});
@@ -19,7 +20,7 @@ class FavouritesAndPlaylistScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // ============FloatinAction Buttonfor Explore Page Playlist Adding==========
+      // ============FloatingAction Buttonfor Explore Page Playlist Adding==========
       floatingActionButton: const SpeedDials(),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(100),
@@ -31,7 +32,9 @@ class FavouritesAndPlaylistScreen extends StatelessWidget {
             child: Text(
               "Players App",
               style: GoogleFonts.raleway(
-                  fontSize: 22, fontWeight: FontWeight.w800, color: Colors.black),
+                  fontSize: 22,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.black),
             ),
           ),
         ),
@@ -92,14 +95,18 @@ class FavouritesAndPlaylistScreen extends StatelessWidget {
                               "assets/images/pexels-dmitry-demidov-6764885.jpg",
                           cardtext: "Videos"),
                     ),
-                    const SizedBox(width: 10,)
+                    const SizedBox(
+                      width: 10,
+                    )
                   ],
                 ),
               ),
               const SizedBox(height: 10),
               // =====================view more button Song=============
               Padding(
-                padding: const EdgeInsets.only(right: 20,),
+                padding: const EdgeInsets.only(
+                  right: 20,
+                ),
                 child: ExploreViewmore(
                   fromSong: true,
                   viewmoreTitile: "Song Playlist",
@@ -121,66 +128,74 @@ class FavouritesAndPlaylistScreen extends StatelessWidget {
 
               // =====================Song PlayList Part======================
               Expanded(
-                child: ValueListenableBuilder(
-                  valueListenable: PlaylistDbSong.texteditngcontroller,
-                  builder: (context, value, _) {
-                    return value.isEmpty
-                        ? const Center(
-                            child: Text(
-                              "Create Your Songs Playlist",
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.bold),
+                // Currentlt playlist working========================================
+                // ================================================================
+                // ==============================================================
+                child: Consumer<PlaylistDbSong>(
+                    builder: (context, playlistDbSong, __) {
+                  playlistDbSong.getAllPlaylists();
+                  return playlistDbSong.texteditngcontroller.isEmpty
+                      ? const Center(
+                          child: Text(
+                            "Create Your Songs Playlist",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
                             ),
-                          )
-                        : ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: value.length > 2 ? 2 : value.length,
-                            itemBuilder: (context, index) {
-                              List test = value[index].songid;
-                              return Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom: 10, right: 20),
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) {
-                                          return PlaylistSongsList(
-                                            findex: index,
-                                            playlist: value[index],
-                                          );
-                                        },
-                                      ),
-                                    );
-                                  },
-                                  child: FavouritesCards(
-                                    firstIcon:
-                                        Icons.playlist_add_check_outlined,
-                                    trailingicons: Icons.more_vert,
-                                    change: true,
-                                    cardtext: value[index].name,
-                                    height:
-                                        MediaQuery.of(context).size.height /
-                                            10,
-                                    width: MediaQuery.of(context).size.width,
-                                    image:
-                                        "assets/images/pexels-pixabay-210766.jpg",
-
-                                    // ==========Edit And Delete Dialouge Box And Function From Playlist Screen=========
-                                    moreVertPopupicon: editAndDeleteDialoge(
-                                      test: test,
-                                      isforSong: true,
-                                      ctx: context,
-                                      index: index,
+                          ),
+                        )
+                      : ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount:
+                              playlistDbSong.texteditngcontroller.length > 2
+                                  ? 2
+                                  : playlistDbSong.texteditngcontroller.length,
+                          itemBuilder: (context, index) {
+                            List test = playlistDbSong
+                                .texteditngcontroller[index].songid;
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.only(bottom: 10, right: 20),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return PlaylistSongsList(
+                                          findex: index,
+                                          playlist: playlistDbSong
+                                              .texteditngcontroller[index],
+                                        );
+                                      },
                                     ),
+                                  );
+                                },
+                                child: FavouritesCards(
+                                  firstIcon: Icons.playlist_add_check_outlined,
+                                  trailingicons: Icons.more_vert,
+                                  change: true,
+                                  cardtext: playlistDbSong
+                                      .texteditngcontroller[index].name,
+                                  height:
+                                      MediaQuery.of(context).size.height / 10,
+                                  width: MediaQuery.of(context).size.width,
+                                  image:
+                                      "assets/images/pexels-pixabay-210766.jpg",
+
+                                  // ==========Edit And Delete Dialouge Box And Function From Playlist Screen=========
+                                  moreVertPopupicon: editAndDeleteDialoge(
+                                    test: test,
+                                    isforSong: true,
+                                    ctx: context,
+                                    index: index,
                                   ),
                                 ),
-                              );
-                            },
-                          );
-                  },
-                ),
+                              ),
+                            );
+                          },
+                        );
+                }),
               ),
               // =====================view more button Video=============
               Padding(
@@ -214,7 +229,9 @@ class FavouritesAndPlaylistScreen extends StatelessWidget {
                             child: Text(
                               "Create Your Video Playlist",
                               style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.bold,),
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           )
                         : ListView.builder(
@@ -247,8 +264,7 @@ class FavouritesAndPlaylistScreen extends StatelessWidget {
                                     change: true,
                                     cardtext: value[index].name,
                                     height:
-                                        MediaQuery.of(context).size.height /
-                                            10,
+                                        MediaQuery.of(context).size.height / 10,
                                     width: MediaQuery.of(context).size.width,
                                     image:
                                         "assets/images/pexels-dmitry-demidov-6764885.jpg",

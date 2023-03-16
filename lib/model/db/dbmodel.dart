@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 part 'dbmodel.g.dart';
 
 @HiveType(typeId: 1)
-class Playersmodel extends HiveObject {
+class Playersmodel extends HiveObject with ChangeNotifier {
   @HiveField(0)
   String name;
 
@@ -20,6 +21,7 @@ class Playersmodel extends HiveObject {
   }
 
   bool isValueIn(int id) {
+    notifyListeners();
     return songid.contains(id);
   }
 

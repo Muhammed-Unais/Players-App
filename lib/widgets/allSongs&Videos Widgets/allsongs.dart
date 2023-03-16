@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:players_app/functions/songmodelcontrollers/favouritedbfunctions.dart';
 import 'package:players_app/controllers/get_all_songsfunctioms.dart';
-import 'package:players_app/screens/music/playing_music_page.dart';
-import 'package:players_app/screens/music/playlist_screen.dart';
+import 'package:players_app/screens/music/playing_screen/playing_music_page.dart';
+import 'package:players_app/screens/music/playlist/song_playlist_screen.dart';
 import 'package:players_app/widgets/models/listtale_songs_model.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +33,7 @@ class AllSongs extends StatelessWidget {
             child: Text("No Songs Found"),
           );
         }
-        PageManger.songscopy = item.data!;
+        //==================future builder return container===============//
         return Container(
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -48,6 +48,8 @@ class AllSongs extends StatelessWidget {
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.all(6.0),
+
+                //=================== Song list tale==================//
                 child: ListtaleModelVidSong(
                   leading: QueryArtworkWidget(
                     keepOldArtwork: true,
@@ -81,10 +83,11 @@ class AllSongs extends StatelessWidget {
                           item.data![index].artist == "<unknown>"
                       ? "Unknown Artist"
                       : item.data![index].artist!,
+
+                //=============== favorite adding screen======================//
                   trailingOne: Consumer<FavouriteMusicDb>(
                     builder: (context, favoriteMusic, _) {
                       return IconButton(
-                        // currently working =====================================================
                         onPressed: () async {
                           if (favoriteMusic.isFavour(item.data![index])) {
                             favoriteMusic.delete(item.data![index].id);
@@ -104,6 +107,8 @@ class AllSongs extends StatelessWidget {
                       );
                     },
                   ),
+
+              //============== playlist adding screen navigtiom===============//
                   trailingTwo: PopupMenuButton(
                     onSelected: (value) {
                       Navigator.push(
@@ -127,6 +132,8 @@ class AllSongs extends StatelessWidget {
                       )
                     ],
                   ),
+
+            //======= playing music screen from playlist added songs=========//
                   onTap: () {
                     PageManger.audioPlayer.setAudioSource(
                         PageManger.songListCreating(item.data!),

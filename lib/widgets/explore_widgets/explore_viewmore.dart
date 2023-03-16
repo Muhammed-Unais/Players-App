@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:players_app/functions/songmodelcontrollers/playlistfunctions.dart';
-import 'package:players_app/functions/videodbfunctions/videodbplaylist.dart';
+import 'package:provider/provider.dart';
 
 class ExploreViewmore extends StatelessWidget {
   final String viewmoreTitile;
@@ -23,12 +23,15 @@ class ExploreViewmore extends StatelessWidget {
           viewmoreTitile,
           style: GoogleFonts.raleway(fontSize: 18, fontWeight: FontWeight.w900),
         ),
-        ValueListenableBuilder(
-          valueListenable: fromSong == true
-              ? PlaylistDbSong.texteditngcontroller
-              : PlaylistVideoDb.videoPlaylistNotifier,
+        Consumer<PlaylistDbSong>(
+        // Currentlt playlist working========================================
+                // ==============================================================
+                // ==============================================================
+          // : fromSong == true
+          //     ? PlaylistDbSong.texteditngcontroller
+          //     : PlaylistVideoDb.videoPlaylistNotifier,
           builder: (context, value, _) {
-            return value.length > 2
+            return value.texteditngcontroller.length > 2
                 ? TextButton(
                     onPressed: viewMoreAction,
                     child: Text(

@@ -1,52 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:players_app/controllers/get_all_songsfunctioms.dart';
-import 'package:players_app/functions/songmodelcontrollers/favouritedbfunctions.dart';
-import 'package:players_app/screens/music/playing_music_page.dart';
-import 'package:players_app/widgets/home%20widgets/home_songs_section.dart';
+import 'package:players_app/model/db/dbmodel.dart';
+import 'package:players_app/screens/music/playlist/song_adding_playlist.dart';
 import 'package:players_app/widgets/models/listtale_songs_model.dart';
-import 'package:provider/provider.dart';
+import '../playing_screen/playing_music_page.dart';
 
-class SongFavouriteScreen extends StatelessWidget {
-  const SongFavouriteScreen({super.key});
+class PlaylistSongsList extends StatelessWidget {
+  final int findex;
+  final Playersmodel playlist;
+  const PlaylistSongsList(
+      {super.key, required this.findex, required this.playlist});
 
   @override
   Widget build(BuildContext context) {
-    // Intializing FavouriteMusicDB========
-
-    // final favouriteMusicDb =
-    //     Provider.of<FavouriteMusicDb>(context, listen: false);
-    // if (!favouriteMusicDb.isIntialized) {
-    //   favouriteMusicDb.isIntializ(songmodel);
-    // }
+    late List<SongModel> songsPlaylist;
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text(
+          "Add Songs",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.black,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return SongAddingPlaylist(
+                  playlist: playlist,
+                );
+              },
+            ),
+          );
+        },
+      ),
       appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.black,
         title: Text(
-          "Songs Fovorite",
+          playlist.name,
           style: GoogleFonts.raleway(
               fontSize: 22, fontWeight: FontWeight.w800, color: Colors.white),
         ),
-        backgroundColor: Colors.black,
-        centerTitle: true,
       ),
-      body: Consumer<FavouriteMusicDb>(
-        // currently working ===============================================================================================
-        builder: (context, favouriteMusic, _) {
-          if (!favouriteMusic.isIntialized) {
-            favouriteMusic.isIntializ(songmodel);
-          }
-          return favouriteMusic.favouritesSongs.isEmpty
+      body: ValueListenableBuilder(
+        valueListenable: Hive.box<Playersmodel>('SongPlaylistDB').listenable(),
+        builder: (context, musics, _) {
+          print(musics.values.toList()[findex].songid);
+          // here findex is playlist folder index so in this index we have players model class.in the class we have song id int type list.here that is assaigned to songs playlist
+          songsPlaylist = listPlaylist(musics.values.toList()[findex].songid);
+          print(songsPlaylist.length);
+          return songsPlaylist.isEmpty
               ? const Center(
                   child: Text(
-                    "No Favorites",
+                    "Add Your Playlist",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 )
               : Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListView.builder(
-                    itemCount: favouriteMusic.favouritesSongs.length,
+                    itemCount: songsPlaylist.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -55,7 +72,7 @@ class SongFavouriteScreen extends StatelessWidget {
                             artworkWidth: 58,
                             artworkHeight: 58,
                             artworkFit: BoxFit.cover,
-                            id: favouriteMusic.favouritesSongs[index].id,
+                            id: songsPlaylist[index].id,
                             type: ArtworkType.AUDIO,
                             nullArtworkWidget: CircleAvatar(
                               backgroundColor: Colors.black,
@@ -76,23 +93,14 @@ class SongFavouriteScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          title: favouriteMusic
-                              .favouritesSongs[index].displayNameWOExt,
-                          subtitle: favouriteMusic
-                                          .favouritesSongs[index].artist ==
-                                      null ||
-                                  favouriteMusic
-                                          .favouritesSongs[index].artist ==
-                                      "<unknown>"
+                          title: songsPlaylist[index].displayNameWOExt,
+                          subtitle: songsPlaylist[index].artist == null ||
+                                  songsPlaylist[index].artist == "<unknown>"
                               ? "Unknown Artist"
-                              : favouriteMusic.favouritesSongs[index].artist!,
+                              : songsPlaylist[index].artist!,
                           trailingOne: IconButton(
                             onPressed: () {
-                              if (favouriteMusic.isFavour(
-                                  favouriteMusic.favouritesSongs[index])) {
-                                favouriteMusic.delete(
-                                    favouriteMusic.favouritesSongs[index].id);
-                              }
+                              playlist.deleteData(songsPlaylist[index].id);
                             },
                             icon: const Icon(
                               Icons.delete,
@@ -100,16 +108,16 @@ class SongFavouriteScreen extends StatelessWidget {
                             ),
                           ),
                           onTap: () {
+                            List<SongModel> newMusicList = [...songsPlaylist];
+                            PageManger.audioPlayer.stop();
                             PageManger.audioPlayer.setAudioSource(
-                                PageManger.songListCreating(
-                                    favouriteMusic.favouritesSongs),
+                                PageManger.songListCreating(newMusicList),
                                 initialIndex: index);
-                            Navigator.push(
-                              context,
+                            PageManger.audioPlayer.play();
+                            Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => PlayinMusicScreen(
-                                  songModelList: favouriteMusic.favouritesSongs,
-                                  count: favouriteMusic.favouritesSongs.length,
+                                builder: (ctx) => PlayinMusicScreen(
+                                  songModelList: songsPlaylist,
                                 ),
                               ),
                             );
@@ -122,5 +130,19 @@ class SongFavouriteScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  List<SongModel> listPlaylist(List<int> data) {
+    List<SongModel> plsongs = [];
+    print(PageManger.songscopy.length);
+    for (var i = 0; i < PageManger.songscopy.length; i++) {
+      for (var j = 0; j < data.length; j++) {
+        if (PageManger.songscopy[i].id == data[j]) {
+          plsongs.add(PageManger.songscopy[i]);
+        }
+      }
+    }
+    print(plsongs.length);
+    return plsongs;
   }
 }

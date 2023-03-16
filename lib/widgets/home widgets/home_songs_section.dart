@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:players_app/controllers/get_all_songsfunctioms.dart';
-import 'package:players_app/screens/music/playing_music_page.dart';
+import 'package:players_app/screens/music/playing_screen/playing_music_page.dart';
 
 List<SongModel> songmodel = [];
 
@@ -41,6 +41,7 @@ class HomeSongTileState extends State<HomeSongSection> {
             child: Text("No Songs Found"),
           );
         }
+        PageManger.songscopy = item.data!;
         songmodel.addAll(item.data!);
         return GridView.builder(
           physics: const NeverScrollableScrollPhysics(),

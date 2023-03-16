@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:players_app/functions/songmodelcontrollers/playlistfunctions.dart';
+import 'package:players_app/functions/playlist_add_and_minimize.dart';
 import 'package:players_app/model/db/dbmodel.dart';
+import 'package:provider/provider.dart';
 
-class SongAddingPlaylist extends StatefulWidget {
+class SongAddingPlaylist extends StatelessWidget {
+  const SongAddingPlaylist({super.key, required this.playlist});
   final Playersmodel playlist;
 
-  const SongAddingPlaylist({super.key, required this.playlist});
-
-  @override
-  State<SongAddingPlaylist> createState() => _SongAddingPlaylistState();
-}
-
-class _SongAddingPlaylistState extends State<SongAddingPlaylist> {
-  OnAudioQuery audioQuery = OnAudioQuery();
   @override
   Widget build(BuildContext context) {
+    OnAudioQuery audioQuery = OnAudioQuery();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -81,27 +76,33 @@ class _SongAddingPlaylistState extends State<SongAddingPlaylist> {
                           item.data![index].artist == "<unknown>"
                       ? "Unknown Artist"
                       : item.data![index].artist!),
-                  trailing: IconButton(
-                    onPressed: () {
-                      if (!widget.playlist.isValueIn(item.data![index].id)) {
-                        setState(
-                          () {
-                            songAddToPlaylistinSAPL(item.data![index]);
-                            PlaylistDbSong.texteditngcontroller
-                                .notifyListeners();
-                          },
-                        );
-                      } else {
-                        setState(
-                          () {
-                            widget.playlist.deleteData(item.data![index].id);
-                          },
-                        );
-                      }
+
+                  // Currentlt playlist working========================================
+                  // ================================================================
+                  // ==============================================================
+                  trailing: Consumer<Test>(
+                    builder: (context, test, child) {
+                      return IconButton(
+                        onPressed: () {
+                          bool isValueIn =
+                              playlist.isValueIn(item.data![index].id);
+                          if (!isValueIn) {
+                            test.add(
+                                id: item.data![index].id,
+                                playersmodel: playlist);
+                          } else {
+                            test.delete(
+                                id: item.data![index].id,
+                                playersmodel: playlist);
+                          }
+                        },
+                        icon: playlist.isValueIn(
+                          item.data![index].id,
+                        )
+                            ? const Icon(Icons.minimize)
+                            : const Icon(Icons.add),
+                      );
                     },
-                    icon: widget.playlist.isValueIn(item.data![index].id)
-                        ? const Icon(Icons.minimize)
-                        : const Icon(Icons.add),
                   ),
                 ),
               );
@@ -116,17 +117,5 @@ class _SongAddingPlaylistState extends State<SongAddingPlaylist> {
         },
       ),
     );
-  }
-
-  void songAddToPlaylistinSAPL(SongModel data) {
-    widget.playlist.add(data.id);
-    const snackbar1 = SnackBar(
-      backgroundColor: Colors.black,
-      content: Text(
-        'Song added to Playlist',
-        style: TextStyle(color: Colors.white),
-      ),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackbar1);
   }
 }

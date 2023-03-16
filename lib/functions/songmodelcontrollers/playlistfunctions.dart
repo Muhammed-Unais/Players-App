@@ -3,33 +3,35 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../../model/db/dbmodel.dart';
 
 class PlaylistDbSong extends ChangeNotifier {
-  static ValueNotifier<List<Playersmodel>> texteditngcontroller =
-      ValueNotifier([]);
+  final List<Playersmodel> _texteditngcontroller = [];
   static final songPlayListDb = Hive.box<Playersmodel>("SongPlaylistDB");
 
-  static add(Playersmodel value) async {
+  List<Playersmodel> get texteditngcontroller => _texteditngcontroller;
+
+  add(Playersmodel value) async {
     await songPlayListDb.add(value);
-    texteditngcontroller.value.add(value);
-    texteditngcontroller.notifyListeners();
+    _texteditngcontroller.add(value);
+    notifyListeners();
   }
 
-  static getAllPlaylists() {
-    texteditngcontroller.value.clear();
-    texteditngcontroller.value.addAll(songPlayListDb.values);
-    texteditngcontroller.notifyListeners();
-  }
-
-  static deletePlaylist(int index) async {
+  deletePlaylist(int index) async {
     await songPlayListDb.deleteAt(index);
+    notifyListeners();
     getAllPlaylists();
   }
 
-  static editPlaylist(Playersmodel value, int index) async {
+  editPlaylist(Playersmodel value, int index) async {
     await songPlayListDb.putAt(index, value);
+    notifyListeners();
     getAllPlaylists();
   }
 
-  static bool checkSameName(Playersmodel value) {
+  getAllPlaylists() {
+    _texteditngcontroller.clear();
+    _texteditngcontroller.addAll(songPlayListDb.values);
+  }
+
+  bool checkSameName(Playersmodel value) {
     final dates = songPlayListDb.values.map(
       (e) => e.name.trim(),
     );

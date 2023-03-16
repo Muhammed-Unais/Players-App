@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:players_app/functions/songmodelcontrollers/playlistfunctions.dart';
 import 'package:players_app/functions/videodbfunctions/videodbplaylist.dart';
-import 'package:players_app/screens/music/playlist_screen.dart';
-import 'package:players_app/screens/music/songfavourite_listpage.dart';
+import 'package:players_app/screens/music/playlist/song_playlist_screen.dart';
+import 'package:players_app/screens/music/favorite_songs/songfavourite_listpage.dart';
 import 'package:players_app/screens/videos/playlist_video_screen.dart';
 import 'package:players_app/screens/videos/video_favorite_screen.dart';
 import 'package:players_app/widgets/home%20widgets/home_appbar.dart';
@@ -11,6 +11,7 @@ import 'package:players_app/widgets/home%20widgets/home_songs_section.dart';
 import 'package:players_app/widgets/home%20widgets/home_video.dart';
 import 'package:players_app/screens/all_songs_and_videos.dart';
 import 'package:players_app/widgets/home%20widgets/home_viewmore.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,7 +24,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    PlaylistDbSong.getAllPlaylists();
+    // Currentlt playlist working========================================
+    // ================================================================
+    // ==============================================================
     PlaylistVideoDb.getAllPlaylistVideos();
   }
 
@@ -60,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final hight = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    Provider.of<PlaylistDbSong>(context,listen: false).getAllPlaylists();
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: const HomeAppBar(),
@@ -87,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                     child: Container(
                       height: 36,
-                      width: width /100*40,
+                      width: width / 100 * 40,
                       margin: const EdgeInsets.only(right: 10),
                       padding: const EdgeInsets.all(0),
                       decoration: BoxDecoration(

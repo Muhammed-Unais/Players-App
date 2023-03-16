@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:players_app/controllers/access_folder/access_video.dart';
+import 'package:players_app/functions/new_playlist.dart';
+import 'package:players_app/functions/video_add_to_playlist.dart';
 import 'package:players_app/model/db/videodb_model.dart';
-import 'package:players_app/screens/music/playlist_screen.dart';
 import 'package:players_app/screens/videos/videos_playlist_videos_list.dart';
 import 'package:players_app/widgets/explore_widgets/favourites_cards.dart';
+import 'package:players_app/widgets/playlist_scree.dart/playlist_popup.dart';
 
 class VideoPlaylistScreen extends StatelessWidget {
   final int? vindex;
@@ -104,31 +106,5 @@ class VideoPlaylistScreen extends StatelessWidget {
         },
       ),
     );
-  }
-
-  void videoAddToPlaylis(
-      String path, PlayersVideoPlaylistModel viddatas, context) {
-    if (!viddatas.isValueIn(path)) {
-      viddatas.add(path);
-      const vaddSnackbar1 = SnackBar(
-        duration: Duration(milliseconds: 650),
-        backgroundColor: Colors.black,
-        content: Text(
-          'Video added to Playlist',
-          style: TextStyle(color: Colors.white),
-        ),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(vaddSnackbar1);
-    } else {
-      const vaddSnackbar2 = SnackBar(
-        duration: Duration(milliseconds: 650),
-        backgroundColor: Colors.black,
-        content: Text(
-          'Video Already Exisit',
-          style: TextStyle(color: Colors.red),
-        ),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(vaddSnackbar2);
-    }
   }
 }
