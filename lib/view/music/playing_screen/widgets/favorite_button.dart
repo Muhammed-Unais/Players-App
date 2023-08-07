@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:players_app/controllers/functions/songmodelcontrollers/favouritedbfunctions.dart';
+import 'package:players_app/controllers/song_folder/favorite_songdb.dart';
 import 'package:players_app/view/widgets/playing%20music%20page/play_music_buttons.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +14,7 @@ class FavoriteButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return PlaySongButtons(
       // currently working ============================================================================================
-      icons: Consumer<FavouriteMusicDb>(
+      icons: Consumer<FavouriteSongDb>(
         builder: (context, favouriteMusic, _) {
           return IconButton(
             onPressed: () {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:players_app/controllers/functions/playlist_add_edit_delete.dart/new_playlist.dart';
+import 'package:players_app/controllers/song_and_video_playlistfolder/new_or_edit_playlist.dart';
 
 class SpeedDials extends StatelessWidget {
   const SpeedDials({super.key});
@@ -18,7 +18,7 @@ class SpeedDials extends StatelessWidget {
             Icons.video_collection,
           ),
           onTap: () {
-             newPlaylistAdd(
+             NewOrEditPlaylist.newPlaylistAdd(
               isSong: false,
               isCreate: true,
               titile: "Create Playlist",
@@ -31,7 +31,7 @@ class SpeedDials extends StatelessWidget {
             Icons.library_music,
           ),
           onTap: () {
-             newPlaylistAdd(
+             NewOrEditPlaylist.newPlaylistAdd(
               isSong: true,
               isCreate: true,
               titile: "Create Playlist",

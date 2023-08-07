@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:players_app/controllers/get_all_songsfunctioms.dart';
-import 'package:players_app/controllers/functions/songmodelcontrollers/favouritedbfunctions.dart';
+import 'package:players_app/controllers/song_folder/page_manager.dart';
+import 'package:players_app/controllers/song_folder/favorite_songdb.dart';
 import 'package:players_app/view/music/playing_screen/playing_music_page.dart';
 import 'package:players_app/view/widgets/home%20widgets/home_songs_section.dart';
-import 'package:players_app/view/widgets/models/listtale_songs_model.dart';
+import 'package:players_app/view/widgets/model_widget/listtale_songs_model.dart';
 import 'package:provider/provider.dart';
 
 class SongFavouriteScreen extends StatelessWidget {
@@ -23,7 +23,7 @@ class SongFavouriteScreen extends StatelessWidget {
         backgroundColor: Colors.black,
         centerTitle: true,
       ),
-      body: Consumer<FavouriteMusicDb>(
+      body: Consumer<FavouriteSongDb>(
         builder: (context, favouriteMusic, _) {
           if (!favouriteMusic.isIntialized) {
             favouriteMusic.isIntializ(songmodel);

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:players_app/view/music/song_search.dart/song_search_songs.dart';
-import 'package:players_app/view/widgets/allSongs&Videos%20Widgets/allsongs.dart';
-import 'package:players_app/view/widgets/allSongs&Videos%20Widgets/allvideos.dart';
-import 'package:players_app/view/widgets/allSongs&Videos%20Widgets/tabbar_allsongsandvideos.dart';
+
+import 'package:players_app/view/widgets/allsongs_and_videos%20Widgets/allsongs.dart';
+import 'package:players_app/view/widgets/allsongs_and_videos%20Widgets/allvideos.dart';
+import 'package:players_app/view/widgets/allsongs_and_videos%20Widgets/tabbar_allsongsandvideos.dart';
 
 class AllSongsAndVideosScreen extends StatefulWidget {
   final bool recheck;
@@ -105,7 +106,7 @@ class _AllSongsAndVideosScreenState extends State<AllSongsAndVideosScreen>
                             MaterialPageRoute(
                               builder: (context) {
                                 return SongSearchScreen(
-                                  songOrVideoCheck: myIndex == 0 ? true : false,
+                                  isSong: myIndex == 0 ? true : false,
                                 );
                               },
                             ),

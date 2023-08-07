@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:players_app/controllers/get_all_songsfunctioms.dart';
-import 'package:players_app/controllers/functions/resetpp.dart';
+import 'package:players_app/controllers/song_folder/page_manager.dart';
+import 'package:players_app/controllers/resetpp.dart';
 import 'package:players_app/model/settingsmodel.dart';
 import 'package:players_app/view/genaral_screens.dart/splashscreen.dart';
 

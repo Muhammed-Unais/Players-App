@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:players_app/controllers/functions/songmodelcontrollers/playlistfunctions.dart';
-import 'package:players_app/controllers/functions/videodbfunctions/videodbplaylist.dart';
+import 'package:players_app/controllers/song_folder/playlist_db_song.dart';
+import 'package:players_app/controllers/video_folder/videodbplaylist.dart';
+import 'package:players_app/view/genaral_screens.dart/all_songs_and_videos.dart';
 import 'package:players_app/view/music/playlist/song_playlist_screen.dart';
 import 'package:players_app/view/music/favorite_songs/songfavourite_listpage.dart';
-import 'package:players_app/view/videos/playlist_video_screen.dart';
-import 'package:players_app/view/videos/video_favorite_screen.dart';
+import 'package:players_app/view/videos/playlist_videos/playlist_video_screen.dart';
+import 'package:players_app/view/videos/favorite_videos/video_favorite_screen.dart';
 import 'package:players_app/view/widgets/home%20widgets/home_appbar.dart';
 import 'package:players_app/view/widgets/home%20widgets/home_songs_section.dart';
 import 'package:players_app/view/widgets/home%20widgets/home_video.dart';
-import 'package:players_app/view/genaral_screens.dart/all_songs_and_videos.dart';
 import 'package:players_app/view/widgets/home%20widgets/home_viewmore.dart';
 import 'package:provider/provider.dart';
 
@@ -21,21 +21,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-    // Currentlt playlist working========================================
-    // ================================================================
-    // ==============================================================
-    PlaylistVideoDb.getAllPlaylistVideos();
-  }
-
-  @override
-  void dispose() {
-    // audioPlayer.stop();
-    super.dispose();
-  }
-
+  
   List items = [
     "Songs Favorite",
     "Video Favorite",
@@ -64,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final hight = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     Provider.of<PlaylistDbSong>(context,listen: false).getAllPlaylists();
+    Provider.of<PlaylistVideoDb>(context,listen: false).getAllPlaylistVideos();
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: const HomeAppBar(),

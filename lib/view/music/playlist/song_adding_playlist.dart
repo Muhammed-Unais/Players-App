@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:players_app/controllers/functions/son_add_delete_icon_change.dart/playlist_add_and_minimize.dart';
+import 'package:players_app/view/music/playlist/controller/playlist_add_and_minimize.dart';
 import 'package:players_app/model/db/dbmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -76,11 +76,7 @@ class SongAddingPlaylist extends StatelessWidget {
                           item.data![index].artist == "<unknown>"
                       ? "Unknown Artist"
                       : item.data![index].artist!),
-
-                  // Currentlt playlist working========================================
-                  // ================================================================
-                  // ==============================================================
-                  trailing: Consumer<Test>(
+                  trailing: Consumer<SongAddingpage>(
                     builder: (context, test, child) {
                       return IconButton(
                         onPressed: () {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:players_app/controllers/get_all_songsfunctioms.dart';
+import 'package:players_app/controllers/song_folder/page_manager.dart';
 
 class MusicPlaying extends ChangeNotifier {
   int _large = 0;

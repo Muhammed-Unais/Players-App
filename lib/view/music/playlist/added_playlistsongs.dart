@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:players_app/controllers/get_all_songsfunctioms.dart';
+import 'package:players_app/controllers/song_folder/page_manager.dart';
 import 'package:players_app/model/db/dbmodel.dart';
 import 'package:players_app/view/music/playlist/song_adding_playlist.dart';
-import 'package:players_app/view/widgets/models/listtale_songs_model.dart';
+import 'package:players_app/view/widgets/model_widget/listtale_songs_model.dart';
 import '../playing_screen/playing_music_page.dart';
 
 class PlaylistSongsList extends StatelessWidget {

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:players_app/controllers/functions/songmodelcontrollers/playlistfunctions.dart';
-import 'package:players_app/controllers/functions/videodbfunctions/videodbplaylist.dart';
+import 'package:players_app/controllers/song_folder/playlist_db_song.dart';
+import 'package:players_app/controllers/video_folder/video_favorite_db.dart';
+import 'package:players_app/controllers/video_folder/videodbplaylist.dart';
 import 'package:players_app/view/music/playlist/added_playlistsongs.dart';
 import 'package:players_app/view/music/favorite_songs/songfavourite_listpage.dart';
 import 'package:players_app/view/music/playlist/song_playlist_screen.dart';
-import 'package:players_app/view/videos/playlist_video_screen.dart';
-import 'package:players_app/view/videos/video_favorite_screen.dart';
-import 'package:players_app/view/videos/videos_playlist_videos_list.dart';
+import 'package:players_app/view/videos/playlist_videos/playlist_video_screen.dart';
+import 'package:players_app/view/videos/favorite_videos/video_favorite_screen.dart';
+import 'package:players_app/view/videos/playlist_videos/videos_playlist_videos_list.dart';
 import 'package:players_app/view/widgets/explore_widgets/explore_viewmore.dart';
 import 'package:players_app/view/widgets/explore_widgets/favourites_cards.dart';
 import 'package:players_app/view/widgets/explore_widgets/floating_action_button.dart';
@@ -19,6 +20,7 @@ class FavouritesAndPlaylistScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<VideoFavoriteDb>(context).favoriteInitialize();
     return Scaffold(
       // ============FloatingAction Buttonfor Explore Page Playlist Adding==========
       floatingActionButton: const SpeedDials(),
@@ -128,9 +130,6 @@ class FavouritesAndPlaylistScreen extends StatelessWidget {
 
               // =====================Song PlayList Part======================
               Expanded(
-                // Currentlt playlist working========================================
-                // ================================================================
-                // ==============================================================
                 child: Consumer<PlaylistDbSong>(
                     builder: (context, playlistDbSong, __) {
                   playlistDbSong.getAllPlaylists();
@@ -221,10 +220,9 @@ class FavouritesAndPlaylistScreen extends StatelessWidget {
 
               // =====================Video PlayList Part======================
               Expanded(
-                child: ValueListenableBuilder(
-                  valueListenable: PlaylistVideoDb.videoPlaylistNotifier,
+                child: Consumer<PlaylistVideoDb>(
                   builder: (context, value, _) {
-                    return value.isEmpty
+                    return value.videoPlaylistNotifier.isEmpty
                         ? const Center(
                             child: Text(
                               "Create Your Video Playlist",
@@ -236,9 +234,9 @@ class FavouritesAndPlaylistScreen extends StatelessWidget {
                           )
                         : ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: value.length > 2 ? 2 : value.length,
+                            itemCount: value.videoPlaylistNotifier.length > 2 ? 2 : value.videoPlaylisdb.length,
                             itemBuilder: (context, index) {
-                              final editedVideosExisist = value[index].path;
+                              final editedVideosExisist = value.videoPlaylistNotifier[index].path;
                               return Padding(
                                 padding: const EdgeInsets.only(
                                     bottom: 10, right: 20),
@@ -251,7 +249,7 @@ class FavouritesAndPlaylistScreen extends StatelessWidget {
                                           return VideosPlaylistVideoList(
                                             findex: index,
                                             videoPlaylistFoldermodel:
-                                                value[index],
+                                                value.videoPlaylistNotifier[index],
                                           );
                                         },
                                       ),
@@ -262,7 +260,7 @@ class FavouritesAndPlaylistScreen extends StatelessWidget {
                                         Icons.playlist_add_check_outlined,
                                     trailingicons: Icons.more_vert,
                                     change: true,
-                                    cardtext: value[index].name,
+                                    cardtext: value.videoPlaylistNotifier[index].name,
                                     height:
                                         MediaQuery.of(context).size.height / 10,
                                     width: MediaQuery.of(context).size.width,

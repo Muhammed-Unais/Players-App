@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:players_app/controllers/functions/playlist_add_edit_delete.dart/new_playlist.dart';
-import 'package:players_app/controllers/functions/playlist_add_edit_delete.dart/song_addto_playlist.dart';
-import 'package:players_app/controllers/functions/songmodelcontrollers/playlistfunctions.dart';
+import 'package:players_app/controllers/song_and_video_playlistfolder/new_or_edit_playlist.dart';
+import 'package:players_app/controllers/song_and_video_playlistfolder/song_addto_playlist.dart';
+import 'package:players_app/controllers/song_folder/playlist_db_song.dart';
 import 'package:players_app/view/music/playlist/added_playlistsongs.dart';
 import 'package:players_app/view/widgets/explore_widgets/favourites_cards.dart';
 import 'package:players_app/view/widgets/home%20widgets/home_songs_section.dart';
@@ -43,7 +43,7 @@ class SongPlaylistScreen extends StatelessWidget {
         child: const Icon(Icons.playlist_add),
         onPressed: () {
           // ===========Playlist Adding Dialougebox and DB adding Function==========
-          newPlaylistAdd(
+          NewOrEditPlaylist.newPlaylistAdd(
               isSong: true,
               isCreate: true,
               titile: "Create a Playlist",
@@ -92,7 +92,7 @@ class SongPlaylistScreen extends StatelessWidget {
                                     },
                                   ),
                                 )
-                              : songAddToPlaylist(
+                              : SongAddtoPlaylist.songAddToPlaylist(
                                   songmodel[findex!], datas, context);
                         },
                         child: FavouritesCards(

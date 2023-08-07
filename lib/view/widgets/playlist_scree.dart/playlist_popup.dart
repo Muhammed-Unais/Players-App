@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:players_app/controllers/functions/playlist_add_edit_delete.dart/new_playlist.dart';
-import 'package:players_app/controllers/functions/playlist_add_edit_delete.dart/show_dialougeplaylist_deleteboth.dart';
+import 'package:players_app/controllers/song_and_video_playlistfolder/new_or_edit_playlist.dart';
+import 'package:players_app/controllers/song_and_video_playlistfolder/song_video_delete_inplaylist.dart';
 
 Widget editAndDeleteDialoge({ctx, index, required bool isforSong, test}) {
   return PopupMenuButton(
@@ -10,7 +10,7 @@ Widget editAndDeleteDialoge({ctx, index, required bool isforSong, test}) {
     color: Colors.white,
     onSelected: (value) {
       if (value == 1) {
-        newPlaylistAdd(
+        NewOrEditPlaylist.newPlaylistAdd(
             test: test,
             isSong: isforSong,
             isCreate: false,
@@ -19,7 +19,7 @@ Widget editAndDeleteDialoge({ctx, index, required bool isforSong, test}) {
             index: index);
       }
       if (value == 2) {
-        showDialougeForDelete(ctx, isforSong, index);
+        SongVideoDeleteFromPlaylist.showDialougeForDelete(ctx, isforSong, index);
       }
     },
     itemBuilder: (ctx) {
