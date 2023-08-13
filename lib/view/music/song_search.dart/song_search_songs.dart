@@ -29,6 +29,30 @@ class _SongSearchScreenState extends State<SongSearchScreen> {
     super.initState();
   }
 
+  videoLoading() {
+    allVideos = accessVideosPath;
+    foundVideos.addAll(allVideos);
+  }
+
+  searchVideo(String enteredKeyWords) {
+    List result = [];
+    if (enteredKeyWords.isEmpty) {
+      result = allVideos;
+    } else {
+      result = allVideos
+          .where((element) => element
+              .toString()
+              .split('/')
+              .last
+              .toLowerCase()
+              .contains(enteredKeyWords.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      foundVideos = result;
+    });
+  }
+
   OnAudioQuery onAudioQuery = OnAudioQuery();
   AudioPlayer audioPlayer = AudioPlayer();
   List foundVideos = [];
@@ -102,6 +126,7 @@ class _SongSearchScreenState extends State<SongSearchScreen> {
                               MaterialPageRoute(
                                 builder: (context) {
                                   return PlayinMusicScreen(
+                                    index: index,
                                     songModelList: searchCntrl.foundSongs,
                                   );
                                 },
@@ -213,29 +238,5 @@ class _SongSearchScreenState extends State<SongSearchScreen> {
               ),
       ),
     );
-  }
-
-  videoLoading() {
-    allVideos = accessVideosPath;
-    foundVideos.addAll(allVideos);
-  }
-
-  searchVideo(String enteredKeyWords) {
-    List result = [];
-    if (enteredKeyWords.isEmpty) {
-      result = allVideos;
-    } else {
-      result = allVideos
-          .where((element) => element
-              .toString()
-              .split('/')
-              .last
-              .toLowerCase()
-              .contains(enteredKeyWords.toLowerCase()))
-          .toList();
-    }
-    setState(() {
-      foundVideos = result;
-    });
   }
 }

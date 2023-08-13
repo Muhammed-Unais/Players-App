@@ -22,19 +22,24 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(
       const Duration(seconds: 5),
     );
+    navigateToBottomNavbar();
+  }
+
+  void navigateToBottomNavbar() {
     Navigator.pushReplacementNamed(context, 'bottomNavbar');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: SvgPicture.asset("assets/images/Group 3.svg")),
+      body: Center(
+        child: SvgPicture.asset("assets/images/Group 3.svg"),
+      ),
     );
   }
 
   @override
   void dispose() {
     super.dispose();
-    // splashFetch();
   }
 }

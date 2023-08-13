@@ -68,14 +68,9 @@ class MusicPlaying extends ChangeNotifier {
     });
   }
 
-  // ==========//
-  // void updateCurrentPlayingSongDetails(
-  //     {required int index,
-  //     required List<SongModel> songModelList,
-  //     required int currentIndex}) {
-  //   if (songModelList.isNotEmpty) {
-  //     _currentIndex = index;
-  //   }
-  //   notifyListeners();
-  // }
+  @override
+  void dispose() {
+    PageManger.dispose();
+    super.dispose();
+  }
 }

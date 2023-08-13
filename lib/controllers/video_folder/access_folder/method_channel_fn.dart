@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/services.dart';
 
@@ -11,7 +10,6 @@ class AccessFilesFromStorage {
       final res = value as List<Object?>;
       onSuccess(res.map((e) => e.toString()).toList());
     }).onError((error, stackTrace) {
-      log(error.toString());
       onError(error.toString());
     });
   }

@@ -24,19 +24,17 @@ class FavouritesAndPlaylistScreen extends StatelessWidget {
     return Scaffold(
       // ============FloatingAction Buttonfor Explore Page Playlist Adding==========
       floatingActionButton: const SpeedDials(),
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(100),
-        child: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: Padding(
-            padding: const EdgeInsets.only(left: 4),
-            child: Text(
-              "Players App",
-              style: GoogleFonts.raleway(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.black),
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        title: Padding(
+          padding: const EdgeInsets.only(left: 4),
+          child: Text(
+            "FAVORITE&PLAYLISTS",
+            style: GoogleFonts.raleway(
+              fontSize: 22,
+              fontWeight: FontWeight.w800,
+              color: Colors.white,
             ),
           ),
         ),
@@ -51,6 +49,9 @@ class FavouritesAndPlaylistScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(
+                height: 20,
+              ),
               // ==============Favorite Cards===========
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -234,9 +235,12 @@ class FavouritesAndPlaylistScreen extends StatelessWidget {
                           )
                         : ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: value.videoPlaylistNotifier.length > 2 ? 2 : value.videoPlaylisdb.length,
+                            itemCount: value.videoPlaylistNotifier.length > 2
+                                ? 2
+                                : value.videoPlaylisdb.length,
                             itemBuilder: (context, index) {
-                              final editedVideosExisist = value.videoPlaylistNotifier[index].path;
+                              final editedVideosExisist =
+                                  value.videoPlaylistNotifier[index].path;
                               return Padding(
                                 padding: const EdgeInsets.only(
                                     bottom: 10, right: 20),
@@ -248,8 +252,8 @@ class FavouritesAndPlaylistScreen extends StatelessWidget {
                                         builder: (context) {
                                           return VideosPlaylistVideoList(
                                             findex: index,
-                                            videoPlaylistFoldermodel:
-                                                value.videoPlaylistNotifier[index],
+                                            videoPlaylistFoldermodel: value
+                                                .videoPlaylistNotifier[index],
                                           );
                                         },
                                       ),
@@ -260,7 +264,8 @@ class FavouritesAndPlaylistScreen extends StatelessWidget {
                                         Icons.playlist_add_check_outlined,
                                     trailingicons: Icons.more_vert,
                                     change: true,
-                                    cardtext: value.videoPlaylistNotifier[index].name,
+                                    cardtext:
+                                        value.videoPlaylistNotifier[index].name,
                                     height:
                                         MediaQuery.of(context).size.height / 10,
                                     width: MediaQuery.of(context).size.width,

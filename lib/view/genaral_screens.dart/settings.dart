@@ -19,12 +19,12 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.black,
         elevation: 0,
         title: Text(
           "SETTINGS",
           style: GoogleFonts.raleway(
-              fontSize: 22, fontWeight: FontWeight.w800, color: Colors.black),
+              fontSize: 22, fontWeight: FontWeight.w800, color: Colors.white),
         ),
       ),
       body: Padding(
@@ -172,7 +172,7 @@ class ShowDialouge extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            ResetApp.resetApp();
+             ResetApp.resetApp();
             PageManger.audioPlayer.stop();
             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
               builder: (context) {

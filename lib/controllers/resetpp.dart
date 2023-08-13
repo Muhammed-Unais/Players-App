@@ -2,7 +2,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:players_app/model/db/dbmodel.dart';
 import 'package:players_app/model/db/videodb_model.dart';
 
-
 class ResetApp {
   static Future resetApp() async {
     final musicDb = Hive.box<int>('FavoriteDB');
@@ -10,6 +9,7 @@ class ResetApp {
     final videoDb = Hive.box<String>('VideoFavoriteDB');
     final videoPlaylisdb =
         Hive.box<PlayersVideoPlaylistModel>('VideoplaylistDB');
+
     await videoDb.clear();
     await songPlayListDb.clear();
     await videoPlaylisdb.clear();

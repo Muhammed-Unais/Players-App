@@ -1,30 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:iconly/iconly.dart';
 import 'package:players_app/view/genaral_screens.dart/explore.dart';
 import 'package:players_app/view/genaral_screens.dart/home.dart';
-import 'package:players_app/view/genaral_screens.dart/settings.dart';
 import 'package:players_app/view/genaral_screens.dart/all_songs_and_videos.dart';
 
-class HomeBottomNavBar extends StatefulWidget {
-  const HomeBottomNavBar({
-    Key? key,
-  }) : super(key: key);
+class BottomNavBar extends StatefulWidget {
+  const BottomNavBar({Key? key}) : super(key: key);
 
   @override
-  State<HomeBottomNavBar> createState() => _HomeBottomNavBarState();
+  State<BottomNavBar> createState() => _BottomNavBarState();
 }
 
-class _HomeBottomNavBarState extends State<HomeBottomNavBar> {
-  @override
-  void dispose() {
-    // audioPlayer.dispose();
-    super.dispose();
-  }
+class _BottomNavBarState extends State<BottomNavBar> {
 
-  List screens = [
+  List<dynamic> screens = [
     const HomeScreen(),
-    const AllSongsAndVideosScreen(recheck: false,index: 0,),
+    const AllSongsAndVideosScreen(
+      recheck: false,
+      index: 0,
+    ),
     const FavouritesAndPlaylistScreen(),
-    const SettingsScreen(),
   ];
 
   int currentIndex = 0;
@@ -34,13 +29,15 @@ class _HomeBottomNavBarState extends State<HomeBottomNavBar> {
     return Scaffold(
       body: screens.elementAt(currentIndex),
       bottomNavigationBar: SizedBox(
-        height: 80,
+        height: 60,
         child: BottomNavigationBar(
-          backgroundColor:  Colors.white,
+          backgroundColor: Colors.white,
           elevation: 10,
-          onTap: (index) => setState(() {
-            currentIndex = index;
-          },),
+          onTap: (index) => setState(
+            () {
+              currentIndex = index;
+            },
+          ),
           showSelectedLabels: false,
           showUnselectedLabels: false,
           selectedItemColor: Colors.black,
@@ -53,18 +50,14 @@ class _HomeBottomNavBarState extends State<HomeBottomNavBar> {
               label: "Home",
             ),
             BottomNavigationBarItem(
-              activeIcon: Icon(Icons.folder),
-              icon: Icon(Icons.folder_outlined),
+              activeIcon: Icon(IconlyBold.folder),
+              icon: Icon(IconlyBold.folder),
               label: "Media",
             ),
             BottomNavigationBarItem(
               activeIcon: Icon(Icons.explore),
-              icon: Icon(Icons.explore_outlined),
+              icon: Icon(Icons.explore),
               label: "Favorites",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: "Settings",
             ),
           ],
         ),

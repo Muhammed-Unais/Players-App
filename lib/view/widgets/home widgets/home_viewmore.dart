@@ -9,7 +9,7 @@ class HomeViewmore extends StatelessWidget {
     super.key,
     required this.homeViewmoreTitile,
     required this.homeViewMoreAction,
-    this.homefromSong, 
+    this.homefromSong,
   });
 
   @override
@@ -19,13 +19,17 @@ class HomeViewmore extends StatelessWidget {
       children: [
         Text(
           homeViewmoreTitile,
-          style: GoogleFonts.raleway(fontSize: 18, fontWeight: FontWeight.w900),
+          style: GoogleFonts.raleway(fontSize: 16, fontWeight: FontWeight.w800),
         ),
         TextButton(
           onPressed: homeViewMoreAction,
-          child: Text("View More",
+          child: Text(
+            "View More",
             style: GoogleFonts.raleway(
-                fontSize: 13, fontWeight: FontWeight.w700, color: Colors.black),
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
+            ),
           ),
         ),
       ],

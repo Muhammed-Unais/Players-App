@@ -15,7 +15,6 @@ class PlaylistVideoDb extends ChangeNotifier {
     _videoPlaylistNotifier.add(value);
     notifyListeners();
   }
-
   getAllPlaylistVideos() {
     _videoPlaylistNotifier.clear();
     _videoPlaylistNotifier.addAll(videoPlaylisdb.values);

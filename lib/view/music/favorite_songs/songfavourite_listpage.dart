@@ -100,6 +100,7 @@ class SongFavouriteScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => PlayinMusicScreen(
+                                  index: index,
                                   songModelList: favouriteMusic.favouritesSongs,
                                   count: favouriteMusic.favouritesSongs.length,
                                 ),

@@ -39,11 +39,13 @@ class FavouriteSongDb extends ChangeNotifier {
     }
     final Map<dynamic, dynamic> favourmap = musicDb.toMap();
     favourmap.forEach((key, value) {
+
       if (value == id) {
         deletekey = key;
       }
+
     });
-    musicDb.delete(deletekey);
+    await musicDb.delete(deletekey);
     _favouritesSongs.removeWhere((song) => song.id == id);
     notifyListeners();
   }

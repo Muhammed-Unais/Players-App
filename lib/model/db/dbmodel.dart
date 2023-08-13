@@ -10,6 +10,7 @@ class Playersmodel extends HiveObject with ChangeNotifier {
   @HiveField(1)
   List<int> songid;
 
+
   add(int id) async {
     songid.add(id);
     save();
@@ -25,5 +26,5 @@ class Playersmodel extends HiveObject with ChangeNotifier {
     return songid.contains(id);
   }
 
-  Playersmodel({required this.name, required this.songid});
+  Playersmodel({required this.name, required this.songid,});
 }

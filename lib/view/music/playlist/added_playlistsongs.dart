@@ -115,6 +115,7 @@ class PlaylistSongsList extends StatelessWidget {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (ctx) => PlayinMusicScreen(
+                                  index: index,
                                   songModelList: songsPlaylist,
                                 ),
                               ),

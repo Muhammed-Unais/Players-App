@@ -11,7 +11,6 @@ class VideoFavoriteDb extends ChangeNotifier {
   List<PlayersVideoFavoriteModel> get videoFavoriteDb => _videoFavoriteDb;
 
   void intialize(PlayersVideoFavoriteModel value) {
-    print("===============");
     // _videoFavoriteDb.clear();
     if (isVideoFavor(value)) {
       _videoFavoriteDb.add(value);
@@ -51,7 +50,6 @@ class VideoFavoriteDb extends ChangeNotifier {
 
   favoriteInitialize() {
     if (!isIntialized) {
-      print(accessVideosPath.length);
       for (int i = 0; i < accessVideosPath.length; i++) {
         intialize(
           PlayersVideoFavoriteModel(

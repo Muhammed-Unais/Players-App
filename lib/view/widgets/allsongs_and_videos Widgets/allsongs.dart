@@ -12,7 +12,6 @@ class AllSongs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // defining AudioQuery====
     OnAudioQuery audioQuery = OnAudioQuery();
     return FutureBuilder(
       future: audioQuery.querySongs(
@@ -84,7 +83,7 @@ class AllSongs extends StatelessWidget {
                       ? "Unknown Artist"
                       : item.data![index].artist!,
 
-                //=============== favorite adding screen======================//
+                  //=============== favorite adding screen======================//
                   trailingOne: Consumer<FavouriteSongDb>(
                     builder: (context, favoriteMusic, _) {
                       return IconButton(
@@ -108,7 +107,7 @@ class AllSongs extends StatelessWidget {
                     },
                   ),
 
-              //============== playlist adding screen navigtiom===============//
+                  //============== playlist adding screen navigtiom===============//
                   trailingTwo: PopupMenuButton(
                     onSelected: (value) {
                       Navigator.push(
@@ -125,15 +124,14 @@ class AllSongs extends StatelessWidget {
                       );
                     },
                     itemBuilder: (context) => [
-                      PopupMenuItem(
+                      const PopupMenuItem(
                         value: 1,
-                        child: const Text("Add PlayList"),
-                        onTap: () {},
+                        child: Text("Add PlayList"),
                       )
                     ],
                   ),
 
-            //======= playing music screen from playlist added songs=========//
+                  //======= playing music screen from playlist added songs=========//
                   onTap: () {
                     PageManger.audioPlayer.setAudioSource(
                         PageManger.songListCreating(item.data!),
@@ -142,6 +140,7 @@ class AllSongs extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => PlayinMusicScreen(
+                          index: index,
                           songModelList: item.data!,
                           count: item.data!.length,
                         ),

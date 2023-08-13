@@ -1,6 +1,8 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:on_audio_query/on_audio_query.dart';
+import 'package:players_app/controllers/song_folder/recently_played_controller.dart';
 import 'package:players_app/view/music/playing_screen/controllers/music_playing_control.dart';
 import 'package:players_app/view/music/playing_screen/widgets/favorite_button.dart';
 import 'package:players_app/view/music/playing_screen/widgets/next_button.dart';
@@ -12,17 +14,43 @@ import 'package:players_app/view/music/playing_screen/widgets/slider_bar.dart';
 import 'package:players_app/view/widgets/playing%20music%20page/playing_mu_circleavtar.dart';
 import 'package:provider/provider.dart';
 
-class PlayinMusicScreen extends StatelessWidget {
+class PlayinMusicScreen extends StatefulWidget {
   const PlayinMusicScreen(
-      {super.key, required this.songModelList, this.count = 0});
+      {super.key,
+      required this.songModelList,
+      this.count = 0,
+      required this.index});
+
   final List<SongModel> songModelList;
   final int count;
+  final int index;
+
   @override
-  Widget build(BuildContext context) {
+  State<PlayinMusicScreen> createState() => _PlayinMusicScreenState();
+}
+
+class _PlayinMusicScreenState extends State<PlayinMusicScreen> {
+  @override
+  void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<MusicPlaying>(context, listen: false)
-          .initState(songModelList, count);
+          .initState(widget.songModelList, widget.count);
+      addToRecentSongs();
     });
+
+    super.initState();
+  }
+
+  void addToRecentSongs() {
+    log("addToRecentSongsCalled");
+    context.read<RecentlyPlayedSongsController>().addToRecentSongs(
+        songsId: widget.songModelList[widget.index].id,
+        timeStamp: DateTime.now().toUtc().millisecondsSinceEpoch);
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -37,9 +65,10 @@ class PlayinMusicScreen extends StatelessWidget {
         title: Text(
           "NOW PLAYING",
           style: GoogleFonts.roboto(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: Colors.grey.shade600),
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: Colors.grey.shade600,
+          ),
         ),
         centerTitle: true,
       ),
@@ -47,7 +76,7 @@ class PlayinMusicScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Consumer<MusicPlaying>(builder: (context, musicPlaying, _) {
-          final songsModel = songModelList[musicPlaying.currentIndex];
+          final songsModel = widget.songModelList[musicPlaying.currentIndex];
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -55,9 +84,7 @@ class PlayinMusicScreen extends StatelessWidget {
                 height: 30,
               ),
               // ==============Circle Avatar===============
-              PlayinMusicCircleAvatar(
-                songs: songsModel
-              ),
+              PlayinMusicCircleAvatar(songs: songsModel),
               const SizedBox(
                 height: 20,
               ),
@@ -80,14 +107,14 @@ class PlayinMusicScreen extends StatelessWidget {
               Text(
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
-                songsModel.artist.toString() ==
-                        "<unknown>"
+                songsModel.artist.toString() == "<unknown>"
                     ? "Unknown Artist"
                     : songsModel.artist.toString(),
                 style: GoogleFonts.roboto(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
               ),
               const SizedBox(
                 height: 50,
@@ -134,7 +161,6 @@ class PlayinMusicScreen extends StatelessWidget {
               const SizedBox(
                 height: 30,
               ),
-              // =============Repeat&Shuffle,favorite=================
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -143,7 +169,7 @@ class PlayinMusicScreen extends StatelessWidget {
                   const RepeatButton(),
                   // ===================Favorite Button======================
                   FavoriteButton(
-                    songModelList: songModelList,
+                    songModelList: widget.songModelList,
                     currentIndex: musicPlaying.currentIndex,
                   )
                 ],
