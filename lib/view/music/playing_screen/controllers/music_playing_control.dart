@@ -38,14 +38,13 @@ class MusicPlaying extends ChangeNotifier {
   }
 
   //  ==============  //
-  initState(songModelList, count) {
+  void initState(songModelList, count) {
     PageManger.audioPlayer.currentIndexStream.listen(
       (index) {
         if (index != null) {
           PageManger.currerentIndexes = index;
           _large = count - 1;
           _currentIndex = index;
-          notifyListeners();
         }
       },
     );
@@ -59,13 +58,12 @@ class MusicPlaying extends ChangeNotifier {
     PageManger.audioPlayer.durationStream.listen((d) {
       if (d != null) {
         _duration = d;
-        notifyListeners();
       }
     });
     PageManger.audioPlayer.positionStream.listen((p) {
       _position = p;
-      notifyListeners();
     });
+    notifyListeners();
   }
 
   @override

@@ -7,7 +7,7 @@ import 'package:players_app/view/widgets/thumbnail.dart';
 import 'package:provider/provider.dart';
 
 class VideoFavoriteScreen extends StatelessWidget {
-   const VideoFavoriteScreen({super.key});
+  const VideoFavoriteScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,9 @@ class VideoFavoriteScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(bottom: 10),
                         child: ListtaleModelVidSong(
                           leading: thumbnail(
-                              path: itemsOfVFavdb[index].path, choice: true),
+                              path: itemsOfVFavdb[index].path,
+                              hight: 130,
+                              width: 130),
                           title: itemsOfVFavdb[index].title,
                           trailingOne: IconButton(
                             onPressed: () =>

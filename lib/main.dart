@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:players_app/controllers/song_folder/recently_played_controller.dart';
+import 'package:players_app/controllers/video_folder/videos_recently_played_controller.dart';
 import 'package:players_app/model/db/recently_played_songs_model.dart';
+import 'package:players_app/model/db/recently_played_videos_model.dart';
 import 'package:players_app/view/genaral_screens.dart/bottom_navbar.dart';
 import 'package:players_app/view/music/playlist/controller/playlist_add_and_minimize.dart';
 import 'package:players_app/controllers/song_folder/favorite_songdb.dart';
@@ -35,7 +37,10 @@ void main() async {
 
   if (!Hive.isAdapterRegistered(RecentlyPlayedSongsModelAdapter().typeId)) {
     Hive.registerAdapter(RecentlyPlayedSongsModelAdapter());
-    
+  }
+
+   if (!Hive.isAdapterRegistered(RecentlyPlayedVideosModelAdapter().typeId)) {
+    Hive.registerAdapter(RecentlyPlayedVideosModelAdapter());
   }
 
   await Hive.initFlutter();
@@ -44,7 +49,7 @@ void main() async {
   await Hive.openBox<String>('VideoFavoriteDB');
   await Hive.openBox<Playersmodel>('SongPlaylistDB');
   await Hive.openBox<RecentlyPlayedSongsModel>('recently_played');
-
+  await Hive.openBox<RecentlyPlayedVideosModel>('recently_played_videos');
 
   runApp(
     MultiProvider(
@@ -78,6 +83,9 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => RecentlyPlayedSongsController(),
+        ),
+         ChangeNotifierProvider(
+          create: (context) => VideosRecentlyPlayedController(),
         )
       ],
       child: MaterialApp(

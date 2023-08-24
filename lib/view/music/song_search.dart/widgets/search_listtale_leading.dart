@@ -40,6 +40,6 @@ class SearchLeading extends StatelessWidget {
               ),
             ),
           )
-        : thumbnail(path: videoModel, choice: true);
+        : thumbnail(path: videoModel, hight: 100,width: 100);
   }
 }

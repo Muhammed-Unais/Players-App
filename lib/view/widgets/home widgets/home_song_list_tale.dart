@@ -42,7 +42,7 @@ class SongsListTile extends StatelessWidget {
           songModel[index].title,
           style: GoogleFonts.raleway(
             fontSize: 15,
-            fontWeight: FontWeight.w800,
+            fontWeight: FontWeight.w600,
             color: Colors.black,
           ),
           overflow: TextOverflow.ellipsis,
@@ -52,7 +52,7 @@ class SongsListTile extends StatelessWidget {
           songModel[index].artist ?? "",
           style: GoogleFonts.raleway(
             fontSize: 13,
-            fontWeight: FontWeight.w800,
+            fontWeight: FontWeight.w600,
             color: Colors.grey,
           ),
           maxLines: 2,

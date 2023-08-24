@@ -12,17 +12,14 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-
   List<dynamic> screens = [
     const HomeScreen(),
-    const AllSongsAndVideosScreen(
-      recheck: false,
-      index: 0,
-    ),
+    const AllSongsAndVideosScreen(recheck: false, index: 0),
     const FavouritesAndPlaylistScreen(),
   ];
 
   int currentIndex = 0;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +43,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           currentIndex: currentIndex,
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_filled),
+              icon: Icon(IconlyBold.home),
               label: "Home",
             ),
             BottomNavigationBarItem(

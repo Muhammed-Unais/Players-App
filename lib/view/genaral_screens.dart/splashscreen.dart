@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   // spalsh duration function
   Future<void> gotoHomeScreen(BuildContext context) async {
     await Future.delayed(
-      const Duration(seconds: 5),
+      const Duration(seconds: 2),
     );
     navigateToBottomNavbar();
   }

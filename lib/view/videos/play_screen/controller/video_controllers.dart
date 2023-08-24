@@ -1,63 +1,54 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoControllers extends ChangeNotifier {
-  VideoPlayerController? controllers;
-  int _isPlayingindex = -1;
+  // VideoPlayerController? controllers;
+  // int _isPlayingindex = -1;
   bool isPlaying = false;
   bool isLandscape = false;
   bool isShowVideoCntrl = false;
   bool isLocked = false;
 
   // VideoPlayerController? get controller => controller;
-  int get isPlayingindex => _isPlayingindex;
+  // int get isPlayingindex => _isPlayingindex;
   // bool get isPlaying => _isPlaying;
 
   // =================Intialize Video===============
-  intializeVideo(
-      {required int index, required List paths, required bool isModelorPath}) {
-    final controller = VideoPlayerController.file(
-      File(
-        isModelorPath == true ? paths[index].path : paths[index],
-      ),
-    );
-    controllersvalue(controller);
-    // notifyListeners();
-    controller.initialize().then((_) {
-      // old!.dispose();
-      controller.addListener(_oncontrollUpdate);
-      controller.play();
-      notifyListeners();
-    });
+  // intializeVideo(
+  //     {required int index, required List paths, required bool isModelorPath}) {
+  //   final controller = VideoPlayerController.file(
+  //       File(isModelorPath == true ? paths[index].path : paths[index]));
+  //   controllersvalue(controller);
 
-    _isPlayingindex = index;
-  }
+  //   controller.initialize().then((_) {
+  //     controller.addListener(_oncontrollUpdate);
+  //     controller.play();
+  //     notifyListeners();
+  //   });
 
-  controllersvalue(controller) {
-    controllers = controller;
-    // notifyListeners();
-  }
+  //   _isPlayingindex = index;
+  // }
 
-  vidoeControllers() {
-    controllers!.pause();
-  }
+  // controllersvalue(controller) {
+  //   controllers = controller;
+  // }
+
 
   //=============== Listening Function==========================
-  void _oncontrollUpdate() async {
-    final controller = controllers;
-    if (controller == null) {
-      debugPrint("controller is null");
-      return;
-    }
-    if (!controller.value.isInitialized) return;
-    final playing = controller.value.isPlaying;
-    isPlaying = playing;
-  }
+  // void _oncontrollUpdate() async {
+  //   final controller = controllers;
+  //   if (controller == null) {
+  //     debugPrint("controller is null");
+  //     return;
+  //   }
+  //   if (!controller.value.isInitialized) return;
+  //   final playing = controller.value.isPlaying;
+  //   isPlaying = playing;
+  // }
 
-  //====================== Set landscape======================
+  //====================== Set landscape ======================
   Future setlandScape() async {
     if (isLandscape) {
       await SystemChrome.setPreferredOrientations(

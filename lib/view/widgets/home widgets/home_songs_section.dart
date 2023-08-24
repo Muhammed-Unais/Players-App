@@ -7,50 +7,43 @@ import 'package:provider/provider.dart';
 List<SongModel> songmodel = [];
 
 class HomeSongSection extends StatefulWidget {
-  const HomeSongSection({super.key});
+  const HomeSongSection({super.key, required this.recentSongsProvider});
+
+  final RecentlyPlayedSongsController recentSongsProvider;
 
   @override
   State<HomeSongSection> createState() => HomeSongTileState();
 }
 
 class HomeSongTileState extends State<HomeSongSection> {
-  
-  @override
-  void initState() {
-    initializeRecentSongs();
-    super.initState();
-  }
+ 
 
-  void initializeRecentSongs() {
-    var recentSongsProvider = context.read<RecentlyPlayedSongsController>();
+  Future<void> initializeRecentSongs() async {
+    RecentlyPlayedSongsController recentSongsProvider =
+        context.read<RecentlyPlayedSongsController>();
     if (!recentSongsProvider.isIntialize) {
-      context.read<RecentlyPlayedSongsController>().initializRecentSongs();
+      await context
+          .read<RecentlyPlayedSongsController>()
+          .initializRecentSongs();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(
-          height: 16,
-        ),
-        Consumer<RecentlyPlayedSongsController>(
-          builder: (context, recentSongsProvider, _) {
-            return ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: recentSongsProvider.recentSongs.length,
-              itemBuilder: (context, index) {
-                return SongsListTile(
-                  index: index,
-                  songModel: recentSongsProvider.recentSongs,
-                );
-              },
-            );
-          },
-        )
-      ],
+    return RefreshIndicator(
+      color: Colors.black,
+      onRefresh: initializeRecentSongs,
+      child: ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: widget.recentSongsProvider.recentSongs.length,
+        itemBuilder: (context, index) {
+          return SongsListTile(
+            index: index,
+            songModel: widget.recentSongsProvider.recentSongs,
+          );
+        },
+      ),
     );
   }
 }

@@ -33,7 +33,10 @@ class VideoaddtoPlaylistfrmAllVideo extends StatelessWidget {
             child: ListTile(
               tileColor: Colors.white,
               contentPadding: const EdgeInsets.all(10),
-              leading: thumbnail(path: accessVideosPath[index], choice: true),
+              leading: thumbnail(
+                  path: accessVideosPath[index],
+                  hight: 130,
+                  width: 130),
               title: Text(
                 accessVideosPath.isNotEmpty
                     ? accessVideosPath[index].toString().split('/').last
@@ -42,28 +45,27 @@ class VideoaddtoPlaylistfrmAllVideo extends StatelessWidget {
                     fontSize: 12, fontWeight: FontWeight.w500),
               ),
               trailing: Consumer<VideoPlaylistAddDelete>(
-                builder: (context,videoPlaylistAddDb,_) {
-                  return IconButton(
-                    onPressed: () {
-                      if (!videoPlaylistFoldermodel
-                          .isValueIn(accessVideosPath[index])) {
-                        videoPlaylistAddDb.add(
-                            playersVideoPlaylistModel: videoPlaylistFoldermodel,
-                            path: accessVideosPath[index]);
-                      } else {
-                        videoPlaylistAddDb.delete(
-                            playersVideoPlaylistModel: videoPlaylistFoldermodel,
-                            path: accessVideosPath[index]);
-                      }
-                    },
-                    icon: !videoPlaylistFoldermodel.isValueIn(
-                      accessVideosPath[index],
-                    )
-                        ? const Icon(Icons.add)
-                        : const Icon(Icons.minimize),
-                  );
-                }
-              ),
+                  builder: (context, videoPlaylistAddDb, _) {
+                return IconButton(
+                  onPressed: () {
+                    if (!videoPlaylistFoldermodel
+                        .isValueIn(accessVideosPath[index])) {
+                      videoPlaylistAddDb.add(
+                          playersVideoPlaylistModel: videoPlaylistFoldermodel,
+                          path: accessVideosPath[index]);
+                    } else {
+                      videoPlaylistAddDb.delete(
+                          playersVideoPlaylistModel: videoPlaylistFoldermodel,
+                          path: accessVideosPath[index]);
+                    }
+                  },
+                  icon: !videoPlaylistFoldermodel.isValueIn(
+                    accessVideosPath[index],
+                  )
+                      ? const Icon(Icons.add)
+                      : const Icon(Icons.minimize),
+                );
+              }),
             ),
           );
         },

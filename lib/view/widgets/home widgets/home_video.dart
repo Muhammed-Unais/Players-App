@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:players_app/controllers/video_folder/access_folder/access_video.dart';
+import 'package:iconly/iconly.dart';
+import 'package:players_app/controllers/video_folder/videos_recently_played_controller.dart';
 import 'package:players_app/view/videos/play_screen/play_video_screen.dart';
 import 'package:players_app/view/widgets/thumbnail.dart';
+import 'package:provider/provider.dart';
 
 class HomeVideoScreen extends StatefulWidget {
   const HomeVideoScreen({super.key});
@@ -15,82 +16,69 @@ class HomeVideoScreen extends StatefulWidget {
 class _HomeVideoScreenState extends State<HomeVideoScreen> {
   @override
   void initState() {
-    refresh();
+    initializeRecentVideos();
     super.initState();
   }
 
-  void refresh() async {
-    if (await requestPermission(Permission.storage)) {
-      setState(() {});
+  void initializeRecentVideos() {
+    var recentlyVideoProvider = context.read<VideosRecentlyPlayedController>();
+    if (!recentlyVideoProvider.isInitiliaz) {
+      context.read<VideosRecentlyPlayedController>().initializeRecentVideos();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (accessVideosPath.isEmpty) {
-      return const Center(
-        child: CircularProgressIndicator(color: Colors.black),
-      );
-    }
-    return GridView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisExtent: MediaQuery.of(context).size.height*0.17,
-        crossAxisSpacing: 5,
-        mainAxisSpacing: 5,
-      ),
-      itemCount: accessVideosPath.length > 4 ? 4 : accessVideosPath.length,
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.only(right: 8),
-          child: Column(
-            children: [
-              // const SizedBox(height: 4,),
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return PlayVideoScreen(
-                            paths: accessVideosPath,
-                            index: index,
-                            isModelorPath: false,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                  child: accessVideosPath.isEmpty
-                      ? const Center(
-                          child: Image(
-                            image:
-                                AssetImage("assets/images/videoposter.png"),
-                          ),
-                        )
-                      // Video thumbnail widget page
-                      : thumbnail(
-                          path: accessVideosPath[index].toString(),
-                          choice: false),
+    return Consumer<VideosRecentlyPlayedController>(
+        builder: (context, recentVideoProvider, _) {
+      return ListView.builder(
+        itemCount: recentVideoProvider.recentVidoes.length,
+        itemBuilder: (context, index) {
+          return Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            elevation: 0.1,
+            color: Colors.white60,
+            child: ListTile(
+              contentPadding:
+                  const EdgeInsets.only(left: 8, right: 14, top: 8, bottom: 8),
+              leading: thumbnail(
+                  path: recentVideoProvider.recentVidoes[index].path,
+                  hight: 100,
+                  width: 100),
+              title: Text(
+                recentVideoProvider.recentVidoes[index].title,
+                style: GoogleFonts.raleway(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
                 ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
               ),
-              const SizedBox(
-                height: 5,
+              trailing: const Icon(
+                IconlyBold.play,
+                color: Colors.black,
               ),
-              Text(
-                accessVideosPath.isNotEmpty
-                    ? accessVideosPath[index].toString().split('/').last
-                    : "No videos",
-                style: GoogleFonts.roboto(
-                    fontSize: 12, fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-        );
-      },
-    );
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PlayVideoScreen(
+                      isModelorPath: false,
+                      paths: recentVideoProvider.recentVidoes
+                          .map((e) => e.path)
+                          .toList(),
+                      index: index,
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        },
+      );
+    });
   }
 }

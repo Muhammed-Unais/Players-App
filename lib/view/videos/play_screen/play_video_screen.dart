@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:players_app/controllers/video_folder/videos_recently_played_controller.dart';
 import 'package:players_app/view/videos/play_screen/controller/video_controllers.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
@@ -21,25 +22,58 @@ class PlayVideoScreen extends StatefulWidget {
 }
 
 class _PlayVideoScreenState extends State<PlayVideoScreen> {
+  late VideoPlayerController controllers;
+  int isPlayingindex = -1;
+
   @override
   void initState() {
-    Provider.of<VideoControllers>(context, listen: false).intializeVideo(
+
+    intializeVideo(
         index: widget.index,
         paths: widget.paths,
         isModelorPath: widget.isModelorPath);
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        addRecentVideo();
+      },
+    );
     super.initState();
+  }
+
+  intializeVideo(
+      {required int index, required List paths, required bool isModelorPath}) {
+    controllers = VideoPlayerController.file(
+        File(isModelorPath == true ? paths[index].path : paths[index]));
+
+    controllers.initialize().then((_) {
+      controllers.addListener(_oncontrollUpdate);
+      controllers.play();
+      setState(() {});
+    });
+
+    isPlayingindex = index;
+  }
+
+  void _oncontrollUpdate() async {
+    final controller = controllers;
+    if (!controller.value.isInitialized) return;
+    final playing = controller.value.isPlaying;
+    Provider.of<VideoControllers>(context, listen: false).isPlaying = playing;
+  }
+
+  void addRecentVideo() async {
+    await context.read<VideosRecentlyPlayedController>().addToRecentVideos(
+          videoPath: widget.paths[widget.index],
+          timeStamp: DateTime.now().toUtc().millisecondsSinceEpoch,
+        );
   }
 
   @override
   void dispose() {
-    // Provider.of<VideoControllers>(context, listen: false).vidoeControllers();
-    // Provider.of<VideoControllers>(context,listen: false).controllers!.dispose();
-    // Provider.of<VideoControllers>(context,listen: false).controllers = null;
-    // _controller!.pause();
-    // _controller!.dispose();
-    // _controller = null;
     super.dispose();
     SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+    controllers.dispose();
   }
 
   int count = 0;
@@ -71,7 +105,7 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
   @override
   Widget build(BuildContext context) {
     final vidController = Provider.of<VideoControllers>(context, listen: false);
-    final controller = vidController.controllers;
+
     return GestureDetector(
       onTap: () async {
         if (vidController.isLocked == true) return;
@@ -90,12 +124,12 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
             child: Stack(
               children: [
                 //=======================Video playing area =======================
-                controller != null && controller.value.isInitialized
+                controllers.value.isInitialized
                     ? Align(
                         alignment: Alignment.center,
                         child: AspectRatio(
-                          aspectRatio: controller.value.aspectRatio,
-                          child: VideoPlayer(controller),
+                          aspectRatio: controllers.value.aspectRatio,
+                          child: VideoPlayer(controllers),
                         ),
                       )
                     : const AspectRatio(
@@ -135,12 +169,12 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
                         vidController.isShowVideoCntrl == true
                             ? Text(
                                 widget.isModelorPath == true
-                                    ? widget.paths[vidController.isPlayingindex]
+                                    ? widget.paths[isPlayingindex]
                                         .path
                                         .toString()
                                         .split('/')
                                         .last
-                                    : widget.paths[vidController.isPlayingindex]
+                                    : widget.paths[isPlayingindex]
                                         .toString()
                                         .split('/')
                                         .last,
@@ -167,12 +201,12 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         vidController.isShowVideoCntrl == true
-                            ? controlls(context, controller!)
+                            ? controlls(context, controllers)
                             : const SizedBox(),
                         const SizedBox(
                           height: 12,
                         ),
-                        controlerButtons(context, controller!),
+                        controlerButtons(context, controllers),
                         const SizedBox(
                           height: 15,
                         ),
@@ -254,12 +288,16 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
                     children: [
                       IconButton(
                         onPressed: () {
-                          final index = vidController.isPlayingindex - 1;
+                          final index = isPlayingindex - 1;
                           if (index >= 0 && widget.paths.isNotEmpty) {
-                            vidController.intializeVideo(
+                            // vidController.intializeVideo(
+                            //     index: index,
+                            //     isModelorPath: widget.isModelorPath,
+                            //     paths: widget.paths);
+                            intializeVideo(
                                 index: index,
-                                isModelorPath: widget.isModelorPath,
-                                paths: widget.paths);
+                                paths: widget.paths,
+                                isModelorPath: widget.isModelorPath);
                           }
                         },
                         icon: const Icon(
@@ -277,12 +315,12 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
                         onPressed: () async {
                           if (vidController.isPlaying) {
                             vidController.isPauseButton();
-                            vidController.controllers!.pause();
+                            controllers.pause();
                             await Future.delayed(const Duration(seconds: 5));
                             vidController.videoControllersShow();
                           } else {
                             vidController.isPlayButton();
-                            vidController.controllers!.play();
+                            controllers.play();
                           }
                         },
                         icon: Icon(
@@ -298,9 +336,9 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
                       ),
                       IconButton(
                         onPressed: () {
-                          final index = vidController.isPlayingindex + 1;
+                          final index = isPlayingindex + 1;
                           if (index <= widget.paths.length - 1) {
-                            vidController.intializeVideo(
+                            intializeVideo(
                                 index: index,
                                 isModelorPath: widget.isModelorPath,
                                 paths: widget.paths);

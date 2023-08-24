@@ -4,34 +4,38 @@ import 'package:players_app/controllers/video_folder/access_folder/access_video.
 import 'package:players_app/model/db/videodb_model.dart';
 
 class VideoFavoriteDb extends ChangeNotifier {
+
   bool isIntialized = false;
+
   final videoDb = Hive.box<String>('VideoFavoriteDB');
+
   final List<PlayersVideoFavoriteModel> _videoFavoriteDb = [];
 
   List<PlayersVideoFavoriteModel> get videoFavoriteDb => _videoFavoriteDb;
 
   void intialize(PlayersVideoFavoriteModel value) {
-    // _videoFavoriteDb.clear();
+
     if (isVideoFavor(value)) {
       _videoFavoriteDb.add(value);
     }
+    
     isIntialized = true;
   }
 
-  isVideoFavor(PlayersVideoFavoriteModel video) {
+  bool isVideoFavor(PlayersVideoFavoriteModel video) {
     if (videoDb.values.contains(video.path)) {
       return true;
     }
     return false;
   }
 
-  add(PlayersVideoFavoriteModel value) {
+  void add(PlayersVideoFavoriteModel value) {
     videoDb.add(value.path);
     _videoFavoriteDb.add(value);
     notifyListeners();
   }
 
-  delete(String path) async {
+  void delete(String path) async {
     int deletekey = 0;
     if (!videoDb.values.contains(path)) {
       return;
@@ -43,24 +47,26 @@ class VideoFavoriteDb extends ChangeNotifier {
         deletekey = key;
       }
     });
+
     videoDb.delete(deletekey);
     _videoFavoriteDb.removeWhere((element) => element.path == path);
     notifyListeners();
   }
 
-  favoriteInitialize() {
+  void favoriteInitialize() {
     if (!isIntialized) {
       for (int i = 0; i < accessVideosPath.length; i++) {
         intialize(
           PlayersVideoFavoriteModel(
-              path: accessVideosPath[i],
-              title: accessVideosPath[i].toString().split('/').last),
+            path: accessVideosPath[i],
+            title: accessVideosPath[i].toString().split('/').last,
+          ),
         );
       }
     }
   }
 
-  favouriteAddandDelete({required String path, required String title}) {
+  void favouriteAddandDelete({required String path, required String title}) {
     if (isVideoFavor(
       PlayersVideoFavoriteModel(path: path, title: title),
     )) {

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:players_app/controllers/song_folder/playlist_db_song.dart';
+import 'package:players_app/controllers/song_folder/recently_played_controller.dart';
 import 'package:players_app/controllers/video_folder/videodbplaylist.dart';
+import 'package:players_app/controllers/video_folder/videos_recently_played_controller.dart';
 import 'package:players_app/view/music/playlist/song_playlist_screen.dart';
 import 'package:players_app/view/music/favorite_songs/songfavourite_listpage.dart';
 import 'package:players_app/view/videos/playlist_videos/playlist_video_screen.dart';
@@ -12,6 +14,7 @@ import 'package:players_app/view/widgets/home%20widgets/home_circle_tab_indicato
 import 'package:players_app/view/widgets/home%20widgets/home_favourite_playlist_button.dart';
 import 'package:players_app/view/widgets/home%20widgets/home_songs_section.dart';
 import 'package:provider/provider.dart';
+import '../widgets/home widgets/home_video.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -46,9 +49,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    initializeRecentSongs();
     Provider.of<PlaylistDbSong>(context, listen: false).getAllPlaylists();
     Provider.of<PlaylistVideoDb>(context, listen: false).getAllPlaylistVideos();
     super.initState();
+  }
+
+  Future<void> initializeRecentSongs() async {
+    var recentlySongsProvider = context.read<RecentlyPlayedSongsController>();
+    if (!recentlySongsProvider.isIntialize) {
+      await context
+          .read<RecentlyPlayedSongsController>()
+          .initializRecentSongs();
+    }
   }
 
   @override
@@ -79,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 labelColor: Colors.black,
                 labelStyle: GoogleFonts.raleway(
                   fontSize: 16,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),
                 controller: tabController,
@@ -87,10 +100,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     const CircleTabIndicator(color: Colors.black, radius: 3),
                 tabs: const [
                   Tab(text: "Recent songs"),
-                  Tab(text: "Recent videos")
+                  Tab(text: "Recent videos"),
                 ],
               ),
             ),
+            const SizedBox(height: 14),
             Expanded(
               child: TabBarView(
                 controller: tabController,
@@ -101,18 +115,25 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         child: SizedBox(
                           height: 500,
                           width: 500,
-                          child: Lottie.asset(
-                            "assets/images/homesong.json",
-                            animate: true,
-                          ),
+                          child: Lottie.asset("assets/images/homesong.json",
+                              animate: true),
                         ),
                       ),
-                      const SingleChildScrollView(
-                        child: HomeSongSection(),
+                      Consumer<RecentlyPlayedSongsController>(
+                        builder: (context, recentlySongsProvider, _) {
+                          return recentlySongsProvider.recentSongs.isEmpty
+                              ? const Center(
+                                  child: CircularProgressIndicator(
+                                      color: Colors.black),
+                                )
+                              : HomeSongSection(
+                                  recentSongsProvider: recentlySongsProvider,
+                                );
+                        },
                       ),
                     ],
                   ),
-                  const Text("")
+                 const HomeVideoScreen()
                 ],
               ),
             )

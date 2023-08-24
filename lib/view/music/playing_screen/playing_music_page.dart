@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -42,12 +41,10 @@ class _PlayinMusicScreenState extends State<PlayinMusicScreen> {
   }
 
   void addToRecentSongs() {
-    log("addToRecentSongsCalled");
     context.read<RecentlyPlayedSongsController>().addToRecentSongs(
         songsId: widget.songModelList[widget.index].id,
         timeStamp: DateTime.now().toUtc().millisecondsSinceEpoch);
   }
-
 
   @override
   Widget build(BuildContext context) {

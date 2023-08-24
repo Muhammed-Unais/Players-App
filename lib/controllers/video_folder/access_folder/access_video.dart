@@ -1,10 +1,8 @@
-
 import 'package:permission_handler/permission_handler.dart';
 import 'package:players_app/controllers/video_folder/access_folder/method_channel_fn.dart';
 
-List<String> accessVideosPath = [];
 
-// ValueNotifier accessVideosPath = ValueNotifier([]);
+List<String> accessVideosPath = [];
 
 Future<bool> requestPermission(Permission permission) async {
   const storage = Permission.storage;
@@ -25,7 +23,7 @@ Future<bool> requestPermission(Permission permission) async {
   }
 }
 
-Future splashFetch() async {
+Future<void> splashFetch() async {
   if (await requestPermission(Permission.storage)) {
     AccessFilesFromStorage.accessFromStorage([
       '.mkv',
@@ -37,7 +35,7 @@ Future splashFetch() async {
   }
 }
 
-onSuccess(List<String> path) {
+void onSuccess(List<String> path) {
   accessVideosPath = path;
   for (var i = 0; i < accessVideosPath.length; i++) {
     if (accessVideosPath[i].startsWith('/storage/emulated/0/Android/data')) {

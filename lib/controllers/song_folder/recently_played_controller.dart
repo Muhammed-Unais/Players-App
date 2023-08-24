@@ -8,7 +8,7 @@ import 'package:players_app/view/widgets/home%20widgets/home_songs_section.dart'
 class RecentlyPlayedSongsController extends ChangeNotifier {
   var box = Hive.box<RecentlyPlayedSongsModel>("recently_played");
 
-  List<RecentlyPlayedSongsModel> listRecentSongs = [];
+  List<RecentlyPlayedSongsModel> _listRecentSongs = [];
 
   List<SongModel> recentSongs = [];
 
@@ -22,7 +22,7 @@ class RecentlyPlayedSongsController extends ChangeNotifier {
       ignoreCase: true,
       orderType: OrderType.ASC_OR_SMALLER,
       uriType: UriType.EXTERNAL,
-      sortType: null,
+      sortType: null
     );
 
     PageManger.songscopy = listofSongs;
@@ -30,12 +30,12 @@ class RecentlyPlayedSongsController extends ChangeNotifier {
     recentSongs.clear();
 
     List<SongModel> tempRecentSongs =
-        List.filled(listRecentSongs.length, SongModel({}));
+        List.filled(_listRecentSongs.length, SongModel({}));
 
     for (var songmodel in listofSongs) {
       if (isRecentlySong(songmodel.id)) {
-        for (var i = 0; i < listRecentSongs.length; i++) {
-          if (listRecentSongs[i].recentSongsId == songmodel.id) {
+        for (var i = 0; i < _listRecentSongs.length; i++) {
+          if (_listRecentSongs[i].recentSongsId == songmodel.id) {
             tempRecentSongs[i] = songmodel;
           }
         }
@@ -49,7 +49,7 @@ class RecentlyPlayedSongsController extends ChangeNotifier {
   }
 
   bool isRecentlySong(int songId) {
-    var songsIds = listRecentSongs.map((e) => e.recentSongsId);
+    var songsIds = _listRecentSongs.map((e) => e.recentSongsId);
 
     if (songsIds.contains(songId)) return true;
 
@@ -84,19 +84,18 @@ class RecentlyPlayedSongsController extends ChangeNotifier {
     }
 
     isIntialize = false;
-    notifyListeners();
   }
 
   void getSortedRecentSongs() {
-    listRecentSongs = box.values.toList();
-    for (var i = 0; i < listRecentSongs.length; i++) {
+    _listRecentSongs = box.values.toList();
+    for (var i = 0; i < _listRecentSongs.length; i++) {
       bool flag = false;
-      for (var j = 0; j < listRecentSongs.length - i - 1; j++) {
-        if (listRecentSongs[j].timeStamp < listRecentSongs[j + 1].timeStamp) {
+      for (var j = 0; j < _listRecentSongs.length - i - 1; j++) {
+        if (_listRecentSongs[j].timeStamp < _listRecentSongs[j + 1].timeStamp) {
           flag = true;
-          final temp = listRecentSongs[j];
-          listRecentSongs[j] = listRecentSongs[j + 1];
-          listRecentSongs[j + 1] = temp;
+          final temp = _listRecentSongs[j];
+          _listRecentSongs[j] = _listRecentSongs[j + 1];
+          _listRecentSongs[j + 1] = temp;
         }
       }
       if (!flag) {

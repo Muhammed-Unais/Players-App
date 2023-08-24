@@ -20,12 +20,12 @@ class PlayersVideoPlaylistModel extends HiveObject {
   @HiveField(1)
   List<String> path;
 
-   add(String paths) async {
+  void add(String paths) async {
     path.add(paths);
     save();
   }
 
-  deleteData(String paths) {
+  void deleteData(String paths) {
     path.remove(paths);
     save();
   }

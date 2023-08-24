@@ -37,7 +37,7 @@ class AllVidoes extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.only(left: 8, right: 8),
             child: ListtaleModelVidSong(
-              leading: thumbnail(path: vidPath, choice: true),
+              leading: thumbnail(path: vidPath, width: 100, hight: 100),
               title: accessVideosPath.isNotEmpty ? vidTitle : "No Videos",
               trailingOne: videoFavDb.isVideoFavor(
                 PlayersVideoFavoriteModel(
@@ -52,7 +52,8 @@ class AllVidoes extends StatelessWidget {
                       icon: const Icon(
                         Icons.favorite,
                         color: Colors.black,
-                      ))
+                      ),
+                    )
                   : IconButton(
                       onPressed: () {
                         videoFavDbs.add(

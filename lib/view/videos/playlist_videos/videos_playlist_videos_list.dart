@@ -38,8 +38,11 @@ class VideosPlaylistVideoList extends StatelessWidget {
       ),
       appBar: AppBar(
         centerTitle: true,
-        title: Text(videoPlaylistFoldermodel.name,style: GoogleFonts.raleway(
-                fontSize: 22, fontWeight: FontWeight.w800, color: Colors.white),),
+        title: Text(
+          videoPlaylistFoldermodel.name,
+          style: GoogleFonts.raleway(
+              fontSize: 22, fontWeight: FontWeight.w800, color: Colors.white),
+        ),
         backgroundColor: Colors.black,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -67,7 +70,9 @@ class VideosPlaylistVideoList extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: ListtaleModelVidSong(
                         leading: thumbnail(
-                            path: videosinPlaylistFolder[index], choice: true),
+                            path: videosinPlaylistFolder[index],
+                            width: double.infinity,
+                            hight: double.infinity),
                         title: videosinPlaylistFolder[index]
                             .toString()
                             .split('/')

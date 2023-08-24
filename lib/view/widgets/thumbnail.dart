@@ -12,13 +12,13 @@ Future<String> getthumbnail(path) async {
       imageFormat: ImageFormat.PNG))!;
 }
 
-Widget thumbnail({required path, required bool choice}) {
-  Color filteredColor = Colors.white.withOpacity(0); // 50% opacity white color
+Widget thumbnail({required String path, required double hight,required double width}) {
+  Color filteredColor = Colors.white.withOpacity(0);
   return Stack(
     children: [
       Container(
-        height: choice == true ? 130 : 210,
-        width: choice == true ? 110 : 210,
+        height: hight ,
+        width:width,
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
           color: Colors.black,

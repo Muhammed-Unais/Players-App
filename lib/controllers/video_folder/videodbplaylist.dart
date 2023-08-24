@@ -10,23 +10,23 @@ class PlaylistVideoDb extends ChangeNotifier {
   List<PlayersVideoPlaylistModel> get videoPlaylistNotifier =>
       _videoPlaylistNotifier;
 
-  add(PlayersVideoPlaylistModel value) async {
+  void add(PlayersVideoPlaylistModel value) async {
     await videoPlaylisdb.add(value);
     _videoPlaylistNotifier.add(value);
     notifyListeners();
   }
-  getAllPlaylistVideos() {
+  void getAllPlaylistVideos() {
     _videoPlaylistNotifier.clear();
     _videoPlaylistNotifier.addAll(videoPlaylisdb.values);
   }
 
-  deleteVideoPlaylist(int index) async {
+  void deleteVideoPlaylist(int index) async {
     await videoPlaylisdb.deleteAt(index);
     notifyListeners();
     getAllPlaylistVideos();
   }
 
-  updateVideoPlaylist(int index, PlayersVideoPlaylistModel value) async {
+  void updateVideoPlaylist(int index, PlayersVideoPlaylistModel value) async {
     await videoPlaylisdb.putAt(index, value);
     notifyListeners();
     getAllPlaylistVideos();
