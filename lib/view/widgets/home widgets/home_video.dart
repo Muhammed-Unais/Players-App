@@ -66,7 +66,6 @@ class _HomeVideoScreenState extends State<HomeVideoScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => PlayVideoScreen(
-                      isModelorPath: false,
                       paths: recentVideoProvider.recentVidoes
                           .map((e) => e.path)
                           .toList(),

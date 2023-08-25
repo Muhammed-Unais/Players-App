@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:video_player/video_player.dart';
 
 class VideoControllers extends ChangeNotifier {
   // VideoPlayerController? controllers;
@@ -72,7 +70,6 @@ class VideoControllers extends ChangeNotifier {
     return [if (duration.inHours > 0) hours, minutes, seconds].join(':');
   }
 
-  //================Controlls visibility function===============================
   controllsVisibility() async {
     isShowVideoCntrl == false ? isShowVideoCntrl = true : null;
     notifyListeners();

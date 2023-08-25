@@ -18,7 +18,7 @@ class VideosPlaylistVideoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List videosinPlaylistFolder = [];
+    List<String> videosinPlaylistFolder = [];
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         label: const Text("Add Videos"),
@@ -91,7 +91,6 @@ class VideosPlaylistVideoList extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) => PlayVideoScreen(
-                                isModelorPath: false,
                                 paths: videosinPlaylistFolder,
                                 index: index,
                               ),
@@ -107,8 +106,8 @@ class VideosPlaylistVideoList extends StatelessWidget {
     );
   }
 
-  listVideoPlayList(List dates) {
-    List tempvideosPath = [];
+ List<String> listVideoPlayList(List dates) {
+    List<String> tempvideosPath = [];
 
     for (var i = 0; i < accessVideosPath.length; i++) {
       for (var j = 0; j < dates.length; j++) {

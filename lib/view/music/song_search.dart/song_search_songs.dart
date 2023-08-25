@@ -22,6 +22,10 @@ class SongSearchScreen extends StatefulWidget {
 }
 
 class _SongSearchScreenState extends State<SongSearchScreen> {
+  OnAudioQuery onAudioQuery = OnAudioQuery();
+  AudioPlayer audioPlayer = AudioPlayer();
+  List<String> foundVideos = [];
+  late List<String> allVideos;
   @override
   void initState() {
     videoLoading();
@@ -35,7 +39,7 @@ class _SongSearchScreenState extends State<SongSearchScreen> {
   }
 
   searchVideo(String enteredKeyWords) {
-    List result = [];
+    List<String> result = [];
     if (enteredKeyWords.isEmpty) {
       result = allVideos;
     } else {
@@ -53,10 +57,7 @@ class _SongSearchScreenState extends State<SongSearchScreen> {
     });
   }
 
-  OnAudioQuery onAudioQuery = OnAudioQuery();
-  AudioPlayer audioPlayer = AudioPlayer();
-  List foundVideos = [];
-  late List allVideos;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +139,7 @@ class _SongSearchScreenState extends State<SongSearchScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => PlayVideoScreen(
-                                  isModelorPath: false,
+                                 
                                   paths: foundVideos,
                                   index: index,
                                 ),

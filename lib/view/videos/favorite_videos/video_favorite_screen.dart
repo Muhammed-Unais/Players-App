@@ -59,9 +59,9 @@ class VideoFavoriteScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => PlayVideoScreen(
-                                  paths: itemsOfVFavdb,
+                                  paths: itemsOfVFavdb.map((e) => e.path).toList(),
                                   index: index,
-                                  isModelorPath: true,
+                                
                                 ),
                               ),
                             );

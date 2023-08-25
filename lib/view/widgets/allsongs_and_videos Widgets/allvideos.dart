@@ -97,7 +97,7 @@ class AllVidoes extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => PlayVideoScreen(
-                      isModelorPath: false,
+                     
                       paths: accessVideosPath,
                       index: index,
                     ),
