@@ -2,51 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class VideoControllers extends ChangeNotifier {
-  // VideoPlayerController? controllers;
-  // int _isPlayingindex = -1;
   bool isPlaying = false;
   bool isLandscape = false;
   bool isShowVideoCntrl = false;
   bool isLocked = false;
 
-  // VideoPlayerController? get controller => controller;
-  // int get isPlayingindex => _isPlayingindex;
-  // bool get isPlaying => _isPlaying;
-
-  // =================Intialize Video===============
-  // intializeVideo(
-  //     {required int index, required List paths, required bool isModelorPath}) {
-  //   final controller = VideoPlayerController.file(
-  //       File(isModelorPath == true ? paths[index].path : paths[index]));
-  //   controllersvalue(controller);
-
-  //   controller.initialize().then((_) {
-  //     controller.addListener(_oncontrollUpdate);
-  //     controller.play();
-  //     notifyListeners();
-  //   });
-
-  //   _isPlayingindex = index;
-  // }
-
-  // controllersvalue(controller) {
-  //   controllers = controller;
-  // }
-
-
-  //=============== Listening Function==========================
-  // void _oncontrollUpdate() async {
-  //   final controller = controllers;
-  //   if (controller == null) {
-  //     debugPrint("controller is null");
-  //     return;
-  //   }
-  //   if (!controller.value.isInitialized) return;
-  //   final playing = controller.value.isPlaying;
-  //   isPlaying = playing;
-  // }
-
-  //====================== Set landscape ======================
   Future setlandScape() async {
     if (isLandscape) {
       await SystemChrome.setPreferredOrientations(
@@ -56,7 +16,7 @@ class VideoControllers extends ChangeNotifier {
     }
   }
 
-  landscapeChange() {
+  void landscapeChange() {
     isLandscape = !isLandscape;
     notifyListeners();
   }
@@ -70,35 +30,27 @@ class VideoControllers extends ChangeNotifier {
     return [if (duration.inHours > 0) hours, minutes, seconds].join(':');
   }
 
-  controllsVisibility() async {
-    isShowVideoCntrl == false ? isShowVideoCntrl = true : null;
-    notifyListeners();
-    if (isShowVideoCntrl == true) {
-      await Future.delayed(const Duration(seconds: 5));
+  void controllsVisibility() {
+    isShowVideoCntrl == false
+        ? isShowVideoCntrl = true
+        : isShowVideoCntrl = false;
 
-      isShowVideoCntrl = false;
-      notifyListeners();
-    }
+    notifyListeners();
   }
 
-  lockButtonfunction() {
+  void lockButtonfunction() {
     isLocked = !isLocked;
     isShowVideoCntrl = !isShowVideoCntrl;
     notifyListeners();
   }
 
-  isPauseButton() {
+  void isPauseButton() {
     isPlaying = false;
     notifyListeners();
   }
 
-  isPlayButton() {
+  void isPlayButton() {
     isPlaying = true;
-    notifyListeners();
-  }
-
-  videoControllersShow() {
-    isShowVideoCntrl = false;
     notifyListeners();
   }
 }

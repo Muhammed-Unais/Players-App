@@ -4,7 +4,6 @@ import 'package:lottie/lottie.dart';
 import 'package:players_app/controllers/song_folder/playlist_db_song.dart';
 import 'package:players_app/controllers/song_folder/recently_played_controller.dart';
 import 'package:players_app/controllers/video_folder/videodbplaylist.dart';
-import 'package:players_app/controllers/video_folder/videos_recently_played_controller.dart';
 import 'package:players_app/view/music/playlist/song_playlist_screen.dart';
 import 'package:players_app/view/music/favorite_songs/songfavourite_listpage.dart';
 import 'package:players_app/view/videos/playlist_videos/playlist_video_screen.dart';
@@ -133,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       ),
                     ],
                   ),
-                 const HomeVideoScreen()
+                  const HomeVideoScreen()
                 ],
               ),
             )

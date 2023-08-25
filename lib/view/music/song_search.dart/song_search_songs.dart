@@ -126,7 +126,7 @@ class _SongSearchScreenState extends State<SongSearchScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) {
-                                  return PlayinMusicScreen(
+                                  return PlayingMusicScreen(
                                     index: index,
                                     songModelList: searchCntrl.foundSongs,
                                   );

@@ -15,7 +15,6 @@ class VideoDurationController extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vidController = Provider.of<VideoControllers>(context);
     return Container(
       width: MediaQuery.of(context).size.width / 1.03,
       decoration: BoxDecoration(
@@ -32,11 +31,14 @@ class VideoDurationController extends StatelessWidget {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text(
-                vidController.videoDuration(value.position),
-                style: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold),
-              ),
+              Consumer<VideoControllers>(
+                  builder: (context, videoControllerProvider, _) {
+                return Text(
+                  videoControllerProvider.videoDuration(value.position),
+                  style: const TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                );
+              }),
               SizedBox(
                 width: MediaQuery.of(context).size.width / 1.4,
                 height: 12,
@@ -50,10 +52,15 @@ class VideoDurationController extends StatelessWidget {
                   allowScrubbing: true,
                 ),
               ),
-              Text(
-                vidController.videoDuration(controller.value.duration),
-                style: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold),
+              Consumer<VideoControllers>(
+                builder: (context, videoControllerProvider, _) {
+                  return Text(
+                    videoControllerProvider
+                        .videoDuration(controller.value.duration),
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  );
+                },
               ),
             ],
           );

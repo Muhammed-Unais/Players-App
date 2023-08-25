@@ -139,7 +139,7 @@ class AllSongs extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PlayinMusicScreen(
+                        builder: (context) => PlayingMusicScreen(
                           index: index,
                           songModelList: item.data!,
                           count: item.data!.length,

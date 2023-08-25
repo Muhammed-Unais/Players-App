@@ -23,8 +23,10 @@ class PlayVideoScreen extends StatefulWidget {
 }
 
 class _PlayVideoScreenState extends State<PlayVideoScreen> {
+  
   late VideoPlayerController controllers;
   late Future<void> _initilizeVideoPlayerFuture;
+  late VoidCallback _onControllupdatelistner;
   int isPlayingindex = -1;
 
   @override
@@ -33,7 +35,6 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
       index: widget.index,
       paths: widget.paths,
     );
-
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         addRecentVideo();
@@ -43,10 +44,12 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
   }
 
   void intializeVideo({required int index, required List<String> paths}) {
+    _onControllupdatelistner = _oncontrollUpdate;
     controllers = VideoPlayerController.file(File(paths[index]));
     _initilizeVideoPlayerFuture = controllers.initialize().then((_) {
-      controllers.addListener(_oncontrollUpdate);
+      controllers.addListener(_onControllupdatelistner);
       controllers.play();
+      controllers.setLooping(true);
       if (mounted) {
         setState(() {});
       }
@@ -55,10 +58,12 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
     isPlayingindex = index;
   }
 
-  void _oncontrollUpdate() async {
+  void _oncontrollUpdate() {
     if (!controllers.value.isInitialized) return;
     final playing = controllers.value.isPlaying;
-    context.read<VideoControllers>().isPlaying = playing;
+    if (mounted) {
+      context.read<VideoControllers>().isPlaying = playing;
+    }
   }
 
   void addRecentVideo() async {
@@ -69,9 +74,15 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
   }
 
   @override
+  void deactivate() {
+    controllers.removeListener(_onControllupdatelistner);
+    super.deactivate();
+  }
+
+  @override
   void dispose() {
     SystemChrome.setPreferredOrientations(DeviceOrientation.values);
-    controllers.removeListener(_oncontrollUpdate);
+    controllers.removeListener(_onControllupdatelistner);
     controllers.dispose();
     super.dispose();
   }
@@ -81,25 +92,21 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        final vidController = context.read<VideoControllers>();
-        if (vidController.isLocked == true) return;
-        if (pcount != count) {
-          count++;
-          await vidController.controllsVisibility();
-          pcount++;
-        }
-      },
-      child: Scaffold(
-        backgroundColor: Colors.black,
-        body: SafeArea(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: Stack(
-              children: [
-                Align(
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Stack(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  final vidController = context.read<VideoControllers>();
+                  if (vidController.isLocked == true) return;
+                  vidController.controllsVisibility();
+                },
+                child: Align(
                   alignment: Alignment.center,
                   child: FutureBuilder(
                     future: _initilizeVideoPlayerFuture,
@@ -115,47 +122,47 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
                           child: Center(
                             child: CircularProgressIndicator(
                               color: Colors.white,
-                              value: 4,
-                             ),
+                              strokeWidth: 4,
+                            ),
                           ),
                         );
                       }
                     },
                   ),
                 ),
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  left: 0,
-                  child: VideoTitleDetailWidget(
-                    videoTitle: widget.paths[isPlayingindex].split("/").last,
-                  ),
+              ),
+              Positioned(
+                top: 0,
+                right: 0,
+                left: 0,
+                child: VideoTitleDetailWidget(
+                  videoTitle: widget.paths[isPlayingindex].split("/").last,
                 ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  left: 0,
-                  child: VideoControllerWidget(
-                    controller: controllers,
-                    skipNextButton: () {
-                      final index = isPlayingindex + 1;
-                      if (index <= widget.paths.length - 1) {
-                        intializeVideo(index: index, paths: widget.paths);
-                      }
-                    },
-                    skipPreviousButton: () {
-                      final index = isPlayingindex - 1;
-                      if (index >= 0 && widget.paths.isNotEmpty) {
-                        intializeVideo(
-                          index: index,
-                          paths: widget.paths,
-                        );
-                      }
-                    },
-                  ),
-                )
-              ],
-            ),
+              ),
+              Positioned(
+                bottom: 0,
+                right: 0,
+                left: 0,
+                child: VideoControllerWidget(
+                  controller: controllers,
+                  skipNextButton: () {
+                    final index = isPlayingindex + 1;
+                    if (index <= widget.paths.length - 1) {
+                      intializeVideo(index: index, paths: widget.paths);
+                    }
+                  },
+                  skipPreviousButton: () {
+                    final index = isPlayingindex - 1;
+                    if (index >= 0 && widget.paths.isNotEmpty) {
+                      intializeVideo(
+                        index: index,
+                        paths: widget.paths,
+                      );
+                    }
+                  },
+                ),
+              )
+            ],
           ),
         ),
       ),

@@ -99,7 +99,7 @@ class SongFavouriteScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => PlayinMusicScreen(
+                                builder: (context) => PlayingMusicScreen(
                                   index: index,
                                   songModelList: favouriteMusic.favouritesSongs,
                                   count: favouriteMusic.favouritesSongs.length,

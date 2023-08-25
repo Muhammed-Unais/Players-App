@@ -106,7 +106,7 @@ class VideosPlaylistVideoList extends StatelessWidget {
     );
   }
 
- List<String> listVideoPlayList(List dates) {
+ List<String> listVideoPlayList(List<String> dates) {
     List<String> tempvideosPath = [];
 
     for (var i = 0; i < accessVideosPath.length; i++) {

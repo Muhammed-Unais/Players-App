@@ -13,8 +13,9 @@ import 'package:players_app/view/music/playing_screen/widgets/slider_bar.dart';
 import 'package:players_app/view/widgets/playing%20music%20page/playing_mu_circleavtar.dart';
 import 'package:provider/provider.dart';
 
-class PlayinMusicScreen extends StatefulWidget {
-  const PlayinMusicScreen(
+class PlayingMusicScreen extends StatefulWidget {
+  
+  const PlayingMusicScreen(
       {super.key,
       required this.songModelList,
       this.count = 0,
@@ -25,10 +26,10 @@ class PlayinMusicScreen extends StatefulWidget {
   final int index;
 
   @override
-  State<PlayinMusicScreen> createState() => _PlayinMusicScreenState();
+  State<PlayingMusicScreen> createState() => _PlayingMusicScreenState();
 }
 
-class _PlayinMusicScreenState extends State<PlayinMusicScreen> {
+class _PlayingMusicScreenState extends State<PlayingMusicScreen> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {

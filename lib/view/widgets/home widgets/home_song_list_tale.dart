@@ -71,7 +71,7 @@ class SongsListTile extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) {
-                return PlayinMusicScreen(
+                return PlayingMusicScreen(
                   songModelList: songModel,
                   index: index,
                 );
