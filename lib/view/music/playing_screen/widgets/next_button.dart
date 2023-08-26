@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:players_app/controllers/song_folder/page_manager.dart';
+import 'package:players_app/view/music/playing_screen/controllers/music_playing_control.dart';
 import 'package:players_app/view/widgets/playing%20music%20page/play_music_buttons.dart';
+import 'package:provider/provider.dart';
 
 class NextButton extends StatelessWidget {
   const NextButton({super.key});
@@ -9,14 +10,7 @@ class NextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return PlaySongButtons(
       icons: IconButton(
-          onPressed: () async {
-            if (PageManger.audioPlayer.hasNext) {
-              await PageManger.audioPlayer.seekToNext();
-              PageManger.audioPlayer.play();
-            } else {
-              PageManger.audioPlayer.play();
-            }
-          },
+          onPressed: context.read<MusicPlaying>().nextButton,
           icon: const Icon(
             Icons.skip_next,
             color: Colors.black,

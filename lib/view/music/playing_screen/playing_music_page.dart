@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:on_audio_query/on_audio_query.dart';
+import 'package:players_app/controllers/song_folder/page_manager.dart';
 import 'package:players_app/controllers/song_folder/recently_played_controller.dart';
 import 'package:players_app/view/music/playing_screen/controllers/music_playing_control.dart';
-import 'package:players_app/view/music/playing_screen/widgets/favorite_button.dart';
-import 'package:players_app/view/music/playing_screen/widgets/next_button.dart';
-import 'package:players_app/view/music/playing_screen/widgets/playbutton.dart';
-import 'package:players_app/view/music/playing_screen/widgets/previous_button.dart';
-import 'package:players_app/view/music/playing_screen/widgets/repeat_button.dart';
-import 'package:players_app/view/music/playing_screen/widgets/shuffle_button.dart';
+import 'package:players_app/view/music/playing_screen/widgets/play_next_previous_buttons.dart';
+import 'package:players_app/view/music/playing_screen/widgets/shffle_repeat_fav_bottons.dart';
 import 'package:players_app/view/music/playing_screen/widgets/slider_bar.dart';
 import 'package:players_app/view/widgets/playing%20music%20page/playing_mu_circleavtar.dart';
 import 'package:provider/provider.dart';
 
 class PlayingMusicScreen extends StatefulWidget {
-  
   const PlayingMusicScreen(
       {super.key,
       required this.songModelList,
@@ -49,17 +45,19 @@ class _PlayingMusicScreenState extends State<PlayingMusicScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.arrow_back),
-            color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+        ),
         title: Text(
           "NOW PLAYING",
           style: GoogleFonts.roboto(
@@ -70,111 +68,103 @@ class _PlayingMusicScreenState extends State<PlayingMusicScreen> {
         ),
         centerTitle: true,
       ),
-      // =============Body==================
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Consumer<MusicPlaying>(builder: (context, musicPlaying, _) {
-          final songsModel = widget.songModelList[musicPlaying.currentIndex];
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 30,
-              ),
-              // ==============Circle Avatar===============
-              PlayinMusicCircleAvatar(songs: songsModel),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                alignment: Alignment.center,
-                child: Text(
+        child: Consumer<MusicPlaying>(
+          builder: (context, musicPlaying, _) {
+            final songsModel = widget.songModelList[musicPlaying.currentIndex];
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: size.height * 0.03),
+                PlayinMusicCircleAvatar(songs: songsModel),
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    songsModel.displayNameWOExt,
+                    style: GoogleFonts.roboto(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: size.height * 0.01,
+                ),
+                Text(
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
-                  songsModel.displayNameWOExt,
+                  songsModel.artist.toString() == "<unknown>"
+                      ? "Unknown Artist"
+                      : songsModel.artist.toString(),
                   style: GoogleFonts.roboto(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w800,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
                     color: Colors.white,
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                songsModel.artist.toString() == "<unknown>"
-                    ? "Unknown Artist"
-                    : songsModel.artist.toString(),
-                style: GoogleFonts.roboto(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
+                SizedBox(
+                  height: size.height * 0.05,
                 ),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              // ================Slider Progress Bar Time================
-              SliderBar(
-                value: musicPlaying.position.inSeconds.toDouble(),
-                function: (value) => musicPlaying.changeSlider(value),
-                max: musicPlaying.duration.inSeconds.toDouble(),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    musicPlaying.position.toString().substring(2, 7),
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  Text(
-                    musicPlaying.duration.toString().substring(2, 7),
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              // =============Previous Button=================
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const PreviousButton(),
-                  // =============Play&puase=================
-                  PlayPausebutton(
-                    isPlaying: musicPlaying.isPlaying,
-                    function: () => musicPlaying.playButton(),
-                  ),
-                  // =============Next Song=================
-                  const NextButton(),
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const ShuffleButton(),
-                  //====================== repeat Button ===============
-                  const RepeatButton(),
-                  // ===================Favorite Button======================
-                  FavoriteButton(
-                    songModelList: widget.songModelList,
-                    currentIndex: musicPlaying.currentIndex,
-                  )
-                ],
-              )
-            ],
-          );
-        }),
+                StreamBuilder<Duration?>(
+                  stream: PageManger.audioPlayer.positionStream,
+                  builder: (context, snapshot) {
+                    return SliderBar(
+                      value: snapshot.data?.inSeconds.toDouble() ?? 0.0,
+                      function: (value) => musicPlaying.changeSlider(value),
+                      max: musicPlaying.duration.inSeconds.toDouble(),
+                    );
+                  },
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    StreamBuilder<Duration?>(
+                      stream: PageManger.audioPlayer.positionStream,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          );
+                        }
+                        return Text(
+                          snapshot.data.toString().trim().substring(2, 7),
+                          style: const TextStyle(color: Colors.white),
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: size.height * 0.03,
+                    ),
+                    Text(
+                      musicPlaying.duration.toString().substring(2, 7),
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: size.height * 0.03,
+                ),
+                const PlayNextPreviousButtons(),
+                SizedBox(
+                  height: size.height * 0.03,
+                ),
+                ShuffleRepeatFavouriteButtons(
+                  songModelList: widget.songModelList,
+                  index: musicPlaying.currentIndex,
+                )
+              ],
+            );
+          },
+        ),
       ),
     );
   }

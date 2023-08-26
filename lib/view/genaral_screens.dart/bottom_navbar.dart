@@ -19,13 +19,17 @@ class _BottomNavBarState extends State<BottomNavBar> {
   ];
 
   int currentIndex = 0;
-  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: screens.elementAt(currentIndex),
-      bottomNavigationBar: SizedBox(
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          border: Border(
+            top: BorderSide(color: Colors.grey,width: 0.3),
+          ),
+        ),
         height: 60,
         child: BottomNavigationBar(
           backgroundColor: Colors.white,

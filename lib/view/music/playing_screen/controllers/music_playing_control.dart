@@ -17,28 +17,47 @@ class MusicPlaying extends ChangeNotifier {
   bool _isPlaying = true;
   bool get isPlaying => _isPlaying;
 
-  playButton() {
+  void previousButton() async {
+    _isPlaying = true;
+    if (PageManger.audioPlayer.hasPrevious) {
+      await PageManger.audioPlayer.seekToPrevious();
+      PageManger.audioPlayer.play();
+    } else {
+      PageManger.audioPlayer.play();
+    }
+    notifyListeners();
+  }
+
+  void nextButton() async {
+    _isPlaying = true;
+
+    if (PageManger.audioPlayer.hasNext) {
+      await PageManger.audioPlayer.seekToNext();
+      PageManger.audioPlayer.play();
+    } else {
+      PageManger.audioPlayer.play();
+    }
+    notifyListeners();
+  }
+
+  void playButton() {
     if (PageManger.audioPlayer.playing) {
       PageManger.audioPlayer.pause();
     } else {
       PageManger.audioPlayer.play();
     }
-    _isPlaying = !_isPlaying;
-  }
-
-  void changeToSeconds(int seconds) {
-    Duration duration = Duration(seconds: seconds);
-    PageManger.audioPlayer.seek(duration);
-  }
-
-  void changeSlider(double value) {
-    changeToSeconds(value.toInt());
-    value = value;
+    _isPlaying = PageManger.audioPlayer.playing;
     notifyListeners();
   }
 
-  //  ==============  //
+  void changeSlider(double value) {
+    Duration duration = Duration(seconds: value.toInt());
+    PageManger.audioPlayer.seek(duration);
+  }
+
   void initState(songModelList, count) {
+    _isPlaying = true;
+
     PageManger.audioPlayer.currentIndexStream.listen(
       (index) {
         if (index != null) {
@@ -63,7 +82,6 @@ class MusicPlaying extends ChangeNotifier {
     PageManger.audioPlayer.positionStream.listen((p) {
       _position = p;
     });
-    notifyListeners();
   }
 
   @override

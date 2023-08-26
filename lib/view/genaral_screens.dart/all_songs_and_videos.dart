@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconly/iconly.dart';
 import 'package:players_app/view/music/song_search.dart/song_search_songs.dart';
 
 import 'package:players_app/view/widgets/allsongs_and_videos%20Widgets/allsongs.dart';
@@ -93,7 +94,7 @@ class _AllSongsAndVideosScreenState extends State<AllSongsAndVideosScreen>
                     children: [
                       Text(
                         myIndex == 0 ? "All Songs" : "All Videos",
-                        style: GoogleFonts.roboto(
+                        style: GoogleFonts.raleway(
                           fontSize: 22,
                           fontWeight: FontWeight.w900,
                           color: Colors.white,
@@ -112,10 +113,7 @@ class _AllSongsAndVideosScreenState extends State<AllSongsAndVideosScreen>
                             ),
                           );
                         },
-                        icon: const Icon(
-                          Icons.search,
-                          color: Colors.white,
-                        ),
+                        icon: const Icon(IconlyBold.search,color: Colors.white,),
                       )
                     ],
                   ),

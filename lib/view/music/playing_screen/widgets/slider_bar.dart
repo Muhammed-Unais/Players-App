@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
 class SliderBar extends StatelessWidget {
-  const SliderBar({super.key, required this.value, required this.function, required this.max});
+  const SliderBar(
+      {super.key,
+      required this.value,
+      required this.function,
+      required this.max});
 
   final double value;
   final double max;
-  final Function(double) function;
+  final void Function(double) function;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,7 @@ class SliderBar extends StatelessWidget {
           value: value,
           onChanged: function,
           min: 0.0,
-          max:max,
+          max: max,
           inactiveColor: Colors.grey,
           activeColor: Colors.white,
         ),

@@ -13,7 +13,9 @@ class ListtaleModelVidSong extends StatelessWidget {
       required this.onTap,
       required this.leading,
       required this.title,
-      this.subtitle, this.trailingOne,this.trailingTwo});
+      this.subtitle,
+      this.trailingOne,
+      this.trailingTwo});
 
   @override
   Widget build(BuildContext context) {
@@ -23,26 +25,30 @@ class ListtaleModelVidSong extends StatelessWidget {
       leading: leading,
       title: Text(
         title,
-        style: GoogleFonts.roboto(
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-          color: Colors.black,
-        ),overflow: TextOverflow.ellipsis
-      ),
-      subtitle: Text(
-        subtitle==null ?"":subtitle!,
-        style: GoogleFonts.roboto(
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
+        style: GoogleFonts.raleway(
+          fontSize: 15,
+          fontWeight: FontWeight.w600,
           color: Colors.black,
         ),
+        overflow: TextOverflow.ellipsis,
+        maxLines: 2,
+      ),
+      subtitle: Text(
+        subtitle == null ? "" : subtitle!,
+        style: GoogleFonts.raleway(
+          fontSize: 13,
+          fontWeight: FontWeight.w600,
+          color: Colors.grey,
+        ),
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
       ),
       trailing: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
-        children:  [
-          trailingOne==null ?const SizedBox():trailingOne!,
-          trailingTwo==null ?const SizedBox():trailingTwo!
+        children: [
+          trailingOne == null ? const SizedBox() : trailingOne!,
+          trailingTwo == null ? const SizedBox() : trailingTwo!
         ],
       ),
     );

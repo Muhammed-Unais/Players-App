@@ -83,6 +83,8 @@ class AllSongs extends StatelessWidget {
                       ? "Unknown Artist"
                       : item.data![index].artist!,
 
+                     
+
                   //=============== favorite adding screen======================//
                   trailingOne: Consumer<FavouriteSongDb>(
                     builder: (context, favoriteMusic, _) {
