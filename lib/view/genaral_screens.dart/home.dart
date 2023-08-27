@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 labelColor: Colors.black,
                 labelStyle: GoogleFonts.raleway(
                   fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
                   color: Colors.black,
                 ),
                 controller: tabController,
@@ -123,7 +123,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           return recentlySongsProvider.recentSongs.isEmpty
                               ? const Center(
                                   child: CircularProgressIndicator(
-                                      color: Colors.black),
+                                    color: Colors.black,
+                                  ),
                                 )
                               : HomeSongSection(
                                   recentSongsProvider: recentlySongsProvider,

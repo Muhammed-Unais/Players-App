@@ -26,6 +26,7 @@ class FavouritesCards extends StatelessWidget {
     return Stack(
       children: [
         Container(
+          margin: const EdgeInsets.only(bottom: 10),
           height: height,
           width: width,
           decoration: BoxDecoration(

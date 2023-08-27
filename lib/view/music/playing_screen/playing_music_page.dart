@@ -115,6 +115,13 @@ class _PlayingMusicScreenState extends State<PlayingMusicScreen> {
                 StreamBuilder<Duration?>(
                   stream: PageManger.audioPlayer.positionStream,
                   builder: (context, snapshot) {
+                    if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          );
+                        }
                     return SliderBar(
                       value: snapshot.data?.inSeconds.toDouble() ?? 0.0,
                       function: (value) => musicPlaying.changeSlider(value),
@@ -144,9 +151,21 @@ class _PlayingMusicScreenState extends State<PlayingMusicScreen> {
                     SizedBox(
                       height: size.height * 0.03,
                     ),
-                    Text(
-                      musicPlaying.duration.toString().substring(2, 7),
-                      style: const TextStyle(color: Colors.white),
+                    StreamBuilder<Duration?>(
+                      stream: PageManger.audioPlayer.durationStream,
+                      builder: (context, snapshot) {
+                         if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          );
+                        }
+                        return Text(
+                          snapshot.data.toString().substring(2, 7),
+                          style: const TextStyle(color: Colors.white),
+                        );
+                      }
                     ),
                   ],
                 ),

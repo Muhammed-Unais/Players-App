@@ -57,7 +57,6 @@ class MusicPlaying extends ChangeNotifier {
 
   void initState(songModelList, count) {
     _isPlaying = true;
-
     PageManger.audioPlayer.currentIndexStream.listen(
       (index) {
         if (index != null) {
@@ -71,7 +70,6 @@ class MusicPlaying extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Playing audio function
   void playSong() async {
     PageManger.audioPlayer.play();
     PageManger.audioPlayer.durationStream.listen((d) {
@@ -82,6 +80,7 @@ class MusicPlaying extends ChangeNotifier {
     PageManger.audioPlayer.positionStream.listen((p) {
       _position = p;
     });
+    notifyListeners();
   }
 
   @override
