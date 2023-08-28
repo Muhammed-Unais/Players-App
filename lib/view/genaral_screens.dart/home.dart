@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:players_app/controllers/song_folder/playlist_db_song.dart';
-import 'package:players_app/controllers/song_folder/recently_played_controller.dart';
 import 'package:players_app/controllers/video_folder/videodbplaylist.dart';
 import 'package:players_app/view/music/playlist/song_playlist_screen.dart';
 import 'package:players_app/view/music/favorite_songs/songfavourite_listpage.dart';
@@ -46,99 +45,78 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     )
   ];
 
+  late TabController tabController;
+
   @override
   void initState() {
-    initializeRecentSongs();
-    Provider.of<PlaylistDbSong>(context, listen: false).getAllPlaylists();
-    Provider.of<PlaylistVideoDb>(context, listen: false).getAllPlaylistVideos();
+    tabController = TabController(length: 2, vsync: this);
+    context.read<PlaylistDbSong>().getAllPlaylists();
+    context.read<PlaylistVideoDb>().getAllPlaylistVideos();
     super.initState();
   }
 
-  Future<void> initializeRecentSongs() async {
-    var recentlySongsProvider = context.read<RecentlyPlayedSongsController>();
-    if (!recentlySongsProvider.isIntialize) {
-      await context
-          .read<RecentlyPlayedSongsController>()
-          .initializRecentSongs();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    TabController tabController = TabController(length: 2, vsync: this);
     final hight = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const HomeAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16),
-        child: Column(
-          children: [
-            FavouriteAndPlaylistButton(
-              hight: hight,
-              navigateScreen: navigateScreen,
-              width: width,
-              items: items,
-              icons: icons,
+      body: Column(
+        children: [
+          FavouriteAndPlaylistButton(
+            hight: hight,
+            navigateScreen: navigateScreen,
+            width: width,
+            items: items,
+            icons: icons,
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TabBar(
+              padding: const EdgeInsets.only(left: 16),
+              isScrollable: true,
+              labelPadding: const EdgeInsets.only(left: 4, right: 16),
+              unselectedLabelColor: Colors.grey,
+              labelColor: Colors.black,
+              labelStyle: GoogleFonts.raleway(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: Colors.black,
+              ),
+              controller: tabController,
+              indicator:
+                  const CircleTabIndicator(color: Colors.black, radius: 3),
+              tabs: const [
+                Tab(text: "Recent songs"),
+                Tab(text: "Recent videos"),
+              ],
             ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: TabBar(
-                isScrollable: true,
-                labelPadding: const EdgeInsets.only(left: 4, right: 16),
-                unselectedLabelColor: Colors.grey,
-                labelColor: Colors.black,
-                labelStyle: GoogleFonts.raleway(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black,
+          ),
+          const SizedBox(height: 14),
+          Expanded(
+            child: TabBarView(
+              controller: tabController,
+              children: [
+                Stack(
+                  children: [
+                    Center(
+                      child: SizedBox(
+                        height: 500,
+                        width: 500,
+                        child: Lottie.asset("assets/images/homesong.json",
+                            animate: true),
+                      ),
+                    ),
+                    const HomeSongSection(),
+                  ],
                 ),
-                controller: tabController,
-                indicator:
-                    const CircleTabIndicator(color: Colors.black, radius: 3),
-                tabs: const [
-                  Tab(text: "Recent songs"),
-                  Tab(text: "Recent videos"),
-                ],
-              ),
+                const HomeVideoScreen()
+              ],
             ),
-            const SizedBox(height: 14),
-            Expanded(
-              child: TabBarView(
-                controller: tabController,
-                children: [
-                  Stack(
-                    children: [
-                      Center(
-                        child: SizedBox(
-                          height: 500,
-                          width: 500,
-                          child: Lottie.asset("assets/images/homesong.json",
-                              animate: true),
-                        ),
-                      ),
-                      Consumer<RecentlyPlayedSongsController>(
-                        builder: (context, recentlySongsProvider, _) {
-                          return recentlySongsProvider.recentSongs.isEmpty
-                              ? const Center(
-                                  child: CircularProgressIndicator(
-                                    color: Colors.black,
-                                  ),
-                                )
-                              : HomeSongSection(
-                                  recentSongsProvider: recentlySongsProvider,
-                                );
-                        },
-                      ),
-                    ],
-                  ),
-                  const HomeVideoScreen()
-                ],
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

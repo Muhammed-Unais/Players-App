@@ -8,14 +8,13 @@ import 'package:players_app/model/db/videodb_model.dart';
 import 'package:players_app/view/videos/playlist_videos/videos_playlist_videos_list.dart';
 import 'package:players_app/view/widgets/explore_widgets/favourites_cards.dart';
 import 'package:players_app/view/widgets/playlist_scree.dart/playlist_popup.dart';
+import 'package:provider/provider.dart';
 
 class VideoPlaylistScreen extends StatelessWidget {
   final int? vindex;
   final bool addedVideosShoworNot;
   const VideoPlaylistScreen(
       {super.key, this.vindex, required this.addedVideosShoworNot});
-
-  // This is the screen of video playlist folder showing and navigate from explore viewmore and allvideo page
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +33,6 @@ class VideoPlaylistScreen extends StatelessWidget {
         backgroundColor: Colors.black,
         child: const Icon(Icons.playlist_add),
         onPressed: () {
-          // ============For Creation and isforVideo============
           NewOrEditPlaylist.newPlaylistAdd(
               titile: "Create Playlist",
               isCreate: true,
@@ -57,47 +55,41 @@ class VideoPlaylistScreen extends StatelessWidget {
                   ),
                 )
               : ListView.builder(
+                  padding: const EdgeInsets.only(
+                      left: 16, right: 16, top: 10, bottom: 10),
                   itemBuilder: (context, index) {
                     final vidDatas = videosPlaylist.values.toList()[index];
                     final editedExisitVideos = vidDatas.path;
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          // ===========videoAddingfunction form all videos Vindex from allvideos selected video index===================
-
-                          addedVideosShoworNot == true
-                              ? Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return VideosPlaylistVideoList(
-                                        videoPlaylistFoldermodel: vidDatas,
-                                        findex: index,
-                                      );
-                                    },
-                                  ),
-                                )
-                              : VideoAddToPlaylist.videoAddToPlaylist(
-                                  accessVideosPath[vindex!], vidDatas, context);
-                        },
-                        child: FavouritesCards(
-                          image:
-                              "assets/images/pexels-dmitry-demidov-6764885.jpg",
-                          cardtext: vidDatas.name,
-                          height: MediaQuery.of(context).size.height / 10,
-                          width: MediaQuery.of(context).size.width,
-                          change: true,
-                          firstIcon: Icons.playlist_add_check_outlined,
-                          trailingicons: Icons.more_vert,
-                          moreVertPopupicon:
-                              //========== For Update and delete and isForVideo================
-                              editAndDeleteDialoge(
-                            isforSong: false,
-                            ctx: context,
-                            index: index,
-                            test: editedExisitVideos,
-                          ),
+                    return GestureDetector(
+                      onTap: () {
+                        addedVideosShoworNot == true
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return VideosPlaylistVideoList(
+                                      videoPlaylistFoldermodel: vidDatas,
+                                      findex: index,
+                                    );
+                                  },
+                                ),
+                              )
+                            : VideoAddToPlaylist.videoAddToPlaylist(
+                                accessVideosPath[vindex!],
+                                vidDatas,
+                                context);
+                      },
+                      child: FavouritesCards(
+                        cardtext: vidDatas.name,
+                        height: MediaQuery.of(context).size.height / 10,
+                        width: MediaQuery.of(context).size.width,
+                        firstIcon: Icons.video_collection_sharp,
+                        trailingicons: Icons.more_vert,
+                        moreVertPopupicon: editAndDeleteDialoge(
+                          isforSong: false,
+                          ctx: context,
+                          index: index,
+                          test: editedExisitVideos,
                         ),
                       ),
                     );

@@ -27,7 +27,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
           border: Border(
-            top: BorderSide(color: Colors.grey,width: 0.3),
+            top: BorderSide(color: Colors.grey,width: 0.4),
           ),
         ),
         height: 60,

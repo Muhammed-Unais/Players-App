@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 import 'package:players_app/view/music/song_search.dart/song_search_songs.dart';
-
 import 'package:players_app/view/widgets/allsongs_and_videos%20Widgets/allsongs.dart';
 import 'package:players_app/view/widgets/allsongs_and_videos%20Widgets/allvideos.dart';
 import 'package:players_app/view/widgets/allsongs_and_videos%20Widgets/tabbar_allsongsandvideos.dart';
@@ -31,7 +29,6 @@ class _AllSongsAndVideosScreenState extends State<AllSongsAndVideosScreen>
       initialIndex: widget.index,
     );
     tabController.addListener(_handleTabBarSelection);
-    tabController.notifyListeners();
     super.initState();
   }
 
@@ -56,78 +53,56 @@ class _AllSongsAndVideosScreenState extends State<AllSongsAndVideosScreen>
       initialIndex: widget.index,
       length: 2,
       child: Scaffold(
-        backgroundColor: Colors.black,
-        appBar: PreferredSize(
-          preferredSize: const Size.square(200),
-          child: Stack(
-            children: [
-              Container(
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(width: 0.3, color: Colors.black),
+        backgroundColor: Colors.white,
+        body: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) {
+            return [
+              SliverAppBar(
+                backgroundColor: Colors.white,
+                pinned: true,
+                expandedHeight: 200,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Image.asset(
+                    myIndex == 0
+                        ? "assets/images/wepik-export-20230828135001zGdl.png"
+                        : "assets/images/wepik-export-20230828192147Ve8k.png",
+                    fit: BoxFit.cover,
                   ),
-                  image: DecorationImage(
-                      image:
-                          AssetImage("assets/images/pexels-pixabay-210766.jpg"),
-                      fit: BoxFit.cover),
                 ),
-                child: AppBar(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  bottom: PreferredSize(
-                    preferredSize: const Size.fromHeight(0),
-                    child: TabbarAllSongsVideos(
-                      tabController: tabController,
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return SongSearchScreen(
+                              isSong: myIndex == 0 ? true : false,
+                            );
+                          },
+                        ),
+                      );
+                    },
+                    icon: const Icon(
+                      IconlyBold.search,
+                      color: Colors.black,
                     ),
                   ),
+                ],
+                bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(40),
+                  child: TabbarAllSongsVideos(tabController: tabController),
                 ),
-              ),
-              Positioned(
-                top: 70,
-                left: 20,
-                right: 10,
-                child: SizedBox(
-                  // color: Colors.black,
-                  width: MediaQuery.of(context).size.width,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        myIndex == 0 ? "All Songs" : "All Videos",
-                        style: GoogleFonts.raleway(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w900,
-                          color: Colors.white,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return SongSearchScreen(
-                                  isSong: myIndex == 0 ? true : false,
-                                );
-                              },
-                            ),
-                          );
-                        },
-                        icon: const Icon(IconlyBold.search,color: Colors.white,),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              )
+            ];
+          },
+          body: TabBarView(
+            controller: tabController,
+            children: const [
+              AllSongs(),
+              AllVidoes(),
             ],
           ),
-        ),
-        body: TabBarView(
-          controller: tabController,
-          children: const [
-            AllSongs(),
-            AllVidoes(),
-          ],
         ),
       ),
     );

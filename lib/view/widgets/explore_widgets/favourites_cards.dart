@@ -2,70 +2,66 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FavouritesCards extends StatelessWidget {
-  final String image;
   final String cardtext;
   final double height;
   final double width;
-  final bool change;
+
   final IconData? firstIcon;
   final IconData? trailingicons;
   final Widget? moreVertPopupicon;
   const FavouritesCards({
     super.key,
-    required this.image,
     required this.cardtext,
     required this.height,
     required this.width,
-    required this.change,
     this.trailingicons,
-    this.firstIcon, this.moreVertPopupicon,
+    this.firstIcon,
+    this.moreVertPopupicon,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          margin: const EdgeInsets.only(bottom: 10),
-          height: height,
-          width: width,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage(image),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      height: height,
+      width: width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.0),
+        gradient: const LinearGradient(
+          colors: [Color(0xffb9b9b9), Color(0xffe8edef)],
+          stops: [0, 1],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            blurRadius: 0.1,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Stack(
+        children: [
+          Positioned(
+            left: 16,
+            bottom: 26,
+            top: 26,
+            child: Icon(firstIcon, color: Colors.black, size: 24),
+          ),
+          Center(
+            child: Text(
+              cardtext,
+              style:GoogleFonts.raleway(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black,
+                ),
             ),
           ),
-        ),
-        Positioned(
-          left: 16,
-          top: 16,
-          child: change == false
-              ? Icon(
-                  firstIcon,
-                  color: Colors.white,
-                  size: 16,
-                )
-              : Icon(firstIcon, color: Colors.white, size: 20),
-        ),
-        Positioned(
-          bottom: 16,
-          left: 16,
-          child: Text(
-            cardtext,
-            style: GoogleFonts.raleway(
-                fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white),
-          ),
-        ),
-        Positioned(
-          right: 12,
-          top: 16,
-          bottom: 16,
-          child: change == true
-              ? moreVertPopupicon!
-              : const SizedBox(),
-        ),
-      ],
+          Positioned(right: 12, top: 16, bottom: 16, child: moreVertPopupicon!),
+        ],
+      ),
     );
   }
 }

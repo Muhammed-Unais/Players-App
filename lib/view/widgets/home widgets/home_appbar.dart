@@ -11,6 +11,12 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      shape: const Border(
+        bottom: BorderSide(
+          color: Colors.grey,
+          width: 0.4,
+        ),
+      ),
       backgroundColor: Colors.white,
       elevation: 0,
       actions: [
@@ -29,7 +35,7 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
             padding: EdgeInsets.only(right: 16),
             child: Icon(
               IconlyBold.setting,
-              color:Colors.black,
+              color: Colors.black,
               weight: 20,
             ),
           ),

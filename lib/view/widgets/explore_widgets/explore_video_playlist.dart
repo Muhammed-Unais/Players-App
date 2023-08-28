@@ -12,24 +12,24 @@ class ExploreVidoePlaylist extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Consumer<PlaylistVideoDb>(
       builder: (context, value, _) {
         return value.videoPlaylistNotifier.isEmpty
-            ? const Center(
-                child: Text(
-                  "Create Your Video Playlist",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              )
+            ?  Center(
+              child: SizedBox(
+                height: size.height*0.4,
+                width: size.width*0.8,
+                child: Image.asset("assets/images/Add files-rafiki.png"),
+              ),
+            )
             : ListView.builder(
+                padding: const EdgeInsets.only(left: 16, right: 16),
                 itemCount: value.videoPlaylistNotifier.length > 6
                     ? 6
                     : value.videoPlaylisdb.length,
                 itemBuilder: (context, index) {
-                  final editedVideosExisist =
+                  var editedVideosExisist =
                       value.videoPlaylistNotifier[index].path;
                   return InkWell(
                     onTap: () {
@@ -37,21 +37,23 @@ class ExploreVidoePlaylist extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return index==5?  const VideoPlaylistScreen(
-                            addedVideosShoworNot: true,
-                          ):VideosPlaylistVideoList(
-                              findex: index,
-                              videoPlaylistFoldermodel:
-                                  value.videoPlaylistNotifier[index],
-                            );
+                            return index == 5
+                                ? const VideoPlaylistScreen(
+                                    addedVideosShoworNot: true,
+                                  )
+                                : VideosPlaylistVideoList(
+                                    findex: index,
+                                    videoPlaylistFoldermodel:
+                                        value.videoPlaylistNotifier[index],
+                                  );
                           },
                         ),
                       );
                     },
                     child: index == 5
                         ? SizedBox(
-                            height: MediaQuery.of(context).size.height / 10,
-                            width: MediaQuery.of(context).size.width,
+                            height: size.height / 10,
+                            width: size.width,
                             child: Center(
                               child: Text(
                                 "View More",
@@ -64,14 +66,11 @@ class ExploreVidoePlaylist extends StatelessWidget {
                             ),
                           )
                         : FavouritesCards(
-                            firstIcon: Icons.playlist_add_check_outlined,
+                            firstIcon: Icons.video_collection_sharp,
                             trailingicons: Icons.more_vert,
-                            change: true,
                             cardtext: value.videoPlaylistNotifier[index].name,
-                            height: MediaQuery.of(context).size.height / 10,
-                            width: MediaQuery.of(context).size.width,
-                            image:
-                                "assets/images/pexels-dmitry-demidov-6764885.jpg",
+                            height: size.height * 0.095,
+                            width: size.width,
                             moreVertPopupicon: editAndDeleteDialoge(
                               test: editedVideosExisist,
                               isforSong: false,

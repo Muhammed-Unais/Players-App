@@ -71,8 +71,8 @@ class VideosPlaylistVideoList extends StatelessWidget {
                       child: ListtaleModelVidSong(
                         leading: thumbnail(
                             path: videosinPlaylistFolder[index],
-                            width: double.infinity,
-                            hight: double.infinity),
+                            width: 100,
+                            hight: 100),
                         title: videosinPlaylistFolder[index]
                             .toString()
                             .split('/')

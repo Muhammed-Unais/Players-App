@@ -11,7 +11,7 @@ class PageManger {
       songList.add(
         AudioSource.uri(
           tag: currerentIndexes,
-          Uri.parse(element.uri!),
+          Uri.parse(element.uri??""),
         ),
       );
     }

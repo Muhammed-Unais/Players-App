@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:players_app/controllers/song_folder/recently_played_controller.dart';
+import 'package:players_app/controllers/video_folder/access_folder/access_video.dart';
 import 'package:players_app/controllers/video_folder/videos_recently_played_controller.dart';
 import 'package:players_app/model/db/recently_played_songs_model.dart';
 import 'package:players_app/model/db/recently_played_videos_model.dart';
@@ -39,7 +40,7 @@ void main() async {
     Hive.registerAdapter(RecentlyPlayedSongsModelAdapter());
   }
 
-   if (!Hive.isAdapterRegistered(RecentlyPlayedVideosModelAdapter().typeId)) {
+  if (!Hive.isAdapterRegistered(RecentlyPlayedVideosModelAdapter().typeId)) {
     Hive.registerAdapter(RecentlyPlayedVideosModelAdapter());
   }
 
@@ -84,9 +85,9 @@ void main() async {
         ChangeNotifierProvider(
           create: (context) => RecentlyPlayedSongsController(),
         ),
-         ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (context) => VideosRecentlyPlayedController(),
-        )
+        ),
       ],
       child: MaterialApp(
         initialRoute: "spalshScreen",

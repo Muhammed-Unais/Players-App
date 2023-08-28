@@ -29,9 +29,20 @@ class _HomeVideoScreenState extends State<HomeVideoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Consumer<VideosRecentlyPlayedController>(
         builder: (context, recentVideoProvider, _) {
+      if (recentVideoProvider.recentVidoes.isEmpty) {
+        return Center(
+          child: SizedBox(
+            height: size.height * 0.4,
+            width: size.width * 0.8,
+            child: Image.asset("assets/images/Press pause-rafiki.png"),
+          ),
+        );
+      }
       return ListView.builder(
+        padding: const EdgeInsets.only(left: 16, right: 16),
         itemCount: recentVideoProvider.recentVidoes.length,
         itemBuilder: (context, index) {
           return Card(

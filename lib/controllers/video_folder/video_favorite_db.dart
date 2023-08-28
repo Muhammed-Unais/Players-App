@@ -4,7 +4,6 @@ import 'package:players_app/controllers/video_folder/access_folder/access_video.
 import 'package:players_app/model/db/videodb_model.dart';
 
 class VideoFavoriteDb extends ChangeNotifier {
-
   bool isIntialized = false;
 
   final videoDb = Hive.box<String>('VideoFavoriteDB');
@@ -13,12 +12,11 @@ class VideoFavoriteDb extends ChangeNotifier {
 
   List<PlayersVideoFavoriteModel> get videoFavoriteDb => _videoFavoriteDb;
 
-  void intialize(PlayersVideoFavoriteModel value) {
-
-    if (isVideoFavor(value)) {
-      _videoFavoriteDb.add(value);
+  void intialize(PlayersVideoFavoriteModel video) {
+    if (isVideoFavor(video)) {
+      _videoFavoriteDb.add(video);
     }
-    
+
     isIntialized = true;
   }
 

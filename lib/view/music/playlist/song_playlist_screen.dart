@@ -2,30 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:players_app/controllers/song_and_video_playlistfolder/new_or_edit_playlist.dart';
 import 'package:players_app/controllers/song_and_video_playlistfolder/song_addto_playlist.dart';
+import 'package:players_app/controllers/song_folder/page_manager.dart';
 import 'package:players_app/controllers/song_folder/playlist_db_song.dart';
 import 'package:players_app/view/music/playlist/added_playlistsongs.dart';
 import 'package:players_app/view/widgets/explore_widgets/favourites_cards.dart';
-import 'package:players_app/view/widgets/home%20widgets/home_songs_section.dart';
 import 'package:players_app/view/widgets/playlist_scree.dart/playlist_popup.dart';
 import 'package:provider/provider.dart';
 
 GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
 class SongPlaylistScreen extends StatelessWidget {
-  // final SongModel? addtoPlaylist;
-
-  // ================This the Song Playlist screen and Navigate from allsongs and explore view more page=================
   final int? findex;
-  // this bool value for navigate to added song page or not explore viewmore navigate and allsongs page didnot navigate
   final bool playlistSongsShowornot;
   const SongPlaylistScreen({
     super.key,
-    // this.addtoPlaylist,
     this.findex,
     required this.playlistSongsShowornot,
   });
 
-  // =============PlaylistFolders ShowingScreen=========
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +36,6 @@ class SongPlaylistScreen extends StatelessWidget {
         backgroundColor: Colors.black,
         child: const Icon(Icons.playlist_add),
         onPressed: () {
-          // ===========Playlist Adding Dialougebox and DB adding Function==========
           NewOrEditPlaylist.newPlaylistAdd(
               isSong: true,
               isCreate: true,
@@ -50,11 +43,7 @@ class SongPlaylistScreen extends StatelessWidget {
               context: context);
         },
       ),
-      // ============Value listanble Builder From PlaylistDBSong=========
-      body: 
-      // ValueListenableBuilder(
-      //   valueListenable: Hive.box<Playersmodel>('SongPlaylistDB').listenable(),
-      Consumer<PlaylistDbSong>(
+      body: Consumer<PlaylistDbSong>(
         builder: (context, musicplaylist, _) {
           return musicplaylist.texteditngcontroller.isEmpty
               ? Center(
@@ -67,6 +56,8 @@ class SongPlaylistScreen extends StatelessWidget {
                   ),
                 )
               : ListView.builder(
+                  padding: const EdgeInsets.only(
+                      left: 16, right: 16, top: 10, bottom: 10),
                   itemCount: musicplaylist.texteditngcontroller.length,
                   itemBuilder: (
                     context,
@@ -74,42 +65,34 @@ class SongPlaylistScreen extends StatelessWidget {
                   ) {
                     final datas = musicplaylist.texteditngcontroller[index];
                     final List<int> test = datas.songid;
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          // ==============Add Songs To Playlist folder==============
-
-                          playlistSongsShowornot == true
-                              ? Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return PlaylistSongsList(
-                                        playlist: datas,
-                                        findex: index,
-                                      );
-                                    },
-                                  ),
-                                )
-                              : SongAddtoPlaylist.songAddToPlaylist(
-                                  songmodel[findex!], datas, context);
-                        },
-                        child: FavouritesCards(
-                          cardtext: datas.name,
-                          change: true,
-                          height: MediaQuery.of(context).size.height / 10,
-                          width: MediaQuery.of(context).size.width,
-                          image: "assets/images/pexels-pixabay-210766.jpg",
-                          firstIcon: Icons.playlist_add_check_outlined,
-                          trailingicons: Icons.more_vert,
-                          moreVertPopupicon: editAndDeleteDialoge(
-                            isforSong: true,
-                            ctx: context,
-                            index: index,
-                            test: test,
-                          ),
-                          //==========Edit and Delete Dialoge Box================
+                    return GestureDetector(
+                      onTap: () {
+                        playlistSongsShowornot == true
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return PlaylistSongsList(
+                                      playlist: datas,
+                                      findex: index,
+                                    );
+                                  },
+                                ),
+                              )
+                            : SongAddtoPlaylist.songAddToPlaylist(
+                                PageManger.songscopy[findex!], datas, context);
+                      },
+                      child: FavouritesCards(
+                        cardtext: datas.name,
+                        height: MediaQuery.of(context).size.height / 10,
+                        width: MediaQuery.of(context).size.width,
+                        firstIcon: Icons.library_music_sharp,
+                        trailingicons: Icons.more_vert,
+                        moreVertPopupicon: editAndDeleteDialoge(
+                          isforSong: true,
+                          ctx: context,
+                          index: index,
+                          test: test,
                         ),
                       ),
                     );
@@ -120,16 +103,3 @@ class SongPlaylistScreen extends StatelessWidget {
     );
   }
 }
-
-
-
-// ==========Edit and Delete Dialoge Box================
-
-// ===========Playlist Adding Dialougebox and DB adding Function============
-
-// ==============Playlist Update Function ===============
-
-// =============Playlist Add Button Pressed function==========
-
-
-

@@ -4,7 +4,6 @@ import 'package:on_audio_query/on_audio_query.dart';
 import 'package:players_app/controllers/song_folder/page_manager.dart';
 import 'package:players_app/controllers/song_folder/favorite_songdb.dart';
 import 'package:players_app/view/music/playing_screen/playing_music_page.dart';
-import 'package:players_app/view/widgets/home%20widgets/home_songs_section.dart';
 import 'package:players_app/view/widgets/model_widget/listtale_songs_model.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +25,7 @@ class SongFavouriteScreen extends StatelessWidget {
       body: Consumer<FavouriteSongDb>(
         builder: (context, favouriteMusic, _) {
           if (!favouriteMusic.isIntialized) {
-            favouriteMusic.isIntializ(songmodel);
+            favouriteMusic.isIntializ(PageManger.songscopy);
           }
           return favouriteMusic.favouritesSongs.isEmpty
               ? const Center(

@@ -12,6 +12,7 @@ class AllSongs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     OnAudioQuery audioQuery = OnAudioQuery();
     return FutureBuilder(
       future: audioQuery.querySongs(
@@ -20,139 +21,124 @@ class AllSongs extends StatelessWidget {
           uriType: UriType.EXTERNAL,
           sortType: null),
       builder: (context, item) {
-        if (item.data == null) {
+        if (item.connectionState == ConnectionState.waiting) {
           return const Center(
             child: CircularProgressIndicator(
               color: Colors.black,
             ),
           );
         }
-        if (item.data!.isEmpty) {
-          return const Center(
-            child: Text("No Songs Found"),
+        if (item.connectionState == ConnectionState.done &&
+            item.data!.isEmpty) {
+          return Center(
+            child: SizedBox(
+              height: size.height * 0.4,
+              width: size.width * 0.8,
+              child: Image.asset("assets/images/Add files-rafiki.png"),
+            ),
           );
         }
-        //==================future builder return container===============//
-        return Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(24),
-              topLeft: Radius.circular(24),
-            ),
-          ),
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: ListView.builder(
-            itemCount: item.data!.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(6.0),
-
-                //=================== Song list tale==================//
-                child: ListtaleModelVidSong(
-                  leading: QueryArtworkWidget(
-                    keepOldArtwork: true,
-                    // artworkBorder: BorderRadius.circular(10),
-                    artworkWidth: 58,
-                    artworkHeight: 58,
-                    artworkFit: BoxFit.cover,
-                    id: item.data![index].id,
-                    type: ArtworkType.AUDIO,
-                    nullArtworkWidget: CircleAvatar(
-                      backgroundColor: Colors.black,
-                      backgroundImage: const AssetImage(
-                          "assets/images/pexels-foteros-352505.jpg"),
-                      radius: 30,
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.center,
-                            child: Icon(
-                              Icons.music_note_outlined,
-                              color: Colors.white.withAlpha(105),
-                              size: 25,
-                            ),
+        return ListView.builder(
+          padding: const EdgeInsets.only(left: 16, right: 16),
+          shrinkWrap: true,
+          itemCount: item.data!.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 5, top: 5),
+              child: ListtaleModelVidSong(
+                leading: QueryArtworkWidget(
+                  keepOldArtwork: true,
+                  artworkWidth: 58,
+                  artworkHeight: 58,
+                  artworkFit: BoxFit.cover,
+                  id: item.data![index].id,
+                  type: ArtworkType.AUDIO,
+                  nullArtworkWidget: CircleAvatar(
+                    backgroundColor: Colors.black,
+                    backgroundImage: const AssetImage(
+                        "assets/images/pexels-foteros-352505.jpg"),
+                    radius: 30,
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: Icon(
+                            Icons.music_note_outlined,
+                            color: Colors.white.withAlpha(105),
+                            size: 25,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                  title: item.data![index].title,
-                  subtitle: item.data![index].artist == null ||
-                          item.data![index].artist == "<unknown>"
-                      ? "Unknown Artist"
-                      : item.data![index].artist!,
-
-                     
-
-                  //=============== favorite adding screen======================//
-                  trailingOne: Consumer<FavouriteSongDb>(
-                    builder: (context, favoriteMusic, _) {
-                      return IconButton(
-                        onPressed: () async {
-                          if (favoriteMusic.isFavour(item.data![index])) {
-                            favoriteMusic.delete(item.data![index].id);
-                          } else {
-                            favoriteMusic.add(item.data![index]);
-                          }
-                        },
-                        icon: favoriteMusic.isFavour(item.data![index])
-                            ? const Icon(
-                                Icons.favorite,
-                                color: Colors.black,
-                              )
-                            : const Icon(
-                                Icons.favorite_border,
-                                color: Colors.black,
-                              ),
-                      );
-                    },
-                  ),
-
-                  //============== playlist adding screen navigtiom===============//
-                  trailingTwo: PopupMenuButton(
-                    onSelected: (value) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return SongPlaylistScreen(
-                              // addtoPlaylist: item.data![index],
-                              findex: index,
-                              playlistSongsShowornot: false,
-                            );
-                          },
-                        ),
-                      );
-                    },
-                    itemBuilder: (context) => [
-                      const PopupMenuItem(
-                        value: 1,
-                        child: Text("Add PlayList"),
-                      )
-                    ],
-                  ),
-
-                  //======= playing music screen from playlist added songs=========//
-                  onTap: () {
-                    PageManger.audioPlayer.setAudioSource(
-                        PageManger.songListCreating(item.data!),
-                        initialIndex: index);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PlayingMusicScreen(
-                          index: index,
-                          songModelList: item.data!,
-                          count: item.data!.length,
-                        ),
-                      ),
+                ),
+                title: item.data![index].title,
+                subtitle: item.data![index].artist == null ||
+                        item.data![index].artist == "<unknown>"
+                    ? "Unknown Artist"
+                    : item.data![index].artist!,
+                trailingOne: Consumer<FavouriteSongDb>(
+                  builder: (context, favoriteMusic, _) {
+                    return IconButton(
+                      onPressed: () async {
+                        if (favoriteMusic.isFavour(item.data![index])) {
+                          favoriteMusic.delete(item.data![index].id);
+                        } else {
+                          favoriteMusic.add(item.data![index]);
+                        }
+                      },
+                      icon: favoriteMusic.isFavour(item.data![index])
+                          ? const Icon(
+                              Icons.favorite,
+                              color: Colors.black,
+                            )
+                          : const Icon(
+                              Icons.favorite_border,
+                              color: Colors.black,
+                            ),
                     );
                   },
                 ),
-              );
-            },
-          ),
+                trailingTwo: PopupMenuButton(
+                  onSelected: (value) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return SongPlaylistScreen(
+                            // addtoPlaylist: item.data![index],
+                            findex: index,
+                            playlistSongsShowornot: false,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                  itemBuilder: (context) => [
+                    const PopupMenuItem(
+                      value: 1,
+                      child: Text("Add PlayList"),
+                    )
+                  ],
+                ),
+                onTap: () {
+                  PageManger.audioPlayer.setAudioSource(
+                      PageManger.songListCreating(item.data!),
+                      initialIndex: index);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PlayingMusicScreen(
+                        index: index,
+                        songModelList: item.data!,
+                        count: item.data!.length,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          },
         );
       },
     );

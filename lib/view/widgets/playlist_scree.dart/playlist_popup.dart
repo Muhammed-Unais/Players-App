@@ -8,6 +8,7 @@ Widget editAndDeleteDialoge({ctx, index, required bool isforSong, test}) {
       borderRadius: BorderRadius.circular(10),
     ),
     color: Colors.white,
+    icon: const Icon(Icons.more_vert,color: Colors.black,),
     onSelected: (value) {
       if (value == 1) {
         NewOrEditPlaylist.newPlaylistAdd(

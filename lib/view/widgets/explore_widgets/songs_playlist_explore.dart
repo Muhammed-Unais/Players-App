@@ -12,20 +12,19 @@ class SongsExplorePlaylist extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Consumer<PlaylistDbSong>(
       builder: (context, playlistDbSong, __) {
-        playlistDbSong.getAllPlaylists();
         return playlistDbSong.texteditngcontroller.isEmpty
-            ? const Center(
-                child: Text(
-                  "Create Your Songs Playlist",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              )
+            ? Center(
+              child: SizedBox(
+                height: size.height*0.4,
+                width: size.width*0.8,
+                child: Image.asset("assets/images/Add files-rafiki.png"),
+              ),
+            )
             : ListView.builder(
+                padding: const EdgeInsets.only(left: 16, right: 16),
                 itemCount: playlistDbSong.texteditngcontroller.length > 6
                     ? 6
                     : playlistDbSong.texteditngcontroller.length,
@@ -52,8 +51,8 @@ class SongsExplorePlaylist extends StatelessWidget {
                     },
                     child: index == 5
                         ? SizedBox(
-                            height: MediaQuery.of(context).size.height / 10,
-                            width: MediaQuery.of(context).size.width,
+                            height: size.height / 10,
+                            width: size.width,
                             child: Center(
                               child: Text(
                                 "View More",
@@ -66,14 +65,12 @@ class SongsExplorePlaylist extends StatelessWidget {
                             ),
                           )
                         : FavouritesCards(
-                            firstIcon: Icons.playlist_add_check_outlined,
+                            firstIcon: Icons.library_music,
                             trailingicons: Icons.more_vert,
-                            change: true,
                             cardtext:
                                 playlistDbSong.texteditngcontroller[index].name,
-                            height: MediaQuery.of(context).size.height / 10,
-                            width: MediaQuery.of(context).size.width,
-                            image: "assets/images/pexels-pixabay-210766.jpg",
+                            height: size.height * 0.095,
+                            width: size.width,
                             moreVertPopupicon: editAndDeleteDialoge(
                               test: test,
                               isforSong: true,

@@ -49,7 +49,6 @@ class PlaylistSongsList extends StatelessWidget {
       body: ValueListenableBuilder(
         valueListenable: Hive.box<Playersmodel>('SongPlaylistDB').listenable(),
         builder: (context, musics, _) {
-          // here findex is playlist folder index so in this index we have players model class.in the class we have song id int type list.here that is assaigned to songs playlist
           songsPlaylist = listPlaylist(musics.values.toList()[findex].songid);
           return songsPlaylist.isEmpty
               ? const Center(
@@ -59,69 +58,66 @@ class PlaylistSongsList extends StatelessWidget {
                   ),
                 )
               : Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: ListView.builder(
                     itemCount: songsPlaylist.length,
                     itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ListtaleModelVidSong(
-                          leading: QueryArtworkWidget(
-                            artworkWidth: 58,
-                            artworkHeight: 58,
-                            artworkFit: BoxFit.cover,
-                            id: songsPlaylist[index].id,
-                            type: ArtworkType.AUDIO,
-                            nullArtworkWidget: CircleAvatar(
-                              backgroundColor: Colors.black,
-                              backgroundImage: const AssetImage(
-                                  "assets/images/pexels-foteros-352505.jpg"),
-                              radius: 30,
-                              child: Stack(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.center,
-                                    child: Icon(
-                                      Icons.music_note_outlined,
-                                      color: Colors.white.withAlpha(105),
-                                      size: 25,
-                                    ),
+                      return ListtaleModelVidSong(
+                        leading: QueryArtworkWidget(
+                          artworkWidth: 58,
+                          artworkHeight: 58,
+                          artworkFit: BoxFit.cover,
+                          id: songsPlaylist[index].id,
+                          type: ArtworkType.AUDIO,
+                          nullArtworkWidget: CircleAvatar(
+                            backgroundColor: Colors.black,
+                            backgroundImage: const AssetImage(
+                                "assets/images/pexels-foteros-352505.jpg"),
+                            radius: 30,
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Icon(
+                                    Icons.music_note_outlined,
+                                    color: Colors.white.withAlpha(105),
+                                    size: 25,
                                   ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          title: songsPlaylist[index].displayNameWOExt,
-                          subtitle: songsPlaylist[index].artist == null ||
-                                  songsPlaylist[index].artist == "<unknown>"
-                              ? "Unknown Artist"
-                              : songsPlaylist[index].artist!,
-                          trailingOne: IconButton(
-                            onPressed: () {
-                              playlist.deleteData(songsPlaylist[index].id);
-                            },
-                            icon: const Icon(
-                              Icons.delete,
-                              color: Colors.black,
-                            ),
-                          ),
-                          onTap: () {
-                            List<SongModel> newMusicList = [...songsPlaylist];
-                            PageManger.audioPlayer.stop();
-                            PageManger.audioPlayer.setAudioSource(
-                                PageManger.songListCreating(newMusicList),
-                                initialIndex: index);
-                            PageManger.audioPlayer.play();
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (ctx) => PlayingMusicScreen(
-                                  index: index,
-                                  songModelList: songsPlaylist,
                                 ),
-                              ),
-                            );
-                          },
+                              ],
+                            ),
+                          ),
                         ),
+                        title: songsPlaylist[index].displayNameWOExt,
+                        subtitle: songsPlaylist[index].artist == null ||
+                                songsPlaylist[index].artist == "<unknown>"
+                            ? "Unknown Artist"
+                            : songsPlaylist[index].artist!,
+                        trailingOne: IconButton(
+                          onPressed: () {
+                            playlist.deleteData(songsPlaylist[index].id);
+                          },
+                          icon: const Icon(
+                            Icons.delete,
+                            color: Colors.black,
+                          ),
+                        ),
+                        onTap: () {
+                          List<SongModel> newMusicList = [...songsPlaylist];
+                          PageManger.audioPlayer.stop();
+                          PageManger.audioPlayer.setAudioSource(
+                              PageManger.songListCreating(newMusicList),
+                              initialIndex: index);
+                          PageManger.audioPlayer.play();
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (ctx) => PlayingMusicScreen(
+                                index: index,
+                                songModelList: songsPlaylist,
+                              ),
+                            ),
+                          );
+                        },
                       );
                     },
                   ),

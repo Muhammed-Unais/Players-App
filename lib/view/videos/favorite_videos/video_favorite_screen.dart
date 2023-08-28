@@ -24,6 +24,9 @@ class VideoFavoriteScreen extends StatelessWidget {
       ),
       body: Consumer<VideoFavoriteDb>(
         builder: (context, videoFavorites, child) {
+           if (!videoFavorites.isIntialized) {
+            videoFavorites.favoriteInitialize();
+          }
           final itemsOfVFavdb = videoFavorites.videoFavoriteDb;
           return videoFavorites.videoFavoriteDb.isEmpty
               ? const Center(
@@ -42,8 +45,8 @@ class VideoFavoriteScreen extends StatelessWidget {
                         child: ListtaleModelVidSong(
                           leading: thumbnail(
                               path: itemsOfVFavdb[index].path,
-                              hight: 130,
-                              width: 130),
+                              hight: 100,
+                              width: 100),
                           title: itemsOfVFavdb[index].title,
                           trailingOne: IconButton(
                             onPressed: () =>

@@ -112,22 +112,10 @@ class _PlayingMusicScreenState extends State<PlayingMusicScreen> {
                 SizedBox(
                   height: size.height * 0.05,
                 ),
-                StreamBuilder<Duration?>(
-                  stream: PageManger.audioPlayer.positionStream,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 2,
-                          );
-                        }
-                    return SliderBar(
-                      value: snapshot.data?.inSeconds.toDouble() ?? 0.0,
-                      function: (value) => musicPlaying.changeSlider(value),
-                      max: musicPlaying.duration.inSeconds.toDouble(),
-                    );
-                  },
+                SliderBar(
+                  value: musicPlaying.position.inSeconds.toDouble(),
+                  function: musicPlaying.changeSlider,
+                  max: musicPlaying.duration.inSeconds.toDouble(),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -151,28 +139,16 @@ class _PlayingMusicScreenState extends State<PlayingMusicScreen> {
                     SizedBox(
                       height: size.height * 0.03,
                     ),
-                    StreamBuilder<Duration?>(
-                      stream: PageManger.audioPlayer.durationStream,
-                      builder: (context, snapshot) {
-                         if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 2,
-                          );
-                        }
-                        return Text(
-                          snapshot.data.toString().substring(2, 7),
-                          style: const TextStyle(color: Colors.white),
-                        );
-                      }
+                    Text(
+                      musicPlaying.duration.toString().substring(2, 7),
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ],
                 ),
                 SizedBox(
                   height: size.height * 0.03,
                 ),
-                const PlayNextPreviousButtons(),
+                PlayNextPreviousButtons(currentAudioSource: widget.songModelList),
                 SizedBox(
                   height: size.height * 0.03,
                 ),

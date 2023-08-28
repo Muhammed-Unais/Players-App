@@ -10,20 +10,20 @@ class FavouriteExploreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      width: size.width * 0.435,
+      width: size.width * 0.45,
       height: size.height * 0.1,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
         gradient: LinearGradient(
-          colors: [Colors.grey[500]!, Colors.white38],
+          colors: [Colors.grey[600]!, Colors.white10],
           begin: Alignment.topLeft,
           end: Alignment.bottomCenter,
         ),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
-            blurRadius: 0.2,
-            offset: const Offset(0, 2),
+            blurRadius: 0.1,
+            offset: const Offset(0, 1),
           ),
         ],
       ),
@@ -42,7 +42,7 @@ class FavouriteExploreCard extends StatelessWidget {
             child: Text(
               cardTitile,
               style:GoogleFonts.raleway(
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),

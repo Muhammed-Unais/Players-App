@@ -57,12 +57,10 @@ class _SongSearchScreenState extends State<SongSearchScreen> {
     });
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     final searchCntrl = Provider.of<SearchController>(context);
-    final vidFavProvider=Provider.of<VideoFavoriteDb>(context);
+    final vidFavProvider = Provider.of<VideoFavoriteDb>(context);
     searchCntrl.songLoading();
     return Scaffold(
       appBar: AppBar(
@@ -139,7 +137,6 @@ class _SongSearchScreenState extends State<SongSearchScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => PlayVideoScreen(
-                                 
                                   paths: foundVideos,
                                   index: index,
                                 ),
@@ -184,13 +181,10 @@ class _SongSearchScreenState extends State<SongSearchScreen> {
                               IconButton(
                                 onPressed: () =>
                                     vidFavProvider.favouriteAddandDelete(
-                                        path: vidPath,
-                                        title: vidTitle),
+                                        path: vidPath, title: vidTitle),
                                 icon: vidFavProvider.isVideoFavor(
                                   PlayersVideoFavoriteModel(
-                                    path: vidPath,
-                                    title: vidTitle
-                                  ),
+                                      path: vidPath, title: vidTitle),
                                 )
                                     ? const Icon(
                                         Icons.favorite,

@@ -17,7 +17,7 @@ class TabbarAllSongsVideos extends StatelessWidget {
         splashBorderRadius: BorderRadius.circular(20),
         indicator: const BoxDecoration(
           border: Border(
-            bottom: BorderSide(width: 1, color: Colors.white),
+            bottom: BorderSide(width: 1, color: Colors.black),
           ),
         ),
         labelPadding:
@@ -28,18 +28,18 @@ class TabbarAllSongsVideos extends StatelessWidget {
         tabs: [
           Text(
             "All SONGS",
-            style: GoogleFonts.roboto(
+            style: GoogleFonts.raleway(
               fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
+              fontWeight: FontWeight.w800,
+              color: Colors.black,
             ),
           ),
           Text(
             "ALL VIDEOS",
-            style: GoogleFonts.roboto(
+            style:GoogleFonts.raleway(
               fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
+              fontWeight: FontWeight.w800,
+              color: Colors.black,
             ),
           ),
         ],

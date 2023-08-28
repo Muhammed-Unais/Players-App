@@ -24,71 +24,82 @@ class PlayVideoScreen extends StatefulWidget {
 
 class _PlayVideoScreenState extends State<PlayVideoScreen> {
   
-  late VideoPlayerController controllers;
+  VideoPlayerController? _controllers;
   late Future<void> _initilizeVideoPlayerFuture;
-  late VoidCallback _onControllupdatelistner;
-  int isPlayingindex = -1;
+  int _isPlayingindex = -1;
+  bool _isDispose = false;
+  int _onControllUpadatTime = 0;
 
   @override
   void initState() {
-    intializeVideo(
-      index: widget.index,
-      paths: widget.paths,
-    );
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) {
-        addRecentVideo();
-      },
-    );
+    intializeVideo(index: widget.index, paths: widget.paths);
     super.initState();
   }
 
   void intializeVideo({required int index, required List<String> paths}) {
-    _onControllupdatelistner = _oncontrollUpdate;
-    controllers = VideoPlayerController.file(File(paths[index]));
+    addRecentVideo(
+      timeStamp: DateTime.now().toUtc().millisecondsSinceEpoch,
+      videoPath: paths[index],
+    );
+
+    var controllers = VideoPlayerController.file(File(paths[index]));
+
+    final old = _controllers;
+    _controllers = controllers;
+
+    if (old != null) {
+      old.removeListener(_oncontrollUpdate);
+      old.pause();
+    }
+
     _initilizeVideoPlayerFuture = controllers.initialize().then((_) {
-      controllers.addListener(_onControllupdatelistner);
+      old?.dispose();
+      controllers.addListener(_oncontrollUpdate);
       controllers.play();
       controllers.setLooping(true);
-      if (mounted) {
-        setState(() {});
-      }
+      setState(() {});
     });
 
-    isPlayingindex = index;
+    _isPlayingindex = index;
   }
 
   void _oncontrollUpdate() {
+    if (_isDispose) return;
+
+    final now = DateTime.now().microsecondsSinceEpoch;
+
+    if (_onControllUpadatTime > now) return;
+
+    _onControllUpadatTime = now + 500;
+
+    final controllers = _controllers;
+
+    if (controllers == null) return;
+
     if (!controllers.value.isInitialized) return;
+
     final playing = controllers.value.isPlaying;
     if (mounted) {
       context.read<VideoControllers>().isPlaying = playing;
     }
   }
 
-  void addRecentVideo() async {
-    await context.read<VideosRecentlyPlayedController>().addToRecentVideos(
-          videoPath: widget.paths[widget.index],
-          timeStamp: DateTime.now().toUtc().millisecondsSinceEpoch,
-        );
-  }
-
-  @override
-  void deactivate() {
-    controllers.removeListener(_onControllupdatelistner);
-    super.deactivate();
+  void addRecentVideo(
+      {required String videoPath, required int timeStamp}) async {
+    await context
+        .read<VideosRecentlyPlayedController>()
+        .addToRecentVideos(videoPath: videoPath, timeStamp: timeStamp);
   }
 
   @override
   void dispose() {
     SystemChrome.setPreferredOrientations(DeviceOrientation.values);
-    controllers.removeListener(_onControllupdatelistner);
-    controllers.dispose();
+    _isDispose = true;
+    _controllers?.pause();
+    _controllers?.dispose();
+    _controllers = null;
     super.dispose();
   }
-
-  int count = 0;
-  int pcount = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -113,8 +124,8 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
                     builder: (context, snapShot) {
                       if (snapShot.connectionState == ConnectionState.done) {
                         return AspectRatio(
-                          aspectRatio: controllers.value.aspectRatio,
-                          child: VideoPlayer(controllers),
+                          aspectRatio: _controllers!.value.aspectRatio,
+                          child: VideoPlayer(_controllers!),
                         );
                       } else {
                         return const AspectRatio(
@@ -136,7 +147,7 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
                 right: 0,
                 left: 0,
                 child: VideoTitleDetailWidget(
-                  videoTitle: widget.paths[isPlayingindex].split("/").last,
+                  videoTitle: widget.paths[_isPlayingindex].split("/").last,
                 ),
               ),
               Positioned(
@@ -144,15 +155,15 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
                 right: 0,
                 left: 0,
                 child: VideoControllerWidget(
-                  controller: controllers,
+                  controller: _controllers!,
                   skipNextButton: () {
-                    final index = isPlayingindex + 1;
+                    final index = _isPlayingindex + 1;
                     if (index <= widget.paths.length - 1) {
                       intializeVideo(index: index, paths: widget.paths);
                     }
                   },
                   skipPreviousButton: () {
-                    final index = isPlayingindex - 1;
+                    final index = _isPlayingindex - 1;
                     if (index >= 0 && widget.paths.isNotEmpty) {
                       intializeVideo(
                         index: index,

@@ -36,7 +36,7 @@ Future<void> splashFetch() async {
 }
 
 void onSuccess(List<String> path) {
-  accessVideosPath = path;
+  accessVideosPath =path;
   for (var i = 0; i < accessVideosPath.length; i++) {
     if (accessVideosPath[i].startsWith('/storage/emulated/0/Android/data')) {
       accessVideosPath.remove(accessVideosPath[i]);

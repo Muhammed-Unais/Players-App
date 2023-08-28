@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 import 'package:players_app/controllers/song_folder/page_manager.dart';
+import 'package:players_app/controllers/song_folder/recently_played_controller.dart';
+import 'package:provider/provider.dart';
 
 class MusicPlaying extends ChangeNotifier {
   int _large = 0;
@@ -17,9 +20,17 @@ class MusicPlaying extends ChangeNotifier {
   bool _isPlaying = true;
   bool get isPlaying => _isPlaying;
 
-  void previousButton() async {
+  void addToRecentSongs(BuildContext context, int songsId) {
+    context.read<RecentlyPlayedSongsController>().addToRecentSongs(
+        songsId: songsId,
+        timeStamp: DateTime.now().toUtc().millisecondsSinceEpoch);
+  }
+
+  void previousButton(
+      List<SongModel> currentAudioSource, BuildContext context) async {
     _isPlaying = true;
     if (PageManger.audioPlayer.hasPrevious) {
+      addToRecentSongs(context, currentAudioSource[currentIndex].id);
       await PageManger.audioPlayer.seekToPrevious();
       PageManger.audioPlayer.play();
     } else {
@@ -28,10 +39,12 @@ class MusicPlaying extends ChangeNotifier {
     notifyListeners();
   }
 
-  void nextButton() async {
+  void nextButton(
+      List<SongModel> currentAudioSource, BuildContext context) async {
     _isPlaying = true;
 
     if (PageManger.audioPlayer.hasNext) {
+      addToRecentSongs(context, currentAudioSource[currentIndex].id);
       await PageManger.audioPlayer.seekToNext();
       PageManger.audioPlayer.play();
     } else {
@@ -53,6 +66,7 @@ class MusicPlaying extends ChangeNotifier {
   void changeSlider(double value) {
     Duration duration = Duration(seconds: value.toInt());
     PageManger.audioPlayer.seek(duration);
+    notifyListeners();
   }
 
   void initState(songModelList, count) {
@@ -75,12 +89,13 @@ class MusicPlaying extends ChangeNotifier {
     PageManger.audioPlayer.durationStream.listen((d) {
       if (d != null) {
         _duration = d;
+        notifyListeners();
       }
     });
     PageManger.audioPlayer.positionStream.listen((p) {
       _position = p;
+      notifyListeners();
     });
-    notifyListeners();
   }
 
   @override

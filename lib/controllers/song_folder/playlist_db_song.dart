@@ -8,25 +8,25 @@ class PlaylistDbSong extends ChangeNotifier {
 
   List<Playersmodel> get texteditngcontroller => _texteditngcontroller;
 
-  add(Playersmodel value) async {
+  Future<void> add(Playersmodel value) async {
     await songPlayListDb.add(value);
     _texteditngcontroller.add(value);
     notifyListeners();
   }
 
-  deletePlaylist(int index) async {
+  Future<void> deletePlaylist(int index) async {
     await songPlayListDb.deleteAt(index);
     notifyListeners();
     getAllPlaylists();
   }
 
-  editPlaylist(Playersmodel value, int index) async {
+  Future<void> editPlaylist(Playersmodel value, int index) async {
     await songPlayListDb.putAt(index, value);
     notifyListeners();
     getAllPlaylists();
   }
 
-  getAllPlaylists() {
+  void getAllPlaylists() {
     _texteditngcontroller.clear();
     _texteditngcontroller.addAll(songPlayListDb.values);
   }

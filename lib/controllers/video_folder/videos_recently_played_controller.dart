@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:players_app/controllers/video_folder/access_folder/access_video.dart';
@@ -17,7 +15,7 @@ class VideosRecentlyPlayedController extends ChangeNotifier {
   bool isInitiliaz = false;
 
   void initializeRecentVideos() {
-    log("kerriii");
+
     getRecentVideos();
     var tempRecentvideos = List.filled(_recentVidoesDbList.length,
         PlayersVideoFavoriteModel(path: "", title: ""));
