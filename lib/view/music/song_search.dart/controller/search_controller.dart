@@ -30,6 +30,8 @@ class SearchController extends ChangeNotifier {
   void searchVideo(String enteredKeyWords, BuildContext context) {
     var allVideo = context.read<VideoFileAccessFromStorage>().accessVideosPath;
     if (enteredKeyWords.isEmpty) {
+      foundVideos = [];
+      notifyListeners();
     } else {
       foundVideos = [
         ...allVideo
