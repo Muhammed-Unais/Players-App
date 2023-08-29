@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:on_audio_query/on_audio_query.dart';
+import 'package:players_app/controllers/song_and_video_playlistfolder/alert_dialotgue_songs_video_delete.dart';
 import 'package:players_app/controllers/song_folder/page_manager.dart';
 import 'package:players_app/model/db/dbmodel.dart';
 import 'package:players_app/view/music/playing_screen/playing_music_page.dart';
@@ -51,10 +52,14 @@ class PlaylistSongsList extends StatelessWidget {
         builder: (context, musics, _) {
           songsPlaylist = listPlaylist(musics.values.toList()[findex].songid);
           return songsPlaylist.isEmpty
-              ? const Center(
+              ? Center(
                   child: Text(
-                    "Add Your Playlist",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    "Add your playlist",
+                    style: GoogleFonts.raleway(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.black,
+                    ),
                   ),
                 )
               : Padding(
@@ -62,6 +67,7 @@ class PlaylistSongsList extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: songsPlaylist.length,
                     itemBuilder: (context, index) {
+                      var playlistSongs = songsPlaylist[index];
                       return ListtaleModelVidSong(
                         leading: QueryArtworkWidget(
                           artworkWidth: 58,
@@ -88,14 +94,17 @@ class PlaylistSongsList extends StatelessWidget {
                             ),
                           ),
                         ),
-                        title: songsPlaylist[index].displayNameWOExt,
-                        subtitle: songsPlaylist[index].artist == null ||
-                                songsPlaylist[index].artist == "<unknown>"
+                        title: playlistSongs.displayNameWOExt,
+                        subtitle: playlistSongs.artist == null ||
+                                playlistSongs.artist == "<unknown>"
                             ? "Unknown Artist"
-                            : songsPlaylist[index].artist!,
+                            : playlistSongs.artist!,
                         trailingOne: IconButton(
                           onPressed: () {
-                            playlist.deleteData(songsPlaylist[index].id);
+                            deleteVideoAndSongs(context, "Delete", () {
+                              playlist.deleteData(playlistSongs.id);
+                              Navigator.pop(context);
+                            });
                           },
                           icon: const Icon(
                             Icons.delete,

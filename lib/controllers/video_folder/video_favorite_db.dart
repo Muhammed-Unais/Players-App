@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:players_app/controllers/video_folder/access_folder/access_video.dart';
 import 'package:players_app/model/db/videodb_model.dart';
+import 'package:provider/provider.dart';
 
 class VideoFavoriteDb extends ChangeNotifier {
   bool isIntialized = false;
@@ -29,7 +30,10 @@ class VideoFavoriteDb extends ChangeNotifier {
 
   void add(PlayersVideoFavoriteModel value) {
     videoDb.add(value.path);
-    _videoFavoriteDb.add(value);
+    var paths = _videoFavoriteDb.map((e) => e.path);
+    if (!paths.contains(value.path)) {
+      _videoFavoriteDb.add(value);
+    }
     notifyListeners();
   }
 
@@ -51,7 +55,9 @@ class VideoFavoriteDb extends ChangeNotifier {
     notifyListeners();
   }
 
-  void favoriteInitialize() {
+  void favoriteInitialize(BuildContext context) {
+    var accessVideosPath =
+        context.read<VideoFileAccessFromStorage>().accessVideosPath;
     if (!isIntialized) {
       for (int i = 0; i < accessVideosPath.length; i++) {
         intialize(

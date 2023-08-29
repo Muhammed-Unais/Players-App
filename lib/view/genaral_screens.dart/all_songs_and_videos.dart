@@ -63,9 +63,7 @@ class _AllSongsAndVideosScreenState extends State<AllSongsAndVideosScreen>
                 expandedHeight: 200,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Image.asset(
-                    myIndex == 0
-                        ? "assets/images/wepik-export-20230828135001zGdl.png"
-                        : "assets/images/wepik-export-20230828192147Ve8k.png",
+                    "assets/images/wepik-export-20230828135001zGdl.png",
                     fit: BoxFit.cover,
                   ),
                 ),

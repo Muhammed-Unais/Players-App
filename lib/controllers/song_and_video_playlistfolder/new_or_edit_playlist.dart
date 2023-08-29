@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:players_app/controllers/song_and_video_playlistfolder/add_button_playlist.dart';
 import 'package:players_app/controllers/song_and_video_playlistfolder/update_playlist_name.dart';
 import 'package:players_app/view/music/playlist/song_playlist_screen.dart';
@@ -17,7 +18,16 @@ class NewOrEditPlaylist {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(titile),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          title: Text(
+            titile,
+            style: GoogleFonts.raleway(
+              fontSize: 18,
+              fontWeight: FontWeight.w800,
+              color: Colors.black,
+            ),
+          ),
           content: Form(
             key: formkey,
             child: TextFormField(
@@ -32,7 +42,13 @@ class NewOrEditPlaylist {
               },
               controller: textEditingController,
               decoration: const InputDecoration(
+                focusColor: Colors.black,
+                
+                fillColor: Colors.black,
                 border: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.black,
+                  ),
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
                   ),
@@ -45,26 +61,34 @@ class NewOrEditPlaylist {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text(
+              child: Text(
                 "Cancel",
-                style: TextStyle(fontSize: 16, color: Colors.black),
+                style: GoogleFonts.raleway(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
               ),
             ),
             TextButton(
               onPressed: () {
                 if (formkey.currentState!.validate()) {
-                  isCreate == true
-                      // =======================================
-                      ? AddButtonPlaylist.addbuttonPressed(
-                          textediting, isSong, context)
-                      : UpdateVideoSongPlaylistName.updateTextfieldDetails(
-                          textediting, index, isSong, test, context);
-                  // ===========================================
+                  if (isCreate) {
+                    AddButtonPlaylist.addbuttonPressed(
+                        textediting, isSong, context);
+                  } else {
+                    UpdateVideoSongPlaylistName.updateTextfieldDetails(
+                        textediting, index, isSong, test, context);
+                  }
                 }
               },
               child: Text(
                 isCreate == true ? "Create" : "Update",
-                style: const TextStyle(fontSize: 16, color: Colors.black),
+                style: GoogleFonts.raleway(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
               ),
             ),
           ],

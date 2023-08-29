@@ -8,100 +8,128 @@ import 'package:players_app/view/widgets/model_widget/listtale_songs_model.dart'
 import 'package:players_app/view/widgets/thumbnail.dart';
 import 'package:provider/provider.dart';
 
-class AllVidoes extends StatelessWidget {
+class AllVidoes extends StatefulWidget {
   const AllVidoes({super.key});
+
+  @override
+  State<AllVidoes> createState() => _AllVidoesState();
+}
+
+class _AllVidoesState extends State<AllVidoes> {
+  @override
+  void initState() {
+    fetichingVideoFromInternalStroge();
+    super.initState();
+  }
+
+  void fetichingVideoFromInternalStroge() {
+    var vidoeFileProvider = context.read<VideoFileAccessFromStorage>();
+    if (!vidoeFileProvider.isInitialize) {
+      context.read<VideoFileAccessFromStorage>().splashFetch();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return ListView.builder(
-      padding: const EdgeInsets.only(right: 16, left: 16),
-      shrinkWrap: true,
-      itemCount: accessVideosPath.length,
-      itemBuilder: (context, index) {
-        final vidPath = accessVideosPath[index];
-        final vidTitle = accessVideosPath[index].toString().split('/').last;
-        if (accessVideosPath.isEmpty) {
-          return Center(
-            child: SizedBox(
-              height: size.height * 0.4,
-              width: size.width * 0.8,
-              child: Image.asset("assets/images/Add files-rafiki.png"),
-            ),
-          );
-        }
-        return Padding(
-          padding: const EdgeInsets.only(top: 5, bottom: 5),
-          child: ListtaleModelVidSong(
-            leading: thumbnail(path: vidPath, width: 100, hight: 100),
-            title: accessVideosPath.isNotEmpty ? vidTitle : "No Videos",
-            trailingOne: Consumer<VideoFavoriteDb>(
-              builder: (context, videoFavDbProvider, _) {
-                if (videoFavDbProvider.isVideoFavor(PlayersVideoFavoriteModel(
-                    title: vidTitle, path: vidPath))) {
-                  return IconButton(
-                    onPressed: () {
-                      context.read<VideoFavoriteDb>().delete(vidPath);
-                    },
-                    icon: const Icon(
-                      Icons.favorite,
-                      color: Colors.black,
-                    ),
-                  );
-                }
-                return IconButton(
-                  onPressed: () {
-                    context.read<VideoFavoriteDb>().add(
-                          PlayersVideoFavoriteModel(
-                            title: vidTitle,
-                            path: vidPath,
-                          ),
-                        );
-                  },
-                  icon: const Icon(
-                    Icons.favorite_border,
-                    color: Colors.black,
-                  ),
-                );
-              },
-            ),
-            trailingTwo: PopupMenuButton(
-              onSelected: (value) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return VideoPlaylistScreen(
-                        vindex: index,
-                        addedVideosShoworNot: false,
-                      );
-                    },
-                  ),
-                );
-              },
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  value: 1,
-                  child: const Text(
-                    "Add PlayList",
-                  ),
-                  onTap: () {},
-                ),
-              ],
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PlayVideoScreen(
-                    paths: accessVideosPath,
-                    index: index,
-                  ),
+    return Consumer<VideoFileAccessFromStorage>(
+      builder: (context, videoFileProvider, _) {
+        return ListView.builder(
+          padding: const EdgeInsets.only(right: 16, left: 16),
+          shrinkWrap: true,
+          itemCount: videoFileProvider.accessVideosPath.length,
+          itemBuilder: (context, index) {
+            final vidPath = videoFileProvider.accessVideosPath[index];
+            final vidTitle = videoFileProvider.accessVideosPath[index]
+                .toString()
+                .split('/')
+                .last;
+            if (videoFileProvider.accessVideosPath.isEmpty) {
+              return Center(
+                child: SizedBox(
+                  height: size.height * 0.4,
+                  width: size.width * 0.8,
+                  child: Image.asset("assets/images/Add files-rafiki.png"),
                 ),
               );
-            },
-          ),
+            }
+            return Padding(
+              padding: const EdgeInsets.only(top: 5, bottom: 5),
+              child: ListtaleModelVidSong(
+                leading: thumbnail(path: vidPath, width: 100, hight: 100),
+                title: videoFileProvider.accessVideosPath.isNotEmpty
+                    ? vidTitle
+                    : "No Videos",
+                trailingOne: Consumer<VideoFavoriteDb>(
+                  builder: (context, videoFavDbProvider, _) {
+                    if (videoFavDbProvider.isVideoFavor(
+                        PlayersVideoFavoriteModel(
+                            title: vidTitle, path: vidPath))) {
+                      return IconButton(
+                        onPressed: () {
+                          context.read<VideoFavoriteDb>().delete(vidPath);
+                        },
+                        icon: const Icon(
+                          Icons.favorite,
+                          color: Colors.black,
+                        ),
+                      );
+                    }
+                    return IconButton(
+                      onPressed: () {
+                        context.read<VideoFavoriteDb>().add(
+                              PlayersVideoFavoriteModel(
+                                title: vidTitle,
+                                path: vidPath,
+                              ),
+                            );
+                      },
+                      icon: const Icon(
+                        Icons.favorite_border,
+                        color: Colors.black,
+                      ),
+                    );
+                  },
+                ),
+                trailingTwo: PopupMenuButton(
+                  onSelected: (value) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return VideoPlaylistScreen(
+                            vindex: index,
+                            addedVideosShoworNot: false,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      value: 1,
+                      child: const Text(
+                        "Add PlayList",
+                      ),
+                      onTap: () {},
+                    ),
+                  ],
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PlayVideoScreen(
+                        paths: videoFileProvider.accessVideosPath,
+                        index: index,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          },
         );
       },
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:on_audio_query/on_audio_query.dart';
+import 'package:players_app/controllers/song_and_video_playlistfolder/alert_dialotgue_songs_video_delete.dart';
 import 'package:players_app/controllers/song_folder/page_manager.dart';
 import 'package:players_app/controllers/song_folder/favorite_songdb.dart';
 import 'package:players_app/view/music/playing_screen/playing_music_page.dart';
@@ -28,10 +29,14 @@ class SongFavouriteScreen extends StatelessWidget {
             favouriteMusic.isIntializ(PageManger.songscopy);
           }
           return favouriteMusic.favouritesSongs.isEmpty
-              ? const Center(
+              ? Center(
                   child: Text(
                     "No Favorites",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.raleway(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.black,
+                    ),
                   ),
                 )
               : Padding(
@@ -39,6 +44,7 @@ class SongFavouriteScreen extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: favouriteMusic.favouritesSongs.length,
                     itemBuilder: (context, index) {
+                      var favSongs = favouriteMusic.favouritesSongs[index];
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ListtaleModelVidSong(
@@ -46,7 +52,7 @@ class SongFavouriteScreen extends StatelessWidget {
                             artworkWidth: 58,
                             artworkHeight: 58,
                             artworkFit: BoxFit.cover,
-                            id: favouriteMusic.favouritesSongs[index].id,
+                            id: favSongs.id,
                             type: ArtworkType.AUDIO,
                             nullArtworkWidget: CircleAvatar(
                               backgroundColor: Colors.black,
@@ -67,23 +73,19 @@ class SongFavouriteScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          title: favouriteMusic
-                              .favouritesSongs[index].displayNameWOExt,
-                          subtitle: favouriteMusic
-                                          .favouritesSongs[index].artist ==
-                                      null ||
-                                  favouriteMusic
-                                          .favouritesSongs[index].artist ==
-                                      "<unknown>"
+                          title: favSongs.displayNameWOExt,
+                          subtitle: favSongs.artist == null ||
+                                  favSongs.artist == "<unknown>"
                               ? "Unknown Artist"
-                              : favouriteMusic.favouritesSongs[index].artist!,
+                              : favSongs.artist!,
                           trailingOne: IconButton(
                             onPressed: () {
-                              if (favouriteMusic.isFavour(
-                                  favouriteMusic.favouritesSongs[index])) {
-                                favouriteMusic.delete(
-                                    favouriteMusic.favouritesSongs[index].id);
-                              }
+                              deleteVideoAndSongs(context, "Delete", () {
+                                if (favouriteMusic.isFavour(favSongs)) {
+                                  favouriteMusic.delete(favSongs.id);
+                                }
+                                Navigator.pop(context);
+                              });
                             },
                             icon: const Icon(
                               Icons.delete,

@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:players_app/controllers/video_folder/access_folder/access_video.dart';
 import 'package:players_app/model/db/recently_played_videos_model.dart';
 import 'package:players_app/model/db/videodb_model.dart';
+import 'package:provider/provider.dart';
 
 class VideosRecentlyPlayedController extends ChangeNotifier {
   var videoRecentBox =
@@ -14,7 +15,9 @@ class VideosRecentlyPlayedController extends ChangeNotifier {
 
   bool isInitiliaz = false;
 
-  void initializeRecentVideos() {
+  void initializeRecentVideos(BuildContext context) {
+    var accessVideosPath =
+        context.read<VideoFileAccessFromStorage>().accessVideosPath;
 
     getRecentVideos();
     var tempRecentvideos = List.filled(_recentVidoesDbList.length,

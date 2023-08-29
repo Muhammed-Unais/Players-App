@@ -23,7 +23,7 @@ class _HomeVideoScreenState extends State<HomeVideoScreen> {
   void initializeRecentVideos() {
     var recentlyVideoProvider = context.read<VideosRecentlyPlayedController>();
     if (!recentlyVideoProvider.isInitiliaz) {
-      context.read<VideosRecentlyPlayedController>().initializeRecentVideos();
+      context.read<VideosRecentlyPlayedController>().initializeRecentVideos(context);
     }
   }
 

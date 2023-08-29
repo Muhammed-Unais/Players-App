@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:players_app/controllers/video_folder/access_folder/access_video.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,6 +16,10 @@ class _SplashScreenState extends State<SplashScreen> {
     splashFetch();
     super.initState();
     gotoHomeScreen(context);
+  }
+
+  Future<void> splashFetch() async {
+    await context.read<VideoFileAccessFromStorage>().splashFetch();
   }
 
   // spalsh duration function

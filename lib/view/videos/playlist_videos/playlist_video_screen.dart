@@ -49,8 +49,8 @@ class VideoPlaylistScreen extends StatelessWidget {
                   child: Text(
                     "Create Your Playlist",
                     style: GoogleFonts.raleway(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
                         color: Colors.black),
                   ),
                 )
@@ -75,7 +75,9 @@ class VideoPlaylistScreen extends StatelessWidget {
                                 ),
                               )
                             : VideoAddToPlaylist.videoAddToPlaylist(
-                                accessVideosPath[vindex!],
+                                context
+                                    .read<VideoFileAccessFromStorage>()
+                                    .accessVideosPath[vindex!],
                                 vidDatas,
                                 context);
                       },

@@ -1,36 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:players_app/controllers/song_folder/page_manager.dart';
+import 'package:players_app/controllers/video_folder/access_folder/access_video.dart';
+import 'package:provider/provider.dart';
 
 class SearchController extends ChangeNotifier {
-  late List<SongModel> _allSongs;
   List<SongModel> _foundSongs = [];
-  List<SongModel> result = [];
+
+  List<String> foundVideos = [];
 
   List<SongModel> get foundSongs => _foundSongs;
 
-  songLoading() async {
-    _allSongs = PageManger.songscopy;
-    _foundSongs = _allSongs;
-  }
-
-  searchsong(String enterdKeyWords) {
+  void searchsong(String enterdKeyWords) {
     if (enterdKeyWords.isEmpty) {
-      result = _allSongs;
+      _foundSongs = [];
       notifyListeners();
     } else {
-      result = _allSongs
-          .where((element) => element.title
-              .toLowerCase()
-              .contains(enterdKeyWords.toLowerCase()))
-          .toList();
+      _foundSongs = [
+        ...PageManger.songscopy
+            .where((element) => element.title
+                .toLowerCase()
+                .contains(enterdKeyWords.toLowerCase()))
+            .toList()
+      ];
       notifyListeners();
     }
-    foundSongsAssaign();
   }
 
-  foundSongsAssaign() {
-    _foundSongs = result;
-    notifyListeners();
+  void searchVideo(String enteredKeyWords, BuildContext context) {
+    var allVideo = context.read<VideoFileAccessFromStorage>().accessVideosPath;
+    if (enteredKeyWords.isEmpty) {
+    } else {
+      foundVideos = [
+        ...allVideo
+            .where((element) => element
+                .toString()
+                .split('/')
+                .last
+                .toLowerCase()
+                .contains(enteredKeyWords.toLowerCase()))
+            .toList()
+      ];
+      notifyListeners();
+    }
   }
 }

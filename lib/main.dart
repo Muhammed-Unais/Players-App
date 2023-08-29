@@ -88,6 +88,9 @@ void main() async {
         ChangeNotifierProvider(
           create: (context) => VideosRecentlyPlayedController(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => VideoFileAccessFromStorage(),
+        ),
       ],
       child: MaterialApp(
         initialRoute: "spalshScreen",

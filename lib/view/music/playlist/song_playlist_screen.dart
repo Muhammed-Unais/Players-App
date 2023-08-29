@@ -50,8 +50,8 @@ class SongPlaylistScreen extends StatelessWidget {
                   child: Text(
                     "Create Your Playlist",
                     style: GoogleFonts.raleway(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
                         color: Colors.black),
                   ),
                 )

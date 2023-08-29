@@ -10,7 +10,7 @@ class FavouriteSongDb extends ChangeNotifier {
   List<SongModel> get favouritesSongs => _favouritesSongs;
 
   void isIntializ(List<SongModel> songs) {
-     _favouritesSongs.clear();
+    _favouritesSongs.clear();
     for (SongModel song in songs) {
       if (isFavour(song)) {
         _favouritesSongs.add(song);
@@ -26,24 +26,26 @@ class FavouriteSongDb extends ChangeNotifier {
     return false;
   }
 
-  add(SongModel song) async {
+  void add(SongModel song) async {
     musicDb.add(song.id);
-    _favouritesSongs.add(song);
+    var songsid = _favouritesSongs.map((e) => e.id);
+    if (!songsid.contains(song.id)) {
+      _favouritesSongs.add(song);
+    }
+
     notifyListeners();
   }
 
-  delete(int id) async {
+  void delete(int id) async {
     int deletekey = 0;
     if (!musicDb.values.contains(id)) {
       return;
     }
     final Map<dynamic, dynamic> favourmap = musicDb.toMap();
     favourmap.forEach((key, value) {
-
       if (value == id) {
         deletekey = key;
       }
-
     });
     await musicDb.delete(deletekey);
     _favouritesSongs.removeWhere((song) => song.id == id);

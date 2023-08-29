@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:iconly/iconly.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:players_app/controllers/video_folder/access_folder/access_video.dart';
 import 'package:players_app/controllers/song_folder/page_manager.dart';
 import 'package:players_app/controllers/video_folder/video_favorite_db.dart';
 import 'package:players_app/model/db/videodb_model.dart';
@@ -22,51 +22,15 @@ class SongSearchScreen extends StatefulWidget {
 }
 
 class _SongSearchScreenState extends State<SongSearchScreen> {
-  OnAudioQuery onAudioQuery = OnAudioQuery();
-  AudioPlayer audioPlayer = AudioPlayer();
-  List<String> foundVideos = [];
-  late List<String> allVideos;
-  @override
-  void initState() {
-    videoLoading();
-    setState(() {});
-    super.initState();
-  }
-
-  videoLoading() {
-    allVideos = accessVideosPath;
-    foundVideos.addAll(allVideos);
-  }
-
-  searchVideo(String enteredKeyWords) {
-    List<String> result = [];
-    if (enteredKeyWords.isEmpty) {
-      result = allVideos;
-    } else {
-      result = allVideos
-          .where((element) => element
-              .toString()
-              .split('/')
-              .last
-              .toLowerCase()
-              .contains(enteredKeyWords.toLowerCase()))
-          .toList();
-    }
-    setState(() {
-      foundVideos = result;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    final searchCntrl = Provider.of<SearchController>(context);
-    final vidFavProvider = Provider.of<VideoFavoriteDb>(context);
-    searchCntrl.songLoading();
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
+        elevation: 1,
+        backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -76,48 +40,80 @@ class _SongSearchScreenState extends State<SongSearchScreen> {
             color: Colors.black,
           ),
         ),
-
-        // ===============TextField================
-        title: Consumer<SearchController>(builder: (context, values, _) {
-          return TextField(
-            decoration: InputDecoration(
-              hintText: 'Search',
-              hintStyle: const TextStyle(fontSize: 20),
-              prefixIcon: const Icon(
-                Icons.search,
-                color: Colors.black,
+        title: Consumer<SearchController>(
+          builder: (context, searchController, _) {
+            return TextField(
+              decoration: InputDecoration(
+                hintText: 'Search',
+                hintStyle: GoogleFonts.raleway(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey,
+                ),
+                prefixIcon: const Icon(
+                  IconlyBold.search,
+                  color: Colors.black,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none,
+                ),
               ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
-              ),
-            ),
-            onChanged: (value) => widget.isSong == true
-                ? values.searchsong(value)
-                : searchVideo(value),
-          );
-        }),
+              onChanged: (value) => widget.isSong == true
+                  ? searchController.searchsong(value)
+                  : searchController.searchVideo(value, context),
+            );
+          },
+        ),
       ),
-
-      // ====================SafeArea====================
       body: SafeArea(
-        child: searchCntrl.foundSongs.isNotEmpty && foundVideos.isNotEmpty
-            ? ListView.separated(
-                separatorBuilder: (context, index) {
-                  return const Divider();
-                },
-                itemCount: searchCntrl.foundSongs.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  final vidPath = foundVideos[index];
-                  final vidTitle =
-                      foundVideos[index].toString().split('/').last;
-                  return ListTile(
-                    onTap: widget.isSong == true
+        child: Consumer<SearchController>(
+          builder: (context, searchController, _) {
+            if (searchController.foundVideos.isEmpty && !widget.isSong) {
+              return Center(
+                child: SizedBox(
+                  height: size.height * 0.4,
+                  width: size.width * 0.8,
+                  child: Image.asset("assets/images/Curious-rafiki.png"),
+                ),
+              );
+            }
+            if (searchController.foundSongs.isEmpty && widget.isSong) {
+              return Center(
+                child: SizedBox(
+                  height: size.height * 0.4,
+                  width: size.width * 0.8,
+                  child: Image.asset("assets/images/Curious-rafiki.png"),
+                ),
+              );
+            }
+            return ListView.builder(
+              itemCount: widget.isSong
+                  ? searchController.foundSongs.length
+                  : searchController.foundVideos.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                var vidPath = '';
+                var vidTitle = '';
+                var foundSong = SongModel({});
+                if (!widget.isSong) {
+                  vidPath = searchController.foundVideos[index];
+                  vidTitle = searchController.foundVideos[index]
+                      .toString()
+                      .split('/')
+                      .last;
+                } else {
+                  foundSong = searchController.foundSongs[index];
+                }
+
+                return Padding(
+                  padding: const EdgeInsets.only(top: 5, bottom: 5),
+                  child: ListTile(
+                    onTap: widget.isSong
                         ? () {
                             PageManger.audioPlayer.setAudioSource(
                                 PageManger.songListCreating(
-                                  searchCntrl.foundSongs,
+                                  searchController.foundSongs,
                                 ),
                                 initialIndex: index);
                             Navigator.push(
@@ -126,7 +122,7 @@ class _SongSearchScreenState extends State<SongSearchScreen> {
                                 builder: (context) {
                                   return PlayingMusicScreen(
                                     index: index,
-                                    songModelList: searchCntrl.foundSongs,
+                                    songModelList: searchController.foundSongs,
                                   );
                                 },
                               ),
@@ -137,63 +133,81 @@ class _SongSearchScreenState extends State<SongSearchScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => PlayVideoScreen(
-                                  paths: foundVideos,
+                                  paths: searchController.foundVideos,
                                   index: index,
                                 ),
                               ),
                             );
                           },
-
-                    // ==================title===================
-                    title: widget.isSong == true
-                        ? Text(searchCntrl.foundSongs[index].title,
-                            overflow: TextOverflow.ellipsis)
-                        : Text(vidTitle, overflow: TextOverflow.ellipsis),
-                    // ==================Subtitle===================
-                    subtitle: widget.isSong == true
-                        ? Text(searchCntrl.foundSongs[index].artist == null ||
-                                searchCntrl.foundSongs[index].artist ==
-                                    "<unknown>"
-                            ? "Unknown Artist"
-                            : searchCntrl.foundSongs[index].artist!)
-                        : const Text(''),
-
-                    // =================Leading======================
-
+                    title: widget.isSong
+                        ? Text(
+                            overflow: TextOverflow.ellipsis,
+                            foundSong.title,
+                            style: GoogleFonts.raleway(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                            maxLines: 2,
+                          )
+                        : Text(
+                            vidTitle,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.raleway(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                            maxLines: 2,
+                          ),
+                    subtitle: widget.isSong
+                        ? Text(
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            foundSong.artist == null ||
+                                    foundSong.artist == "<unknown>"
+                                ? "Unknown Artist"
+                                : foundSong.artist!,
+                            style: GoogleFonts.raleway(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey,
+                            ),
+                          )
+                        : null,
                     leading: SearchLeading(
                       isSong: widget.isSong,
-                      songModel: searchCntrl.foundSongs[index],
+                      songModel: foundSong,
                       videoModel: vidPath,
                     ),
-                    // ==================Trailing=====================
-                    trailing: widget.isSong == true
-                        ?
-                        // =====================SONGS TRAILNGS===================
-                        SongTrailing(
+                    trailing: widget.isSong
+                        ? SongTrailing(
                             index: index,
-                            songModel: searchCntrl.foundSongs[index],
+                            songModel: foundSong,
                           )
-                        :
-                        // =====================ViDEO TRAILINGS===================
-                        Row(
+                        : Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              IconButton(
-                                onPressed: () =>
-                                    vidFavProvider.favouriteAddandDelete(
-                                        path: vidPath, title: vidTitle),
-                                icon: vidFavProvider.isVideoFavor(
-                                  PlayersVideoFavoriteModel(
-                                      path: vidPath, title: vidTitle),
-                                )
-                                    ? const Icon(
-                                        Icons.favorite,
-                                        color: Colors.black,
-                                      )
-                                    : const Icon(
-                                        Icons.favorite_border,
-                                        color: Colors.black,
-                                      ),
+                              Consumer<VideoFavoriteDb>(
+                                builder: (context, vidFavProvider, _) {
+                                  return IconButton(
+                                    onPressed: () =>
+                                        vidFavProvider.favouriteAddandDelete(
+                                            path: vidPath, title: vidTitle),
+                                    icon: vidFavProvider.isVideoFavor(
+                                      PlayersVideoFavoriteModel(
+                                          path: vidPath, title: vidTitle),
+                                    )
+                                        ? const Icon(
+                                            Icons.favorite,
+                                            color: Colors.black,
+                                          )
+                                        : const Icon(
+                                            Icons.favorite_border,
+                                            color: Colors.black,
+                                          ),
+                                  );
+                                },
                               ),
                               PopupMenuButton(
                                 onSelected: (value) {
@@ -221,16 +235,12 @@ class _SongSearchScreenState extends State<SongSearchScreen> {
                               ),
                             ],
                           ),
-                  );
-                },
-              )
-            : Center(
-                child: Text(
-                  widget.isSong == true
-                      ? 'Songs not found'
-                      : "Videos not found",
-                ),
-              ),
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

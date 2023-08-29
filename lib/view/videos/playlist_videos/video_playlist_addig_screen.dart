@@ -13,7 +13,6 @@ class VideoaddtoPlaylistfrmAllVideo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final vidPlaylistAdd = Provider.of<VideoPlaylistAddDelete>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -24,57 +23,61 @@ class VideoaddtoPlaylistfrmAllVideo extends StatelessWidget {
           icon: const Icon(Icons.arrow_back),
         ),
       ),
-      body: ListView.separated(
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(
-              left: 10,
-            ),
-            child: ListTile(
-              tileColor: Colors.white,
-              contentPadding: const EdgeInsets.all(10),
-              leading: thumbnail(
-                  path: accessVideosPath[index],
-                  hight: 130,
-                  width: 130),
-              title: Text(
-                accessVideosPath.isNotEmpty
-                    ? accessVideosPath[index].toString().split('/').last
-                    : "Not found your videos",
-                style: GoogleFonts.roboto(
-                    fontSize: 12, fontWeight: FontWeight.w500),
-              ),
-              trailing: Consumer<VideoPlaylistAddDelete>(
-                  builder: (context, videoPlaylistAddDb, _) {
-                return IconButton(
-                  onPressed: () {
-                    if (!videoPlaylistFoldermodel
-                        .isValueIn(accessVideosPath[index])) {
-                      videoPlaylistAddDb.add(
-                          playersVideoPlaylistModel: videoPlaylistFoldermodel,
-                          path: accessVideosPath[index]);
-                    } else {
-                      videoPlaylistAddDb.delete(
-                          playersVideoPlaylistModel: videoPlaylistFoldermodel,
-                          path: accessVideosPath[index]);
-                    }
-                  },
-                  icon: !videoPlaylistFoldermodel.isValueIn(
-                    accessVideosPath[index],
-                  )
-                      ? const Icon(Icons.add)
-                      : const Icon(Icons.minimize),
-                );
-              }),
-            ),
+      body: Consumer<VideoFileAccessFromStorage>(
+        builder: (context,videoProvider,_) {
+          return ListView.separated(
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(
+                  left: 10,
+                ),
+                child: ListTile(
+                  tileColor: Colors.white,
+                  contentPadding: const EdgeInsets.all(10),
+                  leading: thumbnail(
+                      path: videoProvider.accessVideosPath[index],
+                      hight: 130,
+                      width: 130),
+                  title: Text(
+                    videoProvider.accessVideosPath.isNotEmpty
+                        ? videoProvider.accessVideosPath[index].toString().split('/').last
+                        : "Not found your videos",
+                    style: GoogleFonts.roboto(
+                        fontSize: 12, fontWeight: FontWeight.w500),
+                  ),
+                  trailing: Consumer<VideoPlaylistAddDelete>(
+                      builder: (context, videoPlaylistAddDb, _) {
+                    return IconButton(
+                      onPressed: () {
+                        if (!videoPlaylistFoldermodel
+                            .isValueIn(videoProvider.accessVideosPath[index])) {
+                          videoPlaylistAddDb.add(
+                              playersVideoPlaylistModel: videoPlaylistFoldermodel,
+                              path: videoProvider.accessVideosPath[index]);
+                        } else {
+                          videoPlaylistAddDb.delete(
+                              playersVideoPlaylistModel: videoPlaylistFoldermodel,
+                              path: videoProvider.accessVideosPath[index]);
+                        }
+                      },
+                      icon: !videoPlaylistFoldermodel.isValueIn(
+                        videoProvider.accessVideosPath[index],
+                      )
+                          ? const Icon(Icons.add)
+                          : const Icon(Icons.minimize),
+                    );
+                  }),
+                ),
+              );
+            },
+            separatorBuilder: (context, index) {
+              return const Divider(
+                height: 0,
+              );
+            },
+            itemCount: videoProvider.accessVideosPath.length,
           );
-        },
-        separatorBuilder: (context, index) {
-          return const Divider(
-            height: 0,
-          );
-        },
-        itemCount: accessVideosPath.length,
+        }
       ),
     );
   }

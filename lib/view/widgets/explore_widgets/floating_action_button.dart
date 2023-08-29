@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:players_app/controllers/song_and_video_playlistfolder/new_or_edit_playlist.dart';
 
 class SpeedDials extends StatelessWidget {
@@ -13,6 +14,11 @@ class SpeedDials extends StatelessWidget {
       backgroundColor: Colors.white,
       children: [
         SpeedDialChild(
+          labelStyle:  GoogleFonts.raleway(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
+            ),
           label: "Create Video Playlist ",
           child: const Icon(
             Icons.video_collection,
@@ -26,6 +32,11 @@ class SpeedDials extends StatelessWidget {
           },
         ),
         SpeedDialChild(
+          labelStyle:  GoogleFonts.raleway(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
+            ),
           label: "Create Song Playlist",
           child: const Icon(
             Icons.library_music,

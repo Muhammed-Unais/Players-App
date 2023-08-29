@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:players_app/controllers/song_folder/playlist_db_song.dart';
 import 'package:players_app/controllers/video_folder/videodbplaylist.dart';
 import 'package:provider/provider.dart';
@@ -9,24 +10,36 @@ class SongVideoDeleteFromPlaylist {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          title: Text(
             "Delete",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            style: GoogleFonts.raleway(
+              fontSize: 18,
+              fontWeight: FontWeight.w800,
+              color: Colors.black,
+            ),
           ),
-          content: const Text(
-            "Are you sure you want to Delete Playlist",
-            style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+          content: Text(
+            "Do you want to delete playlist",
+            style: GoogleFonts.raleway(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
+            ),
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text(
+              child: Text(
                 "No",
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                style: GoogleFonts.raleway(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
               ),
             ),
             TextButton(
@@ -48,10 +61,13 @@ class SongVideoDeleteFromPlaylist {
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 Navigator.pop(context);
               },
-              child: const Text(
+              child: Text(
                 "Sure",
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                style: GoogleFonts.raleway(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
               ),
             ),
           ],

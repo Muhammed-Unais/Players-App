@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:players_app/controllers/song_and_video_playlistfolder/alert_dialotgue_songs_video_delete.dart';
 import 'package:players_app/controllers/video_folder/video_favorite_db.dart';
 import 'package:players_app/view/videos/play_screen/play_video_screen.dart';
 import 'package:players_app/view/widgets/model_widget/listtale_songs_model.dart';
@@ -11,7 +12,6 @@ class VideoFavoriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ========================================
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -24,15 +24,19 @@ class VideoFavoriteScreen extends StatelessWidget {
       ),
       body: Consumer<VideoFavoriteDb>(
         builder: (context, videoFavorites, child) {
-           if (!videoFavorites.isIntialized) {
-            videoFavorites.favoriteInitialize();
+          if (!videoFavorites.isIntialized) {
+            videoFavorites.favoriteInitialize(context);
           }
           final itemsOfVFavdb = videoFavorites.videoFavoriteDb;
           return videoFavorites.videoFavoriteDb.isEmpty
-              ? const Center(
+              ?  Center(
                   child: Text(
                     "No Favorites",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.raleway(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.black,
+                    ),
                   ),
                 )
               : Padding(
@@ -49,11 +53,15 @@ class VideoFavoriteScreen extends StatelessWidget {
                               width: 100),
                           title: itemsOfVFavdb[index].title,
                           trailingOne: IconButton(
-                            onPressed: () =>
+                            onPressed: () {
+                              deleteVideoAndSongs(context, "Delete", () {
                                 videoFavorites.favouriteAddandDelete(
-                              path: itemsOfVFavdb[index].path,
-                              title: itemsOfVFavdb[index].title,
-                            ),
+                                  path: itemsOfVFavdb[index].path,
+                                  title: itemsOfVFavdb[index].title,
+                                );
+                                Navigator.pop(context);
+                              });
+                            },
                             icon: const Icon(Icons.delete),
                             color: Colors.black,
                           ),
@@ -62,9 +70,9 @@ class VideoFavoriteScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => PlayVideoScreen(
-                                  paths: itemsOfVFavdb.map((e) => e.path).toList(),
+                                  paths:
+                                      itemsOfVFavdb.map((e) => e.path).toList(),
                                   index: index,
-                                
                                 ),
                               ),
                             );

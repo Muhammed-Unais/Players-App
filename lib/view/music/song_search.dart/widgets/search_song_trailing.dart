@@ -15,8 +15,6 @@ class SongTrailing extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // ============Favorite Icon(adding & deleting)=============
-// currently working ===========================================================================================================
         Consumer<FavouriteSongDb>(
           builder: (context, favouriteMusic, _) {
             return IconButton(
@@ -39,8 +37,6 @@ class SongTrailing extends StatelessWidget {
             );
           },
         ),
-
-        // ===========Morevert ICon For Add Playlist==============
         PopupMenuButton(
           onSelected: (value) {
             Navigator.push(
@@ -48,7 +44,6 @@ class SongTrailing extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) {
                   return SongPlaylistScreen(
-                    // addtoPlaylist: item.data![index],
                     findex: index,
                     playlistSongsShowornot: false,
                   );
