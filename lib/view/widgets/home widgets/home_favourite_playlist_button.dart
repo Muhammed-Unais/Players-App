@@ -42,13 +42,14 @@ class FavouriteAndPlaylistButton extends StatelessWidget {
                 );
               },
               child: Container(
-                margin:const EdgeInsets.only(right: 6),
+                margin: const EdgeInsets.only(right: 6),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20.0),
-                  gradient: LinearGradient(
-                    colors: [Colors.grey[500]!, Colors.white24],
+                  gradient: const LinearGradient(
+                    colors: [Color(0xffb9b9b9), Color(0xffe8e8e8)],
+                    stops: [0, 1],
                     begin: Alignment.topLeft,
-                    end: Alignment.bottomCenter,
+                    end: Alignment.bottomRight,
                   ),
                   boxShadow: [
                     BoxShadow(
@@ -67,7 +68,7 @@ class FavouriteAndPlaylistButton extends StatelessWidget {
                       items[index],
                       style: GoogleFonts.raleway(
                         fontSize: 16,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                         color: Colors.black,
                       ),
                     ),

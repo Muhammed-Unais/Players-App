@@ -23,7 +23,9 @@ class _HomeVideoScreenState extends State<HomeVideoScreen> {
   void initializeRecentVideos() {
     var recentlyVideoProvider = context.read<VideosRecentlyPlayedController>();
     if (!recentlyVideoProvider.isInitiliaz) {
-      context.read<VideosRecentlyPlayedController>().initializeRecentVideos(context);
+      context
+          .read<VideosRecentlyPlayedController>()
+          .initializeRecentVideos(context);
     }
   }
 
@@ -45,12 +47,24 @@ class _HomeVideoScreenState extends State<HomeVideoScreen> {
         padding: const EdgeInsets.only(left: 16, right: 16),
         itemCount: recentVideoProvider.recentVidoes.length,
         itemBuilder: (context, index) {
-          return Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+          return Container(
+            margin: const EdgeInsets.only(bottom: 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20.0),
+              gradient: const LinearGradient(
+                colors: [Color(0xffd1d1d1), Color(0xffe8e8e8)],
+                stops: [0, 1],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  blurRadius: 0.1,
+                  offset: const Offset(0, 1),
+                ),
+              ],
             ),
-            elevation: 0.1,
-            color: Colors.white60,
             child: ListTile(
               contentPadding:
                   const EdgeInsets.only(left: 8, right: 14, top: 8, bottom: 8),

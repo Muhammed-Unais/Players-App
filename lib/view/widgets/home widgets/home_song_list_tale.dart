@@ -17,12 +17,24 @@ class SongsListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.0),
+        gradient: const LinearGradient(
+          colors: [Color(0xffd1d1d1), Color(0xffe8e8e8)],
+          stops: [0, 1],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            blurRadius: 0.1,
+            offset: const Offset(0, 1),
+          ),
+        ],
       ),
-      elevation: 0.1,
-      color: Colors.white60,
       child: ListTile(
         leading: QueryArtworkWidget(
           keepOldArtwork: true,

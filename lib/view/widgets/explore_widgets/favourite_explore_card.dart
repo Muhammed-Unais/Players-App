@@ -14,11 +14,13 @@ class FavouriteExploreCard extends StatelessWidget {
       height: size.height * 0.1,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
-        gradient: LinearGradient(
-          colors: [Colors.grey[600]!, Colors.white10],
+        gradient: const LinearGradient(
+          colors: [Color(0xffb9b9b9), Color(0xffe8e8e8)],
+          stops: [0, 1],
           begin: Alignment.topLeft,
-          end: Alignment.bottomCenter,
-        ),
+          end: Alignment.bottomRight,
+        )
+      ,
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
@@ -41,11 +43,11 @@ class FavouriteExploreCard extends StatelessWidget {
           Center(
             child: Text(
               cardTitile,
-              style:GoogleFonts.raleway(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
+              style: GoogleFonts.raleway(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+              ),
             ),
           ),
         ],
