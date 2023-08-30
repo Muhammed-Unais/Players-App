@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:players_app/controllers/song_folder/page_manager.dart';
@@ -49,6 +50,12 @@ class _PlayingMusicScreenState extends State<PlayingMusicScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.black,
+          statusBarColor: Colors.black,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
@@ -148,7 +155,8 @@ class _PlayingMusicScreenState extends State<PlayingMusicScreen> {
                 SizedBox(
                   height: size.height * 0.03,
                 ),
-                PlayNextPreviousButtons(currentAudioSource: widget.songModelList),
+                PlayNextPreviousButtons(
+                    currentAudioSource: widget.songModelList),
                 SizedBox(
                   height: size.height * 0.03,
                 ),

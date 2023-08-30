@@ -23,7 +23,6 @@ class PlayVideoScreen extends StatefulWidget {
 }
 
 class _PlayVideoScreenState extends State<PlayVideoScreen> {
-  
   VideoPlayerController? _controllers;
   late Future<void> _initilizeVideoPlayerFuture;
   int _isPlayingindex = -1;

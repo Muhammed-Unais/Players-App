@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:iconly/iconly.dart';
 import 'package:players_app/view/music/song_search.dart/song_search_songs.dart';
 import 'package:players_app/view/widgets/allsongs_and_videos%20Widgets/allsongs.dart';
@@ -58,6 +59,11 @@ class _AllSongsAndVideosScreenState extends State<AllSongsAndVideosScreen>
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
               SliverAppBar(
+                systemOverlayStyle: const SystemUiOverlayStyle(
+                  statusBarColor: Colors.transparent,
+                  statusBarIconBrightness: Brightness.dark,
+                  statusBarBrightness: Brightness.light,
+                ),
                 backgroundColor: Colors.white,
                 pinned: true,
                 expandedHeight: 200,

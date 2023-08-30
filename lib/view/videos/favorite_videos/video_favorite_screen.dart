@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:players_app/controllers/song_and_video_playlistfolder/alert_dialotgue_songs_video_delete.dart';
 import 'package:players_app/controllers/video_folder/video_favorite_db.dart';
@@ -14,6 +15,12 @@ class VideoFavoriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+         systemOverlayStyle: const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.white,
+          statusBarColor: Colors.black,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
         title: Text(
           "Favorite Videos",
           style: GoogleFonts.raleway(

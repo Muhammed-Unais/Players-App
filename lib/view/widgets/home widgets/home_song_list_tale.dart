@@ -61,7 +61,10 @@ class SongsListTile extends StatelessWidget {
           maxLines: 2,
         ),
         subtitle: Text(
-          songModel[index].artist ?? "",
+          songModel[index].artist == null ||
+                  songModel[index].artist == "<unknown>"
+              ? "Unknown Artist"
+              : songModel[index].artist!,
           style: GoogleFonts.raleway(
             fontSize: 13,
             fontWeight: FontWeight.w600,

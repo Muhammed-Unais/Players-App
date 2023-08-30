@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:players_app/controllers/song_folder/recently_played_controller.dart';
 import 'package:players_app/controllers/video_folder/access_folder/access_video.dart';
@@ -93,6 +94,16 @@ void main() async {
         ),
       ],
       child: MaterialApp(
+        theme: ThemeData(
+          appBarTheme: const AppBarTheme(
+            systemOverlayStyle: SystemUiOverlayStyle(
+              systemNavigationBarColor: Colors.white,
+              statusBarColor: Colors.white,
+              statusBarIconBrightness: Brightness.dark,
+              statusBarBrightness: Brightness.light,
+            ),
+          ),
+        ),
         initialRoute: "spalshScreen",
         routes: {
           "homeScreen": (context) => const HomeScreen(),
