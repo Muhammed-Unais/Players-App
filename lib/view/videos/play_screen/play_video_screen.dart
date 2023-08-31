@@ -102,6 +102,10 @@ class _PlayVideoScreenState extends State<PlayVideoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+          statusBarColor: Colors.black, systemNavigationBarColor: Colors.black),
+    );
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(

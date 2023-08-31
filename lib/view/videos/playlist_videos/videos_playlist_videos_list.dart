@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:players_app/controllers/song_and_video_playlistfolder/alert_dialotgue_songs_video_delete.dart';
@@ -39,6 +40,12 @@ class VideosPlaylistVideoList extends StatelessWidget {
         },
       ),
       appBar: AppBar(
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.white,
+          statusBarColor: Colors.black,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
         centerTitle: true,
         title: Text(
           videoPlaylistFoldermodel.name,
@@ -73,7 +80,8 @@ class VideosPlaylistVideoList extends StatelessWidget {
                   itemCount: videosinPlaylistFolder.length,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: const EdgeInsets.only(left: 16,right: 16,top: 10),
+                      padding:
+                          const EdgeInsets.only(left: 16, right: 16, top: 10),
                       child: ListtaleModelVidSong(
                         leading: thumbnail(
                             path: videosinPlaylistFolder[index],
@@ -85,10 +93,14 @@ class VideosPlaylistVideoList extends StatelessWidget {
                             .last,
                         trailingOne: IconButton(
                           onPressed: () {
-                            deleteVideoAndSongs(context, "Delete", () {
-                              test.deleteData(videosinPlaylistFolder[index]);
-                              Navigator.pop(context);
-                            });
+                            deleteVideoAndSongs(
+                              context,
+                              "Delete",
+                              () {
+                                test.deleteData(videosinPlaylistFolder[index]);
+                                Navigator.pop(context);
+                              },
+                            );
                           },
                           icon: const Icon(
                             Icons.delete,

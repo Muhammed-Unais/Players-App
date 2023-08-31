@@ -50,6 +50,7 @@ class _AllSongsAndVideosScreenState extends State<AllSongsAndVideosScreen>
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return DefaultTabController(
       initialIndex: widget.index,
       length: 2,
@@ -66,7 +67,7 @@ class _AllSongsAndVideosScreenState extends State<AllSongsAndVideosScreen>
                 ),
                 backgroundColor: Colors.white,
                 pinned: true,
-                expandedHeight: 200,
+                expandedHeight: size.height*0.2,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Image.asset(
                     "assets/images/wepik-export-20230828135001zGdl.png",

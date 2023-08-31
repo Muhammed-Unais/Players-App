@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:players_app/controllers/song_folder/page_manager.dart';
 import 'package:players_app/controllers/resetpp.dart';
@@ -18,6 +19,12 @@ class SettingsScreen extends StatelessWidget {
     ];
     return Scaffold(
       appBar: AppBar(
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.white,
+          statusBarColor: Colors.black,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
         centerTitle: true,
         backgroundColor: Colors.black,
         elevation: 0,
@@ -172,7 +179,7 @@ class ShowDialouge extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-             ResetApp.resetApp();
+            ResetApp.resetApp();
             PageManger.audioPlayer.stop();
             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
               builder: (context) {

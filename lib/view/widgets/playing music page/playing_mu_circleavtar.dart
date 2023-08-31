@@ -4,21 +4,23 @@ import 'package:on_audio_query/on_audio_query.dart';
 class PlayinMusicCircleAvatar extends StatelessWidget {
   final SongModel songs;
   const PlayinMusicCircleAvatar({
-    super.key, required this.songs,
+    super.key,
+    required this.songs,
   });
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Align(
       alignment: Alignment.bottomCenter,
       child: CircleAvatar(
-        radius: 140,
+        radius: size.width*0.3,
         backgroundColor: Colors.grey.shade400,
         child: QueryArtworkWidget(
           keepOldArtwork: true,
           artworkBorder: BorderRadius.circular(200),
-          artworkWidth: 270,
-          artworkHeight: 270,
+          artworkWidth: size.width*0.58,
+          artworkHeight: size.width*0.58,
           artworkFit: BoxFit.cover,
           id: songs.id,
           type: ArtworkType.AUDIO,
@@ -26,7 +28,7 @@ class PlayinMusicCircleAvatar extends StatelessWidget {
             backgroundColor: Colors.black,
             backgroundImage:
                 const AssetImage("assets/images/pexels-foteros-352505.jpg"),
-            radius: 135,
+            radius:  size.width*0.29,
             child: Stack(
               children: [
                 Align(

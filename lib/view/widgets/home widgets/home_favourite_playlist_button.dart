@@ -21,7 +21,10 @@ class FavouriteAndPlaylistButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          border: Border(bottom: BorderSide(color: Colors.grey, width: 0.4))),
+        border: Border(
+          bottom: BorderSide(color: Colors.grey, width: 0.4),
+        ),
+      ),
       height: hight * 0.07,
       child: ListView.builder(
         padding: const EdgeInsets.only(left: 16),
@@ -42,6 +45,7 @@ class FavouriteAndPlaylistButton extends StatelessWidget {
                 );
               },
               child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 margin: const EdgeInsets.only(right: 6),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20.0),
@@ -62,7 +66,7 @@ class FavouriteAndPlaylistButton extends StatelessWidget {
                 height: 36,
                 width: width * 0.4,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       items[index],
