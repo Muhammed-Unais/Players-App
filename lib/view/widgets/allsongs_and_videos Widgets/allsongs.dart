@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:players_app/controllers/song_folder/favorite_songdb.dart';
 import 'package:players_app/controllers/song_folder/page_manager.dart';
+import 'package:players_app/controllers/song_folder/recently_played_controller.dart';
 import 'package:players_app/view/music/playing_screen/playing_music_page.dart';
 import 'package:players_app/view/music/playlist/song_playlist_screen.dart';
 import 'package:players_app/view/widgets/model_widget/listtale_songs_model.dart';
@@ -13,23 +14,9 @@ class AllSongs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    OnAudioQuery audioQuery = OnAudioQuery();
-    return FutureBuilder(
-      future: audioQuery.querySongs(
-          ignoreCase: true,
-          orderType: OrderType.ASC_OR_SMALLER,
-          uriType: UriType.EXTERNAL,
-          sortType: null),
-      builder: (context, item) {
-        if (item.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: Colors.black,
-            ),
-          );
-        }
-        if (item.connectionState == ConnectionState.done &&
-            item.data!.isEmpty) {
+    return  Consumer<RecentlyPlayedSongsController>(
+      builder: (context, allSongsProvider, _) {
+        if (allSongsProvider.allUserSongs.isEmpty) {
           return Center(
             child: SizedBox(
               height: size.height * 0.4,
@@ -41,7 +28,7 @@ class AllSongs extends StatelessWidget {
         return ListView.builder(
           padding: const EdgeInsets.only(left: 16, right: 16),
           shrinkWrap: true,
-          itemCount: item.data!.length,
+          itemCount: allSongsProvider.allUserSongs.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 5, top: 5),
@@ -51,7 +38,7 @@ class AllSongs extends StatelessWidget {
                   artworkWidth: 58,
                   artworkHeight: 58,
                   artworkFit: BoxFit.cover,
-                  id: item.data![index].id,
+                  id: allSongsProvider.allUserSongs[index].id,
                   type: ArtworkType.AUDIO,
                   nullArtworkWidget: CircleAvatar(
                     backgroundColor: Colors.black,
@@ -72,22 +59,27 @@ class AllSongs extends StatelessWidget {
                     ),
                   ),
                 ),
-                title: item.data![index].title,
-                subtitle: item.data![index].artist == null ||
-                        item.data![index].artist == "<unknown>"
+                title: allSongsProvider.allUserSongs[index].title,
+                subtitle: allSongsProvider.allUserSongs[index].artist == null ||
+                        allSongsProvider.allUserSongs[index].artist ==
+                            "<unknown>"
                     ? "Unknown Artist"
-                    : item.data![index].artist!,
+                    : allSongsProvider.allUserSongs[index].artist!,
                 trailingOne: Consumer<FavouriteSongDb>(
                   builder: (context, favoriteMusic, _) {
                     return IconButton(
                       onPressed: () async {
-                        if (favoriteMusic.isFavour(item.data![index])) {
-                          favoriteMusic.delete(item.data![index].id);
+                        if (favoriteMusic
+                            .isFavour(allSongsProvider.allUserSongs[index])) {
+                          favoriteMusic
+                              .delete(allSongsProvider.allUserSongs[index].id);
                         } else {
-                          favoriteMusic.add(item.data![index]);
+                          favoriteMusic
+                              .add(allSongsProvider.allUserSongs[index]);
                         }
                       },
-                      icon: favoriteMusic.isFavour(item.data![index])
+                      icon: favoriteMusic
+                              .isFavour(allSongsProvider.allUserSongs[index])
                           ? const Icon(
                               Icons.favorite,
                               color: Colors.black,
@@ -106,7 +98,6 @@ class AllSongs extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (context) {
                           return SongPlaylistScreen(
-                            // addtoPlaylist: item.data![index],
                             findex: index,
                             playlistSongsShowornot: false,
                           );
@@ -123,15 +114,16 @@ class AllSongs extends StatelessWidget {
                 ),
                 onTap: () {
                   PageManger.audioPlayer.setAudioSource(
-                      PageManger.songListCreating(item.data!),
+                      PageManger.songListCreating(
+                          allSongsProvider.allUserSongs),
                       initialIndex: index);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => PlayingMusicScreen(
                         index: index,
-                        songModelList: item.data!,
-                        count: item.data!.length,
+                        songModelList: allSongsProvider.allUserSongs,
+                        count: allSongsProvider.allUserSongs.length,
                       ),
                     ),
                   );

@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:players_app/controllers/video_folder/access_folder/access_video.dart';
@@ -25,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
   // spalsh duration function
   Future<void> gotoHomeScreen(BuildContext context) async {
     await Future.delayed(
-      const Duration(seconds: 2),
+      const Duration(seconds: 4),
     );
     navigateToBottomNavbar();
   }
@@ -48,3 +49,5 @@ class _SplashScreenState extends State<SplashScreen> {
     super.dispose();
   }
 }
+
+

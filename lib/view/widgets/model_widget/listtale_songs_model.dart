@@ -31,7 +31,7 @@ class ListtaleModelVidSong extends StatelessWidget {
           color: Colors.black,
         ),
         overflow: TextOverflow.ellipsis,
-        maxLines: 2,
+        maxLines: 1,
       ),
       subtitle: Text(
         subtitle == null ? "" : subtitle!,
@@ -40,7 +40,7 @@ class ListtaleModelVidSong extends StatelessWidget {
           fontWeight: FontWeight.w600,
           color: Colors.grey,
         ),
-        maxLines: 2,
+        maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
       trailing: Row(

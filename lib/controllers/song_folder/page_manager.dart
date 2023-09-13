@@ -4,6 +4,7 @@ import 'package:on_audio_query/on_audio_query.dart';
 class PageManger {
   static AudioPlayer audioPlayer = AudioPlayer();
   static List<SongModel> songscopy = [];
+  static List<String> allVidoesCopy = [];
   static int currerentIndexes = -1;
   static ConcatenatingAudioSource songListCreating(List<SongModel> elements) {
     List<AudioSource> songList = [];
@@ -11,7 +12,7 @@ class PageManger {
       songList.add(
         AudioSource.uri(
           tag: currerentIndexes,
-          Uri.parse(element.uri??""),
+          Uri.parse(element.uri ?? ""),
         ),
       );
     }
@@ -25,6 +26,7 @@ class PageManger {
   static void play() async {
     audioPlayer.play();
   }
+
   static void pause() async {
     audioPlayer.pause();
   }

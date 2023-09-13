@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:players_app/view/music/playlist/controller/playlist_add_and_minimize.dart';
 import 'package:players_app/model/db/dbmodel.dart';
@@ -13,6 +14,12 @@ class SongAddingPlaylist extends StatelessWidget {
     OnAudioQuery audioQuery = OnAudioQuery();
     return Scaffold(
       appBar: AppBar(
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.white,
+          statusBarColor: Colors.black,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
         backgroundColor: Colors.black,
         leading: IconButton(
           onPressed: () {

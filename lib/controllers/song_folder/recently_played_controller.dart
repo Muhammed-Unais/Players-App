@@ -11,26 +11,28 @@ class RecentlyPlayedSongsController extends ChangeNotifier {
 
   List<SongModel> recentSongs = [];
 
-  bool isIntialize = false;
+  List<SongModel> allUserSongs = [];
 
+
+  bool isIntialize = false;
 
   Future<List<SongModel>> initializRecentSongs() async {
     final OnAudioQuery audioQuery = OnAudioQuery();
     getSortedRecentSongs();
 
-    var listofSongs = await audioQuery.querySongs(
+     allUserSongs = await audioQuery.querySongs(
         ignoreCase: true,
         orderType: OrderType.ASC_OR_SMALLER,
         uriType: UriType.EXTERNAL,
         sortType: null);
 
-    PageManger.songscopy = listofSongs;
+    PageManger.songscopy = allUserSongs;
     recentSongs.clear();
 
     List<SongModel> tempRecentSongs =
         List.filled(_listRecentSongs.length, SongModel({}));
 
-    for (var songmodel in listofSongs) {
+    for (var songmodel in allUserSongs) {
       if (isRecentlySong(songmodel.id)) {
         for (var i = 0; i < _listRecentSongs.length; i++) {
           if (_listRecentSongs[i].recentSongsId == songmodel.id) {

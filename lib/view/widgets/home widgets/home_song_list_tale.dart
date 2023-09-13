@@ -58,7 +58,7 @@ class SongsListTile extends StatelessWidget {
             color: Colors.black,
           ),
           overflow: TextOverflow.ellipsis,
-          maxLines: 2,
+          maxLines: 1,
         ),
         subtitle: Text(
           songModel[index].artist == null ||

@@ -64,20 +64,23 @@ class FavouriteAndPlaylistButton extends StatelessWidget {
                   ],
                 ),
                 height: 36,
-                width: width * 0.4,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      items[index],
-                      style: GoogleFonts.raleway(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        items[index],
+                        style: GoogleFonts.raleway(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                    icons[index]
-                  ],
+                      const SizedBox(width: 10,),
+                      icons[index]
+                    ],
+                  ),
                 ),
               ),
             ),

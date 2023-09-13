@@ -80,7 +80,7 @@ class _HomeVideoScreenState extends State<HomeVideoScreen> {
                   color: Colors.black,
                 ),
                 overflow: TextOverflow.ellipsis,
-                maxLines: 2,
+                maxLines: 1,
               ),
               trailing: const Icon(
                 IconlyBold.play,
@@ -92,7 +92,7 @@ class _HomeVideoScreenState extends State<HomeVideoScreen> {
                   MaterialPageRoute(
                     builder: (context) => PlayVideoScreen(
                       paths: recentVideoProvider.recentVidoes
-                          .map((e) => e.path)
+                          .map((e) => e.path,)
                           .toList(),
                       index: index,
                     ),
