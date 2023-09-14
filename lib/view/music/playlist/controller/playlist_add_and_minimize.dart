@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:players_app/model/db/dbmodel.dart';
+import 'package:domedia/model/db/dbmodel.dart';
 
 class SongAddingpage extends ChangeNotifier {
   

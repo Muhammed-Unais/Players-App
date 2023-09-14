@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:players_app/controllers/song_and_video_playlistfolder/new_or_edit_playlist.dart';
-import 'package:players_app/controllers/song_and_video_playlistfolder/song_addto_playlist.dart';
-import 'package:players_app/controllers/song_folder/page_manager.dart';
-import 'package:players_app/controllers/song_folder/playlist_db_song.dart';
-import 'package:players_app/view/music/playlist/added_playlistsongs.dart';
-import 'package:players_app/view/widgets/explore_widgets/favourites_cards.dart';
-import 'package:players_app/view/widgets/playlist_scree.dart/playlist_popup.dart';
+import 'package:domedia/controllers/song_and_video_playlistfolder/new_or_edit_playlist.dart';
+import 'package:domedia/controllers/song_and_video_playlistfolder/song_addto_playlist.dart';
+import 'package:domedia/controllers/song_folder/page_manager.dart';
+import 'package:domedia/controllers/song_folder/playlist_db_song.dart';
+import 'package:domedia/view/music/playlist/added_playlistsongs.dart';
+import 'package:domedia/view/widgets/explore_widgets/favourites_cards.dart';
+import 'package:domedia/view/widgets/playlist_scree.dart/playlist_popup.dart';
 import 'package:provider/provider.dart';
 
 GlobalKey<FormState> formkey = GlobalKey<FormState>();

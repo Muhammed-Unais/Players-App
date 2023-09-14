@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
-import 'package:players_app/view/genaral_screens.dart/explore.dart';
-import 'package:players_app/view/genaral_screens.dart/home.dart';
-import 'package:players_app/view/genaral_screens.dart/all_songs_and_videos.dart';
+import 'package:domedia/view/genaral_screens.dart/explore.dart';
+import 'package:domedia/view/genaral_screens.dart/home.dart';
+import 'package:domedia/view/genaral_screens.dart/all_songs_and_videos.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);

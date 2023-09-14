@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:players_app/controllers/song_folder/page_manager.dart';
-import 'package:players_app/model/db/recently_played_songs_model.dart';
+import 'package:domedia/controllers/song_folder/page_manager.dart';
+import 'package:domedia/model/db/recently_played_songs_model.dart';
 
 class RecentlyPlayedSongsController extends ChangeNotifier {
   var box = Hive.box<RecentlyPlayedSongsModel>("recently_played");

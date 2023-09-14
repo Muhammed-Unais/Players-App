@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:players_app/controllers/song_folder/page_manager.dart';
-import 'package:players_app/view/widgets/playing%20music%20page/play_music_buttons.dart';
+import 'package:domedia/controllers/song_folder/page_manager.dart';
+import 'package:domedia/view/widgets/playing%20music%20page/play_music_buttons.dart';
 
 class RepeatButton extends StatelessWidget {
   const RepeatButton({super.key});

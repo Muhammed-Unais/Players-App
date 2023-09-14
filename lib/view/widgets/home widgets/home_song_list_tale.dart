@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:players_app/controllers/song_folder/page_manager.dart';
-import 'package:players_app/view/music/playing_screen/playing_music_page.dart';
+import 'package:domedia/controllers/song_folder/page_manager.dart';
+import 'package:domedia/view/music/playing_screen/playing_music_page.dart';
 
 class SongsListTile extends StatelessWidget {
   const SongsListTile({

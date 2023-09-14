@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:players_app/controllers/video_folder/access_folder/access_video.dart';
-import 'package:players_app/view/videos/playlist_videos/controller/playlist_add_delete.dart';
-import 'package:players_app/model/db/videodb_model.dart';
-import 'package:players_app/view/widgets/thumbnail.dart';
+import 'package:domedia/controllers/video_folder/access_folder/access_video.dart';
+import 'package:domedia/view/videos/playlist_videos/controller/playlist_add_delete.dart';
+import 'package:domedia/model/db/videodb_model.dart';
+import 'package:domedia/view/widgets/thumbnail.dart';
 import 'package:provider/provider.dart';
 
 class VideoaddtoPlaylistfrmAllVideo extends StatelessWidget {

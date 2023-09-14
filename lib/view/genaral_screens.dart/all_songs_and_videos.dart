@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconly/iconly.dart';
-import 'package:players_app/view/music/song_search.dart/song_search_songs.dart';
-import 'package:players_app/view/widgets/allsongs_and_videos%20Widgets/allsongs.dart';
-import 'package:players_app/view/widgets/allsongs_and_videos%20Widgets/allvideos.dart';
-import 'package:players_app/view/widgets/allsongs_and_videos%20Widgets/tabbar_allsongsandvideos.dart';
+import 'package:domedia/view/music/song_search.dart/song_search_songs.dart';
+import 'package:domedia/view/widgets/allsongs_and_videos%20Widgets/allsongs.dart';
+import 'package:domedia/view/widgets/allsongs_and_videos%20Widgets/allvideos.dart';
+import 'package:domedia/view/widgets/allsongs_and_videos%20Widgets/tabbar_allsongsandvideos.dart';
 
 class AllSongsAndVideosScreen extends StatefulWidget {
   final bool recheck;

@@ -1,10 +1,10 @@
 import 'dart:isolate';
+import 'package:domedia/controllers/video_folder/access_folder/method_channel_fn.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:players_app/controllers/video_folder/access_folder/method_channel_fn.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class VideoFileAccessFromStorage with ChangeNotifier {

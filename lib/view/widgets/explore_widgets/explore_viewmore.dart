@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:players_app/controllers/song_folder/playlist_db_song.dart';
+import 'package:domedia/controllers/song_folder/playlist_db_song.dart';
 import 'package:provider/provider.dart';
 
 class ExploreViewmore extends StatelessWidget {

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:players_app/controllers/song_and_video_playlistfolder/alert_dialotgue_songs_video_delete.dart';
-import 'package:players_app/controllers/video_folder/access_folder/access_video.dart';
-import 'package:players_app/model/db/videodb_model.dart';
-import 'package:players_app/view/videos/play_screen/play_video_screen.dart';
-import 'package:players_app/view/videos/playlist_videos/video_playlist_addig_screen.dart';
-import 'package:players_app/view/widgets/model_widget/listtale_songs_model.dart';
-import 'package:players_app/view/widgets/thumbnail.dart';
+import 'package:domedia/controllers/song_and_video_playlistfolder/alert_dialotgue_songs_video_delete.dart';
+import 'package:domedia/controllers/video_folder/access_folder/access_video.dart';
+import 'package:domedia/model/db/videodb_model.dart';
+import 'package:domedia/view/videos/play_screen/play_video_screen.dart';
+import 'package:domedia/view/videos/playlist_videos/video_playlist_addig_screen.dart';
+import 'package:domedia/view/widgets/model_widget/listtale_songs_model.dart';
+import 'package:domedia/view/widgets/thumbnail.dart';
 import 'package:provider/provider.dart';
 
 class VideosPlaylistVideoList extends StatelessWidget {

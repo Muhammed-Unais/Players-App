@@ -3,12 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:players_app/controllers/song_and_video_playlistfolder/alert_dialotgue_songs_video_delete.dart';
-import 'package:players_app/controllers/song_folder/page_manager.dart';
-import 'package:players_app/model/db/dbmodel.dart';
-import 'package:players_app/view/music/playing_screen/playing_music_page.dart';
-import 'package:players_app/view/music/playlist/song_adding_playlist.dart';
-import 'package:players_app/view/widgets/model_widget/listtale_songs_model.dart';
+import 'package:domedia/controllers/song_and_video_playlistfolder/alert_dialotgue_songs_video_delete.dart';
+import 'package:domedia/controllers/song_folder/page_manager.dart';
+import 'package:domedia/model/db/dbmodel.dart';
+import 'package:domedia/view/music/playing_screen/playing_music_page.dart';
+import 'package:domedia/view/music/playlist/song_adding_playlist.dart';
+import 'package:domedia/view/widgets/model_widget/listtale_songs_model.dart';
 
 class PlaylistSongsList extends StatelessWidget {
   final int findex;

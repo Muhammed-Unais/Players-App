@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:players_app/controllers/song_folder/favorite_songdb.dart';
-import 'package:players_app/view/music/playlist/song_playlist_screen.dart';
+import 'package:domedia/controllers/song_folder/favorite_songdb.dart';
+import 'package:domedia/view/music/playlist/song_playlist_screen.dart';
 import 'package:provider/provider.dart';
 
 class SongTrailing extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:players_app/controllers/song_folder/recently_played_controller.dart';
-import 'package:players_app/view/widgets/home%20widgets/home_song_list_tale.dart';
+import 'package:domedia/controllers/song_folder/recently_played_controller.dart';
+import 'package:domedia/view/widgets/home%20widgets/home_song_list_tale.dart';
 import 'package:provider/provider.dart';
 
 class HomeSongSection extends StatefulWidget {

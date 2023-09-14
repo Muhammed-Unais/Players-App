@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:players_app/controllers/video_folder/videodbplaylist.dart';
-import 'package:players_app/view/videos/playlist_videos/playlist_video_screen.dart';
-import 'package:players_app/view/videos/playlist_videos/videos_playlist_videos_list.dart';
-import 'package:players_app/view/widgets/explore_widgets/favourites_cards.dart';
-import 'package:players_app/view/widgets/playlist_scree.dart/playlist_popup.dart';
+import 'package:domedia/controllers/video_folder/videodbplaylist.dart';
+import 'package:domedia/view/videos/playlist_videos/playlist_video_screen.dart';
+import 'package:domedia/view/videos/playlist_videos/videos_playlist_videos_list.dart';
+import 'package:domedia/view/widgets/explore_widgets/favourites_cards.dart';
+import 'package:domedia/view/widgets/playlist_scree.dart/playlist_popup.dart';
 import 'package:provider/provider.dart';
 
 class ExploreVidoePlaylist extends StatelessWidget {

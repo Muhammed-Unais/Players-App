@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:players_app/controllers/song_folder/page_manager.dart';
-import 'package:players_app/controllers/song_folder/recently_played_controller.dart';
+import 'package:domedia/controllers/song_folder/page_manager.dart';
+import 'package:domedia/controllers/song_folder/recently_played_controller.dart';
 import 'package:provider/provider.dart';
 
 class MusicPlaying extends ChangeNotifier {

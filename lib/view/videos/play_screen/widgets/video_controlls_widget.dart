@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:players_app/view/videos/play_screen/controller/video_controllers.dart';
-import 'package:players_app/view/videos/play_screen/widgets/video_controller_button_widget.dart';
-import 'package:players_app/view/videos/play_screen/widgets/video_duration_controller.dart';
+import 'package:domedia/view/videos/play_screen/controller/video_controllers.dart';
+import 'package:domedia/view/videos/play_screen/widgets/video_controller_button_widget.dart';
+import 'package:domedia/view/videos/play_screen/widgets/video_duration_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 

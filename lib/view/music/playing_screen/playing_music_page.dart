@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:players_app/controllers/song_folder/page_manager.dart';
-import 'package:players_app/controllers/song_folder/recently_played_controller.dart';
-import 'package:players_app/view/music/playing_screen/controllers/music_playing_control.dart';
-import 'package:players_app/view/music/playing_screen/widgets/play_next_previous_buttons.dart';
-import 'package:players_app/view/music/playing_screen/widgets/shffle_repeat_fav_bottons.dart';
-import 'package:players_app/view/music/playing_screen/widgets/slider_bar.dart';
-import 'package:players_app/view/widgets/playing%20music%20page/playing_mu_circleavtar.dart';
+import 'package:domedia/controllers/song_folder/page_manager.dart';
+import 'package:domedia/controllers/song_folder/recently_played_controller.dart';
+import 'package:domedia/view/music/playing_screen/controllers/music_playing_control.dart';
+import 'package:domedia/view/music/playing_screen/widgets/play_next_previous_buttons.dart';
+import 'package:domedia/view/music/playing_screen/widgets/shffle_repeat_fav_bottons.dart';
+import 'package:domedia/view/music/playing_screen/widgets/slider_bar.dart';
+import 'package:domedia/view/widgets/playing%20music%20page/playing_mu_circleavtar.dart';
 import 'package:provider/provider.dart';
 
 class PlayingMusicScreen extends StatefulWidget {

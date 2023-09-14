@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:players_app/view/genaral_screens.dart/bottom_navbar.dart';
+import 'package:domedia/view/genaral_screens.dart/bottom_navbar.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

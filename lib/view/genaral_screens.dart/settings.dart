@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:players_app/controllers/song_folder/page_manager.dart';
-import 'package:players_app/controllers/resetpp.dart';
+import 'package:domedia/controllers/song_folder/page_manager.dart';
+import 'package:domedia/controllers/resetpp.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:players_app/view/genaral_screens.dart/splashscreen.dart';
+import 'package:domedia/view/genaral_screens.dart/splashscreen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});

@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:players_app/controllers/song_folder/page_manager.dart';
-import 'package:players_app/controllers/video_folder/video_favorite_db.dart';
-import 'package:players_app/model/db/videodb_model.dart';
-import 'package:players_app/view/music/playing_screen/playing_music_page.dart';
-import 'package:players_app/view/music/song_search.dart/controller/search_controller.dart';
-import 'package:players_app/view/music/song_search.dart/widgets/search_listtale_leading.dart';
-import 'package:players_app/view/music/song_search.dart/widgets/search_song_trailing.dart';
-import 'package:players_app/view/videos/play_screen/play_video_screen.dart';
-import 'package:players_app/view/videos/playlist_videos/playlist_video_screen.dart';
+import 'package:domedia/controllers/song_folder/page_manager.dart';
+import 'package:domedia/controllers/video_folder/video_favorite_db.dart';
+import 'package:domedia/model/db/videodb_model.dart';
+import 'package:domedia/view/music/playing_screen/playing_music_page.dart';
+import 'package:domedia/view/music/song_search.dart/controller/search_controller.dart';
+import 'package:domedia/view/music/song_search.dart/widgets/search_listtale_leading.dart';
+import 'package:domedia/view/music/song_search.dart/widgets/search_song_trailing.dart';
+import 'package:domedia/view/videos/play_screen/play_video_screen.dart';
+import 'package:domedia/view/videos/playlist_videos/playlist_video_screen.dart';
 import 'package:provider/provider.dart';
 
 class SongSearchScreen extends StatefulWidget {

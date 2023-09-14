@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:players_app/controllers/song_and_video_playlistfolder/add_button_playlist.dart';
-import 'package:players_app/controllers/song_and_video_playlistfolder/update_playlist_name.dart';
-import 'package:players_app/view/music/playlist/song_playlist_screen.dart';
+import 'package:domedia/controllers/song_and_video_playlistfolder/add_button_playlist.dart';
+import 'package:domedia/controllers/song_and_video_playlistfolder/update_playlist_name.dart';
+import 'package:domedia/view/music/playlist/song_playlist_screen.dart';
 
 class NewOrEditPlaylist {
   static void newPlaylistAdd(

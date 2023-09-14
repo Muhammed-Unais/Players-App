@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:players_app/controllers/song_and_video_playlistfolder/new_or_edit_playlist.dart';
+import 'package:domedia/controllers/song_and_video_playlistfolder/new_or_edit_playlist.dart';
 
 class SpeedDials extends StatelessWidget {
   const SpeedDials({super.key});

@@ -1,4 +1,4 @@
-package com.example.players_app
+package com.sizedbox.domedia
 
 
 import android.Manifest

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:players_app/view/music/playing_screen/widgets/favorite_button.dart';
-import 'package:players_app/view/music/playing_screen/widgets/repeat_button.dart';
-import 'package:players_app/view/music/playing_screen/widgets/shuffle_button.dart';
+import 'package:domedia/view/music/playing_screen/widgets/favorite_button.dart';
+import 'package:domedia/view/music/playing_screen/widgets/repeat_button.dart';
+import 'package:domedia/view/music/playing_screen/widgets/shuffle_button.dart';
 
 class ShuffleRepeatFavouriteButtons extends StatelessWidget {
   const ShuffleRepeatFavouriteButtons(

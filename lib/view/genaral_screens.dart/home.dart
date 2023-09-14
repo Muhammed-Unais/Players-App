@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:players_app/controllers/song_folder/playlist_db_song.dart';
-import 'package:players_app/controllers/video_folder/videodbplaylist.dart';
-import 'package:players_app/view/music/playlist/song_playlist_screen.dart';
-import 'package:players_app/view/music/favorite_songs/songfavourite_listpage.dart';
-import 'package:players_app/view/videos/playlist_videos/playlist_video_screen.dart';
-import 'package:players_app/view/videos/favorite_videos/video_favorite_screen.dart';
-import 'package:players_app/view/widgets/home%20widgets/home_appbar.dart';
-import 'package:players_app/view/widgets/home%20widgets/home_circle_tab_indicator.dart';
-import 'package:players_app/view/widgets/home%20widgets/home_favourite_playlist_button.dart';
-import 'package:players_app/view/widgets/home%20widgets/home_songs_section.dart';
+import 'package:domedia/controllers/song_folder/playlist_db_song.dart';
+import 'package:domedia/controllers/video_folder/videodbplaylist.dart';
+import 'package:domedia/view/music/playlist/song_playlist_screen.dart';
+import 'package:domedia/view/music/favorite_songs/songfavourite_listpage.dart';
+import 'package:domedia/view/videos/playlist_videos/playlist_video_screen.dart';
+import 'package:domedia/view/videos/favorite_videos/video_favorite_screen.dart';
+import 'package:domedia/view/widgets/home%20widgets/home_appbar.dart';
+import 'package:domedia/view/widgets/home%20widgets/home_circle_tab_indicator.dart';
+import 'package:domedia/view/widgets/home%20widgets/home_favourite_playlist_button.dart';
+import 'package:domedia/view/widgets/home%20widgets/home_songs_section.dart';
 import 'package:provider/provider.dart';
 import '../widgets/home widgets/home_video.dart';
 

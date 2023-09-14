@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:players_app/model/db/videodb_model.dart';
+import 'package:domedia/model/db/videodb_model.dart';
 
 class PlaylistVideoDb extends ChangeNotifier {
   final videoPlaylisdb = Hive.box<PlayersVideoPlaylistModel>('VideoplaylistDB');

@@ -1,7 +1,8 @@
+import 'package:domedia/controllers/song_folder/page_manager.dart';
+import 'package:domedia/controllers/video_folder/access_folder/access_video.dart';
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:players_app/controllers/song_folder/page_manager.dart';
-import 'package:players_app/controllers/video_folder/access_folder/access_video.dart';
+
 import 'package:provider/provider.dart';
 
 class SearchController extends ChangeNotifier {

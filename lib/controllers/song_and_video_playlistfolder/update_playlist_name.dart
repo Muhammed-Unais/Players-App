@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:players_app/controllers/song_folder/playlist_db_song.dart';
-import 'package:players_app/model/db/dbmodel.dart';
-import 'package:players_app/model/db/videodb_model.dart';
-import 'package:players_app/view/widgets/playlist_scree.dart/snack_bar.dart';
+import 'package:domedia/controllers/song_folder/playlist_db_song.dart';
+import 'package:domedia/model/db/dbmodel.dart';
+import 'package:domedia/model/db/videodb_model.dart';
+import 'package:domedia/view/widgets/playlist_scree.dart/snack_bar.dart';
 import 'package:provider/provider.dart';
 import '../video_folder/videodbplaylist.dart';
 

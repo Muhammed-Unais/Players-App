@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
-import 'package:players_app/controllers/video_folder/videos_recently_played_controller.dart';
-import 'package:players_app/view/videos/play_screen/play_video_screen.dart';
-import 'package:players_app/view/widgets/thumbnail.dart';
+import 'package:domedia/controllers/video_folder/videos_recently_played_controller.dart';
+import 'package:domedia/view/videos/play_screen/play_video_screen.dart';
+import 'package:domedia/view/widgets/thumbnail.dart';
 import 'package:provider/provider.dart';
 
 class HomeVideoScreen extends StatefulWidget {

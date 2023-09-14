@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:players_app/view/widgets/thumbnail.dart';
+import 'package:domedia/view/widgets/thumbnail.dart';
 
 class SearchLeading extends StatelessWidget {
   const SearchLeading(

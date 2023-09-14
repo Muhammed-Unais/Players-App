@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:players_app/view/music/playing_screen/controllers/music_playing_control.dart';
-import 'package:players_app/view/widgets/playing%20music%20page/play_music_buttons.dart';
+import 'package:domedia/view/music/playing_screen/controllers/music_playing_control.dart';
+import 'package:domedia/view/widgets/playing%20music%20page/play_music_buttons.dart';
 import 'package:provider/provider.dart';
 
 class NextButton extends StatelessWidget {

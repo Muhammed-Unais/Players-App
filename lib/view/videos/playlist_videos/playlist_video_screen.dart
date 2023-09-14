@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:players_app/controllers/song_and_video_playlistfolder/video_add_to_playlist.dart';
-import 'package:players_app/controllers/video_folder/access_folder/access_video.dart';
-import 'package:players_app/controllers/song_and_video_playlistfolder/new_or_edit_playlist.dart';
-import 'package:players_app/model/db/videodb_model.dart';
-import 'package:players_app/view/videos/playlist_videos/videos_playlist_videos_list.dart';
-import 'package:players_app/view/widgets/explore_widgets/favourites_cards.dart';
-import 'package:players_app/view/widgets/playlist_scree.dart/playlist_popup.dart';
+import 'package:domedia/controllers/song_and_video_playlistfolder/video_add_to_playlist.dart';
+import 'package:domedia/controllers/video_folder/access_folder/access_video.dart';
+import 'package:domedia/controllers/song_and_video_playlistfolder/new_or_edit_playlist.dart';
+import 'package:domedia/model/db/videodb_model.dart';
+import 'package:domedia/view/videos/playlist_videos/videos_playlist_videos_list.dart';
+import 'package:domedia/view/widgets/explore_widgets/favourites_cards.dart';
+import 'package:domedia/view/widgets/playlist_scree.dart/playlist_popup.dart';
 import 'package:provider/provider.dart';
 
 class VideoPlaylistScreen extends StatelessWidget {

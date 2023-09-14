@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:players_app/model/db/videodb_model.dart';
+import 'package:domedia/model/db/videodb_model.dart';
 
 class VideoPlaylistAddDelete extends ChangeNotifier {
   add(

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:players_app/view/music/favorite_songs/songfavourite_listpage.dart';
-import 'package:players_app/view/videos/favorite_videos/video_favorite_screen.dart';
-import 'package:players_app/view/widgets/explore_widgets/explore_video_playlist.dart';
-import 'package:players_app/view/widgets/explore_widgets/favourite_explore_card.dart';
-import 'package:players_app/view/widgets/explore_widgets/floating_action_button.dart';
-import 'package:players_app/view/widgets/explore_widgets/songs_playlist_explore.dart';
-import 'package:players_app/view/widgets/home%20widgets/home_circle_tab_indicator.dart';
+import 'package:domedia/view/music/favorite_songs/songfavourite_listpage.dart';
+import 'package:domedia/view/videos/favorite_videos/video_favorite_screen.dart';
+import 'package:domedia/view/widgets/explore_widgets/explore_video_playlist.dart';
+import 'package:domedia/view/widgets/explore_widgets/favourite_explore_card.dart';
+import 'package:domedia/view/widgets/explore_widgets/floating_action_button.dart';
+import 'package:domedia/view/widgets/explore_widgets/songs_playlist_explore.dart';
+import 'package:domedia/view/widgets/home%20widgets/home_circle_tab_indicator.dart';
 
 class FavouritesAndPlaylistScreen extends StatefulWidget {
   const FavouritesAndPlaylistScreen({super.key});

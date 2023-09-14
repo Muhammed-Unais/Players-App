@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:players_app/controllers/song_and_video_playlistfolder/new_or_edit_playlist.dart';
-import 'package:players_app/controllers/song_and_video_playlistfolder/song_video_delete_inplaylist.dart';
+import 'package:domedia/controllers/song_and_video_playlistfolder/new_or_edit_playlist.dart';
+import 'package:domedia/controllers/song_and_video_playlistfolder/song_video_delete_inplaylist.dart';
 
 Widget editAndDeleteDialoge({ctx, index, required bool isforSong, test}) {
   return PopupMenuButton(

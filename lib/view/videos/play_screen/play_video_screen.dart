@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:players_app/controllers/video_folder/videos_recently_played_controller.dart';
-import 'package:players_app/view/videos/play_screen/controller/video_controllers.dart';
-import 'package:players_app/view/videos/play_screen/widgets/video_controlls_widget.dart';
-import 'package:players_app/view/videos/play_screen/widgets/videotitle_detail_widget.dart';
+import 'package:domedia/controllers/video_folder/videos_recently_played_controller.dart';
+import 'package:domedia/view/videos/play_screen/controller/video_controllers.dart';
+import 'package:domedia/view/videos/play_screen/widgets/video_controlls_widget.dart';
+import 'package:domedia/view/videos/play_screen/widgets/videotitle_detail_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 

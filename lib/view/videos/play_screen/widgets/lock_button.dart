@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:players_app/view/videos/play_screen/controller/video_controllers.dart';
+import 'package:domedia/view/videos/play_screen/controller/video_controllers.dart';
 import 'package:provider/provider.dart';
 
 class LockButton extends StatelessWidget {

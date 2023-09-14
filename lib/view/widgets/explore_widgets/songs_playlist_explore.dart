@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:players_app/controllers/song_folder/playlist_db_song.dart';
-import 'package:players_app/view/music/playlist/added_playlistsongs.dart';
-import 'package:players_app/view/music/playlist/song_playlist_screen.dart';
-import 'package:players_app/view/widgets/explore_widgets/favourites_cards.dart';
-import 'package:players_app/view/widgets/playlist_scree.dart/playlist_popup.dart';
+import 'package:domedia/controllers/song_folder/playlist_db_song.dart';
+import 'package:domedia/view/music/playlist/added_playlistsongs.dart';
+import 'package:domedia/view/music/playlist/song_playlist_screen.dart';
+import 'package:domedia/view/widgets/explore_widgets/favourites_cards.dart';
+import 'package:domedia/view/widgets/playlist_scree.dart/playlist_popup.dart';
 import 'package:provider/provider.dart';
 
 class SongsExplorePlaylist extends StatelessWidget {

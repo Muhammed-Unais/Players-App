@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:players_app/model/db/dbmodel.dart';
+import 'package:domedia/model/db/dbmodel.dart';
 
 class SongAddtoPlaylist {
   static void songAddToPlaylist(SongModel song, Playersmodel datas, context) {

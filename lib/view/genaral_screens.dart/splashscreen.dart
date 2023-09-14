@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:players_app/controllers/video_folder/access_folder/access_video.dart';
+import 'package:domedia/controllers/video_folder/access_folder/access_video.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {

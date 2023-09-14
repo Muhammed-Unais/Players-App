@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:players_app/view/widgets/playing%20music%20page/play_music_buttons.dart';
+import 'package:domedia/view/widgets/playing%20music%20page/play_music_buttons.dart';
 
 class PlayPausebutton extends StatelessWidget {
   const PlayPausebutton({super.key, required this.isPlaying, required this.function});

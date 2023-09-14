@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:players_app/controllers/song_folder/favorite_songdb.dart';
-import 'package:players_app/controllers/song_folder/page_manager.dart';
-import 'package:players_app/controllers/song_folder/recently_played_controller.dart';
-import 'package:players_app/view/music/playing_screen/playing_music_page.dart';
-import 'package:players_app/view/music/playlist/song_playlist_screen.dart';
-import 'package:players_app/view/widgets/model_widget/listtale_songs_model.dart';
+import 'package:domedia/controllers/song_folder/favorite_songdb.dart';
+import 'package:domedia/controllers/song_folder/page_manager.dart';
+import 'package:domedia/controllers/song_folder/recently_played_controller.dart';
+import 'package:domedia/view/music/playing_screen/playing_music_page.dart';
+import 'package:domedia/view/music/playlist/song_playlist_screen.dart';
+import 'package:domedia/view/widgets/model_widget/listtale_songs_model.dart';
 import 'package:provider/provider.dart';
 
 class AllSongs extends StatelessWidget {

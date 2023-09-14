@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:players_app/view/music/playlist/controller/playlist_add_and_minimize.dart';
-import 'package:players_app/model/db/dbmodel.dart';
+import 'package:domedia/view/music/playlist/controller/playlist_add_and_minimize.dart';
+import 'package:domedia/model/db/dbmodel.dart';
 import 'package:provider/provider.dart';
 
 class SongAddingPlaylist extends StatelessWidget {

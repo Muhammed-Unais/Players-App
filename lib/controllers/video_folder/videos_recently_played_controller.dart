@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:players_app/controllers/video_folder/access_folder/access_video.dart';
-import 'package:players_app/model/db/recently_played_videos_model.dart';
-import 'package:players_app/model/db/videodb_model.dart';
+import 'package:domedia/controllers/video_folder/access_folder/access_video.dart';
+import 'package:domedia/model/db/recently_played_videos_model.dart';
+import 'package:domedia/model/db/videodb_model.dart';
 import 'package:provider/provider.dart';
 
 class VideosRecentlyPlayedController extends ChangeNotifier {
