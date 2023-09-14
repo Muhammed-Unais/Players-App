@@ -57,8 +57,7 @@ class HomeSongTileState extends State<HomeSongSection> {
           }
           return ListView.builder(
             padding: const EdgeInsets.only(right: 16, left: 16),
-            physics: const AlwaysScrollableScrollPhysics(),
-            shrinkWrap: true,
+            physics: const AlwaysScrollableScrollPhysics(), 
             itemCount: recentSongProvider.recentSongs.length,
             itemBuilder: (context, index) {
               return SongsListTile(

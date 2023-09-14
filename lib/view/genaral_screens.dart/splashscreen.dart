@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:players_app/controllers/video_folder/access_folder/access_video.dart';
 import 'package:provider/provider.dart';
 
@@ -22,8 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> splashFetch() async {
     await context.read<VideoFileAccessFromStorage>().splashFetch();
   }
-
-  // spalsh duration function
+  
   Future<void> gotoHomeScreen(BuildContext context) async {
     await Future.delayed(
       const Duration(seconds: 4),
@@ -39,7 +36,11 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: SvgPicture.asset("assets/images/Group 3.svg"),
+        child: SizedBox(
+          height: 100,
+          width: 100,
+          child: Image.asset("assets/images/domedia_icon.png"),
+        ),
       ),
     );
   }
@@ -49,5 +50,3 @@ class _SplashScreenState extends State<SplashScreen> {
     super.dispose();
   }
 }
-
-

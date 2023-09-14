@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:players_app/controllers/song_folder/page_manager.dart';
 import 'package:players_app/controllers/resetpp.dart';
-import 'package:players_app/model/settingsmodel.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:players_app/view/genaral_screens.dart/splashscreen.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -49,24 +49,25 @@ class SettingsScreen extends StatelessWidget {
                       bottom: 6, left: 20, right: 20, top: 6),
                   child: InkWell(
                     onTap: () {
-                      index == 1
-                          ? showDialog(
-                              context: context,
-                              builder: (context) {
-                                return const ShowDialouge();
-                              },
-                            )
-                          : Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return AboutusScreen(
-                                    headings: settingsName[index],
-                                    para: SettingsModel.innerContent[index],
-                                  );
-                                },
-                              ),
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                           if (index == 0) {
+                            return  AboutusScreen(fileName: "about_us.md",);
+                          }
+                          if (index == 1) {
+                            return const RestApp();
+                          }
+                          if (index == 3) {
+                            return AboutusScreen(
+                              fileName: "terms_and_conditions.md",
                             );
+                          }
+                          return AboutusScreen(
+                            fileName: "privacy_policy.md",
+                          );
+                        },
+                      );
                     },
                     child: Container(
                       height: MediaQuery.of(context).size.height / 12,
@@ -86,9 +87,10 @@ class SettingsScreen extends StatelessWidget {
                         child: Text(
                           settingsName[index],
                           style: GoogleFonts.raleway(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w800,
-                              color: Colors.white),
+                            fontSize: 17,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -97,41 +99,11 @@ class SettingsScreen extends StatelessWidget {
               },
             ),
             Text(
-              "Version 1.0.2",
+              "Version 1.1.0",
               style: GoogleFonts.raleway(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.black),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class AboutusScreen extends StatelessWidget {
-  final String headings;
-  final String para;
-  const AboutusScreen({super.key, required this.headings, required this.para});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text(headings),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                para,
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
+                fontSize: 15,
+                fontWeight: FontWeight.w800,
+                color: Colors.black,
               ),
             ),
           ],
@@ -141,12 +113,73 @@ class AboutusScreen extends StatelessWidget {
   }
 }
 
-class ShowDialouge extends StatelessWidget {
-  const ShowDialouge({super.key});
+class AboutusScreen extends StatelessWidget {
+  final double radius;
+  final String fileName;
+  AboutusScreen({super.key, this.radius = 8, required this.fileName})
+      : assert(fileName.contains('.md'),
+            'The file must contain the .md extension');
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(radius),
+      ),
+      child: Column(
+        children: [
+          Expanded(
+            child: FutureBuilder(
+              future: Future.delayed(const Duration(milliseconds: 150)).then(
+                (value) {
+                  return rootBundle.loadString("assets/$fileName");
+                },
+              ),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Markdown(data: snapshot.data ?? "");
+                }
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.black,
+                  ),
+                );
+              },
+            ),
+          ),
+          ElevatedButton(
+            style: ButtonStyle(
+              shape: MaterialStatePropertyAll(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              backgroundColor: const MaterialStatePropertyAll(
+                Colors.black,
+              ),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text("Close"),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class RestApp extends StatelessWidget {
+  const RestApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(
+          20,
+        ),
+      ),
       title: Text(
         "ResetApp",
         style: GoogleFonts.roboto(

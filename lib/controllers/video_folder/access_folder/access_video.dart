@@ -40,7 +40,7 @@ class VideoFileAccessFromStorage with ChangeNotifier {
       await AccessFilesFromStorage.accessFromStorage([
         '.mkv',
         '.mp4',
-      ], (List<String> path) async{
+      ], (List<String> path) async {
         accessVideosPath = [...path];
         for (var i = 0; i < accessVideosPath.length; i++) {
           if (accessVideosPath[i]
@@ -53,10 +53,12 @@ class VideoFileAccessFromStorage with ChangeNotifier {
         isInitialize = true;
         notifyListeners();
 
-       await  useIsolateforCreatingThumbnail(accessVideosPath);
+        await useIsolateforCreatingThumbnail(accessVideosPath);
       }, (p0) {
         isInitialize = false;
       });
+
+   
     } else {
       splashFetch();
     }
@@ -118,3 +120,6 @@ Future<void> getthumbnail(List<dynamic> arg) async {
     Isolate.exit();
   }
 }
+
+
+
