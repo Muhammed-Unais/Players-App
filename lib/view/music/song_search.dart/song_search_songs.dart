@@ -1,3 +1,4 @@
+import 'package:domedia/view/music/song_search.dart/controller/search_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
@@ -6,7 +7,6 @@ import 'package:domedia/controllers/song_folder/page_manager.dart';
 import 'package:domedia/controllers/video_folder/video_favorite_db.dart';
 import 'package:domedia/model/db/videodb_model.dart';
 import 'package:domedia/view/music/playing_screen/playing_music_page.dart';
-import 'package:domedia/view/music/song_search.dart/controller/search_controller.dart';
 import 'package:domedia/view/music/song_search.dart/widgets/search_listtale_leading.dart';
 import 'package:domedia/view/music/song_search.dart/widgets/search_song_trailing.dart';
 import 'package:domedia/view/videos/play_screen/play_video_screen.dart';
@@ -40,7 +40,7 @@ class _SongSearchScreenState extends State<SongSearchScreen> {
             color: Colors.black,
           ),
         ),
-        title: Consumer<SearchController>(
+        title: Consumer<SongSearchController>(
           builder: (context, searchController, _) {
             return TextField(
               decoration: InputDecoration(
@@ -67,7 +67,7 @@ class _SongSearchScreenState extends State<SongSearchScreen> {
         ),
       ),
       body: SafeArea(
-        child: Consumer<SearchController>(
+        child: Consumer<SongSearchController>(
           builder: (context, searchController, _) {
             if (searchController.foundVideos.isEmpty && !widget.isSong) {
               return Center(

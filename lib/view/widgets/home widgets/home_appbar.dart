@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
 import 'package:domedia/view/genaral_screens.dart/settings.dart';
 
-class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
+class HomeAppBar extends StatelessWidget  implements PreferredSizeWidget{
   const HomeAppBar({
     super.key,
   });

@@ -1,3 +1,4 @@
+import 'package:domedia/view/music/song_search.dart/controller/search_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -18,7 +19,6 @@ import 'package:domedia/model/db/videodb_model.dart';
 import 'package:domedia/view/genaral_screens.dart/home.dart';
 import 'package:domedia/view/genaral_screens.dart/splashscreen.dart';
 import 'package:domedia/view/music/playing_screen/controllers/music_playing_control.dart';
-import 'package:domedia/view/music/song_search.dart/controller/search_controller.dart';
 import 'package:provider/provider.dart';
 import 'controllers/song_folder/playlist_db_song.dart';
 
@@ -69,7 +69,7 @@ void main() async {
           create: (context) => MusicPlaying(),
         ),
         ChangeNotifierProvider(
-          create: (context) => SearchController(),
+          create: (context) => SongSearchController(),
         ),
         ChangeNotifierProvider(
           create: (context) => VideoFavoriteDb(),

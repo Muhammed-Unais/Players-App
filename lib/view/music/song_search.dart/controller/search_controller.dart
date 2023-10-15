@@ -2,10 +2,9 @@ import 'package:domedia/controllers/song_folder/page_manager.dart';
 import 'package:domedia/controllers/video_folder/access_folder/access_video.dart';
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-
 import 'package:provider/provider.dart';
 
-class SearchController extends ChangeNotifier {
+class SongSearchController extends ChangeNotifier {
   List<SongModel> _foundSongs = [];
 
   List<String> foundVideos = [];
